@@ -1,6 +1,6 @@
-# WinUI FabSim User Guide
+# ReWeave Studio User Guide
 
-Complete guide for using WinUI FabSim to design, preview, and simulate fabrics.
+Complete guide for using ReWeave Studio to design, preview, and simulate fabrics.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ Complete guide for using WinUI FabSim to design, preview, and simulate fabrics.
 
 ## Overview
 
-WinUI FabSim is a comprehensive fabric simulation tool designed for textile professionals and researchers. It enables:
+ReWeave Studio is a comprehensive fabric simulation tool designed for textile professionals and researchers. It enables:
 
 - **Design** custom weave patterns with an infinite canvas
 - **Preview** 2D yarn interlacing with realistic visualization
@@ -40,7 +40,7 @@ WinUI FabSim is a comprehensive fabric simulation tool designed for textile prof
 **Steps:**
 
 1. **Launch the Application**
-   - Click WinUI FabSim icon on desktop or Start menu
+   - Click ReWeave Studio icon on desktop or Start menu
    - Wait for the app to load (first launch may take 30 seconds)
    - You'll see the Home page with recent projects
 
@@ -51,7 +51,7 @@ WinUI FabSim is a comprehensive fabric simulation tool designed for textile prof
 
 3. **Save Your Project**
    - Click File → Save (Ctrl+S)
-   - Choose a location (default: `Documents/FabSim Projects/`)
+   - Choose a location (default: `Documents/ReWeave Projects/`)
    - Enter project name: "My First Fabric"
    - Click **Save**
    - Notice the title bar now shows your project name
@@ -442,7 +442,7 @@ WinUI FabSim is a comprehensive fabric simulation tool designed for textile prof
 
 7. **Organize Project Folder**
    - Go to File → **Open Folder**
-   - Navigate to `Documents/FabSim Projects/`
+   - Navigate to `Documents/ReWeave Projects/`
    - You can:
      - Create subfolders for different projects
      - Rename project files

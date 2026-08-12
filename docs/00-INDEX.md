@@ -1,6 +1,6 @@
-# WinUI FabSim Documentation Index
+# ReWeave Studio Documentation Index
 
-This folder contains comprehensive documentation for **WinUI FabSim** — a Windows App SDK / WinUI 3 fabric simulation studio for weave design, 2D yarn-interlaced preview, and academic 3D geometry models.
+This folder contains comprehensive documentation for **ReWeave Studio** — a Windows App SDK / WinUI 3 fabric simulation studio for weave design, 2D yarn-interlaced preview, and academic 3D geometry models.
 
 ## Documentation Structure
 

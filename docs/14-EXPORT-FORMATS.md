@@ -27,7 +27,7 @@
 ### Export Architecture
 
 ```
-FabSim Data
+ReWeave Data
     ↓
 [Format-Specific Exporter Service]
     ↓
@@ -133,7 +133,7 @@ Optimization:
 
 #### **Example Workflow: OBJ to Blender**
 ```
-1. Export from FabSim as OBJ
+1. Export from ReWeave as OBJ
 2. Open Blender
 3. File → Import → Wavefront (.obj)
 4. Select model.obj
@@ -394,7 +394,7 @@ Parameters (typical):
 
 #### **Example Workflow: Abaqus Analysis**
 ```
-1. Export from FabSim as Abaqus INP
+1. Export from ReWeave as Abaqus INP
 2. Open Abaqus/CAE
 3. File → Import Job... → model.inp
 4. Model loaded with materials and boundary conditions
@@ -464,7 +464,7 @@ Version=1.1
 
 [CONTENT]
 Title=Pattern Name
-Creator=FabSim
+Creator=ReWeave
 Date=2026-07-03
 
 [THREADING]
@@ -518,7 +518,7 @@ UnitOfLength=cm
 
 #### **Example Workflow: WIF to Loom**
 ```
-1. Design pattern in FabSim
+1. Design pattern in ReWeave
 2. Export as WIF
 3. Transfer to loom control computer
 4. Loom software reads WIF
@@ -577,7 +577,7 @@ Pick,Harness1,Harness2,Harness3,Harness4,Harness5,Harness6,Harness7,Harness8
 
 #### **What is FABJC?**
 ```
-- FabSim proprietary binary format
+- ReWeave proprietary binary format
 - Optimized for Jacquard machine compatibility
 - Supports JC5, JC6, JC7 variants
 - Compressed format
@@ -843,7 +843,7 @@ StrainAtBreak,0.15,%,Maximum strain
 ```python
 import pandas as pd
 
-# Load FabSim analysis
+# Load ReWeave analysis
 df = pd.read_csv('analysis.csv')
 
 # Calculate metrics
@@ -867,7 +867,7 @@ df[df['Metric'].str.contains('Stress')].plot()
 WIF Format:
 - File → Import → Pattern (WIF)
 - Reads weave pattern, threading, colors
-- Converts to FabSim internal format
+- Converts to ReWeave internal format
 - Preserves pattern data
 
 CSV Liftplan:
@@ -885,7 +885,7 @@ JC5/6/7 Binary:
 
 #### **Project Import**
 ```
-FabSim Project:
+ReWeave Project:
 - File → Open Recent (if .weave file exists)
 - Or File → Import → Project
 - Restores all settings, patterns, colors
@@ -1048,7 +1048,7 @@ Solution:
 4. Verify scale in target software (Tools → Preferences)
 
 Common Scales:
-- FabSim internal: millimeters
+- ReWeave internal: millimeters
 - 3D printing: millimeters
 - CAD: millimeters or meters (varies)
 - Loom patterns: centimeters
@@ -1138,5 +1138,5 @@ If Corrupted:
 For export-specific questions:
 - See [Troubleshooting Guide](08-TROUBLESHOOTING.md)
 - Check [API Reference](06-API-REFERENCE.md) for technical details
-- Community forum: [forums.fabsim.example.com](https://forums.fabsim.example.com)
-- Email: support@fabsim.example.com
+- Community forum: [forums.reweave.example.com](https://forums.reweave.example.com)
+- Email: support@reweave.example.com

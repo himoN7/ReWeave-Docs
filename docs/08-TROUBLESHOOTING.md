@@ -33,7 +33,7 @@ Solutions for common issues and problems.
    If not installed: Download from [dotnet.microsoft.com](https://dotnet.microsoft.com)
 
 3. **Reinstall the app:**
-   - Uninstall: Settings → Apps → WinUI FabSim → Uninstall
+   - Uninstall: Settings → Apps → ReWeave Studio → Uninstall
    - Restart computer
    - Reinstall from latest bundle
 
@@ -45,7 +45,7 @@ Solutions for common issues and problems.
 1. **Clear app data:**
    ```powershell
    # Remove settings cache
-   Remove-Item "$env:AppData\WinUi FabSim" -Recurse -Force
+   Remove-Item "$env:AppData\ReWeave Studio" -Recurse -Force
    ```
 
 2. **Restart the app** — It will recreate default settings
@@ -54,7 +54,7 @@ Solutions for common issues and problems.
 
 **Solution:**
 1. Go to Settings → Apps → Apps & features
-2. Find "WinUI FabSim"
+2. Find "ReWeave Studio"
 3. Click → Advanced options
 4. Click "Repair"
 5. Wait for repair to complete
@@ -97,7 +97,7 @@ Solutions for common issues and problems.
 
 **Solutions:**
 1. **Close the file in other applications:**
-   - Check if file is open in another instance of FabSim
+   - Check if file is open in another instance of ReWeave
    - Check if file is in use by Cloud sync (OneDrive, Google Drive)
 2. **Move file to local drive:**
    - Avoid network/cloud storage locations
@@ -212,7 +212,7 @@ Solutions for common issues and problems.
 
 3. **Clear UI cache:**
    ```powershell
-   Remove-Item "$env:LocalAppData\WinUi FabSim" -Recurse -Force
+   Remove-Item "$env:LocalAppData\ReWeave Studio" -Recurse -Force
    ```
 
 ### 3D viewport is black or not rendering
@@ -281,7 +281,7 @@ Solutions for common issues and problems.
 **Solutions:**
 1. **Try recovery file:**
    ```
-   Check: %AppData%\WinUi FabSim\Recovery\
+   Check: %AppData%\ReWeave Studio\Recovery\
    ```
 
 2. **Restore from backup:**
@@ -297,7 +297,7 @@ Solutions for common issues and problems.
 **Causes:** Unsupported format or corrupted file
 
 **Supported formats:**
-- `.weave` — WinUI FabSim format
+- `.weave` — ReWeave Studio format
 - `.asc` — Jacquard format
 - `.dup` — Jacquard format
 
@@ -308,7 +308,7 @@ Solutions for common issues and problems.
 
 2. **Convert from other software:**
    - Export from source software as supported format
-   - Then import into FabSim
+   - Then import into ReWeave
 
 3. **Try sample files:**
    - Use built-in patterns first
@@ -391,13 +391,13 @@ Solutions for common issues and problems.
 **Solution:**
 ```bash
 # Ensure correct working directory
-cd "WinUi FabSim"
+cd "ReWeave Studio"
 
 # Verify file exists
 dir *.csproj
 
 # Try full path
-dotnet build "C:\Users\yourname\source\repos\WinUi FabSim\WinUi FabSim\WinUi FabSim.csproj"
+dotnet build "C:\Users\yourname\source\repos\ReWeave Studio\ReWeave Studio\ReWeave Studio.csproj"
 ```
 
 ### "NuGet package not found"
@@ -457,7 +457,7 @@ dotnet nuget locals all --clear
 
 4. **Application logs:**
    ```
-   Location: %AppData%\WinUi FabSim\Logs\
+   Location: %AppData%\ReWeave Studio\Logs\
    ```
 
 5. **Screenshots:** Visual representation of issue

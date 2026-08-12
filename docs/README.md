@@ -1,6 +1,6 @@
-# App Documentation - WinUI FabSim
+# App Documentation - ReWeave Studio
 
-Complete documentation suite for developers and users of WinUI FabSim.
+Complete documentation suite for developers and users of ReWeave Studio.
 
 ## 📚 Documentation Files (20 Documents)
 

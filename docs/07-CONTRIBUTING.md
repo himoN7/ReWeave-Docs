@@ -1,6 +1,6 @@
 # Contributing Guidelines
 
-Guidelines for contributing to WinUI FabSim.
+Guidelines for contributing to ReWeave Studio.
 
 ## Table of Contents
 
@@ -33,12 +33,12 @@ We are committed to providing a welcoming and inspiring community for all. Pleas
 1. **Fork the repository** on GitHub
 2. **Clone your fork:**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/WinUi-FabSim.git
-   cd WinUi-FabSim
+   git clone https://github.com/YOUR_USERNAME/ReWeave.git
+   cd ReWeave
    ```
 3. **Add upstream remote:**
    ```bash
-   git remote add upstream https://github.com/ORIGINAL_OWNER/WinUi-FabSim.git
+   git remote add upstream https://github.com/ORIGINAL_OWNER/ReWeave.git
    ```
 4. **Complete development setup** — See [Installation & Setup](05-INSTALLATION-SETUP.md)
 
@@ -77,7 +77,7 @@ git checkout -b feature/my-feature
 dotnet test
 
 # Run specific test project
-dotnet test Fabsim.AutomatedTests
+dotnet test ReWeave.AutomatedTests
 
 # Manual testing
 # F5 in Visual Studio to run and debug
@@ -381,7 +381,7 @@ How was this tested?
 
 ### Unit Tests
 
-**Location:** `Fabsim.AutomatedTests/Unit/`
+**Location:** `ReWeave.AutomatedTests/Unit/`
 
 **Requirements:**
 - Isolated test of single component
@@ -421,7 +421,7 @@ public class YarnSpecificationTests
 
 ### Integration Tests
 
-**Location:** `Fabsim.AutomatedTests/Integration/`
+**Location:** `ReWeave.AutomatedTests/Integration/`
 
 **Requirements:**
 - Test interaction between components
@@ -491,7 +491,7 @@ dotnet test -v normal
   // Handles fabric physics simulation calculations.
   // Supports multiple yarn path models and solver types.
   // </summary>
-  namespace WinUi_FabSim.Services;
+  namespace WinUi_ReWeave.Services;
   ```
 
 ### Updating External Docs
@@ -544,4 +544,4 @@ dotnet test -v normal
 
 ---
 
-Thank you for contributing to WinUI FabSim! 🧵
+Thank you for contributing to ReWeave Studio! 🧵

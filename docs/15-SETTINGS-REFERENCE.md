@@ -426,9 +426,9 @@ Location: Settings → Backup & Recovery → Auto-Save
 #### **Auto-Save Files**
 ```
 Storage Location:
-- Windows: %AppData%\FabSim\Projects\AutoSave\
-- Mac: ~/Library/FabSim/Projects/AutoSave/
-- Linux: ~/.local/share/FabSim/Projects/AutoSave/
+- Windows: %AppData%\ReWeave\Projects\AutoSave\
+- Mac: ~/Library/ReWeave/Projects/AutoSave/
+- Linux: ~/.local/share/ReWeave/Projects/AutoSave/
 
 Retention:
 - Number of backups: 3-20 (default: 10)
@@ -443,7 +443,7 @@ Retention:
 File → Create Backup
 Creates timestamped copy:
 - Format: project_YYYYMMDD_HHMMSS.weave
-- Location: %AppData%\FabSim\Backups\
+- Location: %AppData%\ReWeave\Backups\
 - Retention: Manual (not auto-deleted)
 
 Frequency Recommendation:
@@ -545,10 +545,10 @@ Higher resolution:
 
 ### File Association
 
-#### **Open With FabSim**
+#### **Open With ReWeave**
 ```
 .weave files:
-- Double-click opens in FabSim
+- Double-click opens in ReWeave
 - Auto-detected if installed
 - Can be reset in: Settings → File Association
 
@@ -636,7 +636,7 @@ Recommended: 2-4 GB on typical system
 
 #### **Cache Settings**
 ```
-Cache Folder: %AppData%\FabSim\Cache\
+Cache Folder: %AppData%\ReWeave\Cache\
 Cache Size Limit: 100 MB - 5 GB
 Default: 1 GB
 
@@ -688,7 +688,7 @@ Default: Warning
 Location: Settings → Advanced → Logging
 
 Log Storage:
-- Location: %AppData%\FabSim\Logs\
+- Location: %AppData%\ReWeave\Logs\
 - Rotation: Daily, 7-day retention
 - Size: Single file ~50 MB
 ```
@@ -864,11 +864,11 @@ Reset Settings: Ctrl+Shift+R (confirmation required)
 
 ```
 Settings Storage:
-- Registry: HKEY_CURRENT_USER\Software\FabSim
-- File: %AppData%\FabSim\settings.json
+- Registry: HKEY_CURRENT_USER\Software\ReWeave
+- File: %AppData%\ReWeave\settings.json
 
 Backup:
-- Auto-backup: %AppData%\FabSim\Backups\
+- Auto-backup: %AppData%\ReWeave\Backups\
 
 GPU Support:
 - NVIDIA CUDA preferred
@@ -880,11 +880,11 @@ GPU Support:
 
 ```
 Settings Storage:
-- ~/Library/Preferences/com.fabsim.plist
-- ~/Library/FabSim/settings.json
+- ~/Library/Preferences/com.reweave.plist
+- ~/Library/ReWeave/settings.json
 
 Backup:
-- Auto-backup: ~/Library/FabSim/Backups/
+- Auto-backup: ~/Library/ReWeave/Backups/
 
 GPU Support:
 - Metal API (Apple GPU)
@@ -895,11 +895,11 @@ GPU Support:
 
 ```
 Settings Storage:
-- ~/.config/FabSim/settings.json
-- ~/.local/share/FabSim/
+- ~/.config/ReWeave/settings.json
+- ~/.local/share/ReWeave/
 
 Backup:
-- Auto-backup: ~/.local/share/FabSim/Backups/
+- Auto-backup: ~/.local/share/ReWeave/Backups/
 
 GPU Support:
 - CUDA (NVIDIA)
@@ -954,4 +954,4 @@ For settings-related support:
 - See [User Guide](01-USER-GUIDE.md)
 - Check [Troubleshooting Guide](08-TROUBLESHOOTING.md)
 - Search settings help in application
-- Contact support: support@fabsim.example.com
+- Contact support: support@reweave.example.com
