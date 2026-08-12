@@ -3,40 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark" />
-    <title>{{ page.title | default: site.title }}</title>
+    <meta name="color-scheme" content="light dark" />
+    <title>{{ page.title | default: site.title }} | ReWeave Docs</title>
     <meta name="description" content="{{ page.description | default: site.description }}" />
-    <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/fabsim-icon.svg' | relative_url }}" />
+    <link rel="icon" type="image/png" href="{{ '/assets/images/app_icon.png' | relative_url }}" />
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   </head>
   <body>
-    <div class="ambient ambient-a" aria-hidden="true"></div>
-    <div class="ambient ambient-b" aria-hidden="true"></div>
-
-    <div class="shell">
-      <header class="brand-bar acrylic">
-        <a class="brand" href="{{ '/' | relative_url }}">
-          <span class="brand-mark">
-            <img src="{{ '/assets/images/fabsim-icon.svg' | relative_url }}" alt="FabSim" width="40" height="40" />
-          </span>
-          <div class="brand-copy">
-            <p class="brand-title">{{ site.title }}</p>
-            <p class="brand-subtitle">{{ site.description }}</p>
-          </div>
+    <!-- Microsoft / ReWeave Header -->
+    <header class="ms-header">
+      <div class="ms-header-top">
+        <a href="{{ '/' | relative_url }}" class="ms-brand-group">
+          <img src="{{ '/assets/images/app_icon.png' | relative_url }}" alt="ReWeave Logo" width="28" height="28" style="object-fit: contain;" />
+          <span class="ms-brand-title">Rezephyr</span>
+          <span class="ms-brand-divider">|</span>
+          <span class="ms-brand-sub">ReWeave Product & Engineering</span>
         </a>
-        <nav class="top-nav" aria-label="Site">
-          <a class="nav-button{% if page.url == '/' %} is-active{% endif %}" href="{{ '/' | relative_url }}">Home</a>
-          <a class="nav-button nav-button-accent" href="https://github.com/himoN7/FabSim-Docs" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </nav>
-      </header>
 
-      <div class="page-shell">
-        <aside class="sidebar">
-          <div class="sidebar-inner acrylic">
-            <p class="sidebar-title">Documentation</p>
+        <div class="ms-nav-actions">
+          <div class="ms-search-wrap">
+            <input type="text" id="searchInput" placeholder="Search docs & topics..." class="ms-input" />
+            <i class="fa-solid fa-magnifying-glass ms-search-icon"></i>
+          </div>
+          <a href="https://github.com/himoN7/ReWeave-Docs" target="_blank" rel="noopener noreferrer" class="ms-btn-secondary">
+            <i class="fa-solid fa-book"></i> GitHub
+          </a>
+          <button class="ms-btn-publish" id="themeToggleBtn" onclick="toggleTheme()">
+            <i class="fa-solid fa-moon"></i> Dark Mode
+          </button>
+        </div>
+      </div>
+
+      <nav class="ms-nav-categories">
+        <div class="ms-categories-inner">
+          <a href="{{ '/' | relative_url }}" class="ms-cat-link{% if page.url == '/' %} active{% endif %}" onclick="filterCategory('All', this); return true;">All Topics</a>
+          <a href="#" class="ms-cat-link" onclick="filterCategory('Fabric Physics', this); return false;">Fabric Physics</a>
+          <a href="#" class="ms-cat-link" onclick="filterCategory('Strain Bench', this); return false;">Strain Bench</a>
+          <a href="#" class="ms-cat-link" onclick="filterCategory('3D Simulation', this); return false;">3D Simulation</a>
+          <a href="#" class="ms-cat-link" onclick="filterCategory('Weave Design', this); return false;">Weave Design</a>
+          <a href="#" class="ms-cat-link" onclick="filterCategory('AI Vision & Analytics', this); return false;">AI Vision & Analytics</a>
+          <a href="#" class="ms-cat-link" onclick="filterCategory('Developer & Packaging', this); return false;">Developer & Packaging</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="ms-container">
+      {% if page.url == '/' %}
+        {{ content }}
+      {% else %}
+        <div class="page-layout">
+          <aside class="docs-sidebar">
+            <p class="sidebar-title">Documentation Index</p>
             <nav class="sidebar-nav" aria-label="Documentation">
               {% assign docs_pages = site.pages | sort: 'path' %}
               {% for doc in docs_pages %}
@@ -48,36 +69,144 @@
                 {% endunless %}
               {% endfor %}
             </nav>
-          </div>
-        </aside>
+          </aside>
 
-        <main class="content">
-          <article class="page-content acrylic">
-            <header class="page-hero">
-              {% if page.url == '/' %}
-                <p class="page-tag">
-                  <img class="page-tag-icon" src="{{ '/assets/images/fabsim-icon.svg' | relative_url }}" alt="" width="18" height="18" />
-                  Fluent Design
-                </p>
-              {% else %}
-                <p class="page-tag">{{ page.title | default: site.title }}</p>
-              {% endif %}
-              <h1>{{ page.title | default: site.title }}</h1>
-              {% if page.description %}
-                <p class="page-description">{{ page.description }}</p>
-              {% endif %}
-            </header>
-            <div class="page-body">
-              {{ content }}
-            </div>
-          </article>
-        </main>
+          <section class="docs-content">
+            <article class="ms-article-container">
+              <header class="ms-article-hero">
+                <p class="ms-article-category">Documentation Article</p>
+                <h1 class="ms-article-title">{{ page.title | default: site.title }}</h1>
+                {% if page.description %}
+                  <p class="ms-section-desc">{{ page.description }}</p>
+                {% endif %}
+              </header>
+              <div class="ms-article-body">
+                {{ content }}
+              </div>
+            </article>
+          </section>
+        </div>
+      {% endif %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="ms-footer">
+      <div class="ms-footer-grid">
+        <div class="ms-footer-col">
+          <h4>Documentation Topics</h4>
+          <ul>
+            <li><a href="{{ '/' | relative_url }}">Overview & Getting Started</a></li>
+            <li><a href="#" onclick="filterCategory('Fabric Physics')">Fabric Physics XPBD</a></li>
+            <li><a href="#" onclick="filterCategory('Strain Bench')">Unit Cell Strain Bench</a></li>
+            <li><a href="#" onclick="filterCategory('3D Simulation')">3D Yarn Path Geometry</a></li>
+            <li><a href="#" onclick="filterCategory('Weave Design')">2D Weave Studio</a></li>
+            <li><a href="#" onclick="filterCategory('AI Vision & Analytics')">AI Weave Vision</a></li>
+          </ul>
+        </div>
+        <div class="ms-footer-col">
+          <h4>Platform & OS</h4>
+          <ul>
+            <li><a href="#">Windows App SDK 1.5+</a></li>
+            <li><a href="#">WinUI 3 Fluent Design 2</a></li>
+            <li><a href="#">Windows 10/11 (x64/ARM64)</a></li>
+            <li><a href="#">Direct3D 11 & HelixToolkit</a></li>
+          </ul>
+        </div>
+        <div class="ms-footer-col">
+          <h4>Developer & Code</h4>
+          <ul>
+            <li><a href="https://github.com/himoN7/WinUi-FabSim" target="_blank" rel="noopener noreferrer">WinUi-FabSim Repository</a></li>
+            <li><a href="https://github.com/himoN7/ReWeave-Docs" target="_blank" rel="noopener noreferrer">ReWeave-Docs Repository</a></li>
+            <li><a href="#">MSIX Packaging Script</a></li>
+            <li><a href="#">Store Publishing Guide</a></li>
+          </ul>
+        </div>
+        <div class="ms-footer-col">
+          <h4>Rezephyr Studio</h4>
+          <ul>
+            <li><a href="https://rezephyr.ir" target="_blank" rel="noopener noreferrer">Rezephyr Studio Homepage</a></li>
+            <li><a href="https://rezephyr.ir/reweave" target="_blank" rel="noopener noreferrer">ReWeave Product Blog</a></li>
+            <li><a href="#">Hamed Rezaei Adaryani</a></li>
+          </ul>
+        </div>
       </div>
 
-      <footer class="site-footer acrylic">
-        <img class="footer-icon" src="{{ '/assets/images/fabsim-icon.svg' | relative_url }}" alt="" width="20" height="20" />
-        <p>FabSim Docs · WinUI Fluent design documentation</p>
-      </footer>
-    </div>
+      <div class="ms-footer-bottom">
+        <span>🌐 English (US) | Rezephyr Studio &copy; 2026</span>
+        <span>ReWeave Fabric Simulation Studio &bull; Built with WinUI 3 & Windows App SDK</span>
+      </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+      function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        const btn = document.getElementById('themeToggleBtn');
+        if (document.body.classList.contains('dark-mode')) {
+          btn.innerHTML = '<i class="fa-solid fa-sun"></i> Light Mode';
+        } else {
+          btn.innerHTML = '<i class="fa-solid fa-moon"></i> Dark Mode';
+        }
+      }
+
+      function filterCategory(cat, el) {
+        if (el) {
+          document.querySelectorAll('.ms-cat-link').forEach(link => link.classList.remove('active'));
+          el.classList.add('active');
+        }
+
+        const cards = document.querySelectorAll('.ms-card');
+        cards.forEach(c => {
+          const cCat = c.getAttribute('data-category');
+          if (cat === 'All' || !cCat || cCat === cat) {
+            c.style.display = 'flex';
+          } else {
+            c.style.display = 'none';
+          }
+        });
+      }
+
+      // Live search filter
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+          const query = e.target.value.toLowerCase().trim();
+          const cards = document.querySelectorAll('.ms-card');
+          const sidebarLinks = document.querySelectorAll('.sidebar-link');
+
+          cards.forEach(card => {
+            const title = (card.getAttribute('data-title') || card.innerText).toLowerCase();
+            if (!query || title.includes(query)) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+
+          sidebarLinks.forEach(link => {
+            const text = link.innerText.toLowerCase();
+            if (!query || text.includes(query)) {
+              link.style.display = 'block';
+            } else {
+              link.style.display = 'none';
+            }
+          });
+        });
+      }
+
+      // Fluent Motion: Cursor-tracking directional light glow
+      document.addEventListener('mousemove', function(e) {
+        document.querySelectorAll('.ms-card').forEach(card => {
+          const rect = card.getBoundingClientRect();
+          if (e.clientX >= rect.left && e.clientX <= rect.right &&
+              e.clientY >= rect.top && e.clientY <= rect.bottom) {
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+          }
+        });
+      });
+    </script>
   </body>
 </html>

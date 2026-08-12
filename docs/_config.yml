@@ -1,8 +1,8 @@
-title: FabSim Docs
-description: Fluent-inspired documentation for FabSim
+title: ReWeave Docs
+description: Official ReWeave Product & Engineering Documentation - Fabric Simulation, Physics FEA, and AI Vision
 theme: null
-baseurl: "/FabSim-Docs"
-url: "https://himoN7.github.io/FabSim-Docs"
+baseurl: "/ReWeave-Docs"
+url: "https://himoN7.github.io/ReWeave-Docs"
 markdown: kramdown
 exclude:
   - README.md

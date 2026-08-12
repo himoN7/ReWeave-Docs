@@ -1,0 +1,41 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base tile -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5F5F7"/>
+      <stop offset="100%" stop-color="#E1E1E6"/>
+    </linearGradient>
+    <linearGradient id="fabricGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4F6BED"/>
+      <stop offset="100%" stop-color="#886CE4"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="24" width="208" height="208" rx="48" fill="url(#bgGrad)"/>
+
+  <!-- Fabric sheet -->
+  <g transform="translate(64,64) rotate(-10 64 64)">
+    <path d="
+      M 16 20
+      H 104
+      L 128 56
+      V 116
+      H 32
+      L 16 92
+      Z
+    " fill="url(#fabricGrad)"/>
+
+    <!-- Fold highlight -->
+    <path d="
+      M 104 20
+      L 128 56
+      H 104
+      Z
+    " fill="rgba(255,255,255,0.35)"/>
+
+    <!-- Grid / simulation lines -->
+    <path d="M32 44 H112" stroke="rgba(255,255,255,0.45)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M32 68 H112" stroke="rgba(255,255,255,0.35)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M32 92 H112" stroke="rgba(255,255,255,0.25)" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>
