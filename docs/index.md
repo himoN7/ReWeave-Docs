@@ -1,22 +1,22 @@
 ---
 layout: default
 title: ReWeave Documentation & Showcase
-description: Official ReWeave Product & Engineering Documentation - Fabric Simulation, Physics FEA, and AI Vision.
+description: Design dobby and layered weaves, preview yarn geometry, and explore drape and mechanical tests on your PC.
 permalink: /
 ---
 
 <!-- Hero Featured Post / Doc Card -->
 <section class="ms-hero-card">
   <div>
-    <div class="ms-hero-category">Fabric Physics</div>
-    <h1 class="ms-hero-title">ReWeave Fabric Physics Engine: High-Fidelity Garment &amp; Sheet Drape Simulation</h1>
-    <p class="ms-hero-excerpt">Experience real-time fabric drape modeling, interactive tension dynamics, and responsive garment visualization engineered for modern textile applications.</p>
+    <div class="ms-hero-category">ReWeave studio</div>
+    <h1 class="ms-hero-title">Design weaves, preview yarn geometry, and explore drape on your PC</h1>
+    <p class="ms-hero-excerpt">ReWeave is a Windows studio for dobby and layered fabric. Projects stay on this computer. The current Store edition saves and reopens <code>.reweave</code> files and does not export loom, image, or CAD files.</p>
     <a href="{{ '/01-USER-GUIDE' | relative_url }}" class="ms-btn-dark">
       Read User Guide <i class="fa-solid fa-arrow-right" style="margin-left: 6px; font-size: 0.85em;"></i>
     </a>
   </div>
   <div class="ms-hero-img-wrap">
-    <img src="{{ '/assets/images/physics_after_solve.png' | relative_url }}" alt="ReWeave Fabric Physics Engine: High-Fidelity Garment &amp; Sheet Drape Simulation" />
+    <img src="{{ '/assets/images/physics_after_solve.png' | relative_url }}" alt="ReWeave drape preview after a physics solve" />
   </div>
 </section>
 
@@ -25,7 +25,7 @@ permalink: /
   <div class="ms-section-header">
     <div>
       <h2 class="ms-section-title">Product Feature Showcases</h2>
-      <p class="ms-section-desc">Key engineering modules and physics capabilities in ReWeave Studio.</p>
+      <p class="ms-section-desc">What the current Windows app includes. Mechanical tests are analytical tracks, not a laboratory certificate.</p>
     </div>
   </div>
 
@@ -36,8 +36,8 @@ permalink: /
       </div>
       <div class="ms-card-body">
         <div class="ms-card-date">August 10, 2026</div>
-        <h3 class="ms-card-title">Unit Cell Strain Bench: Virtual Mechanical Testing</h3>
-        <p class="ms-card-excerpt">Simulate periodic fabric samples under tensile, shear, bending, and compression testing protocols in a virtual 3D workspace.</p>
+        <h3 class="ms-card-title">Mechanical tests</h3>
+        <p class="ms-card-excerpt">Tensile, shear, bending, and compression tracks for a periodic fabric sample. The app labels analytical results so they are not read as a measured lab curve.</p>
         <div class="ms-card-footer">
           <span>Hamed Rezaei Adaryani</span>
           <i class="fa-solid fa-arrow-right"></i>
@@ -51,8 +51,8 @@ permalink: /
       </div>
       <div class="ms-card-body">
         <div class="ms-card-date">August 8, 2026</div>
-        <h3 class="ms-card-title">3D Yarn Path Modeling &amp; Surface Rendering</h3>
-        <p class="ms-card-excerpt">Generate mathematical 3D yarn centerlines and PBR swept meshes across multiple analytical yarn geometry models.</p>
+        <h3 class="ms-card-title">Yarn geometry</h3>
+        <p class="ms-card-excerpt">Yarn centerlines from Peirce, Kemp, elastica, and related analytical models, with a 3D preview in the app. Mesh export is not in the current Store edition.</p>
         <div class="ms-card-footer">
           <span>ReWeave Engineering Team</span>
           <i class="fa-solid fa-arrow-right"></i>
@@ -66,8 +66,8 @@ permalink: /
       </div>
       <div class="ms-card-body">
         <div class="ms-card-date">August 5, 2026</div>
-        <h3 class="ms-card-title">2D Weave Design Studio: Infinite Canvas</h3>
-        <p class="ms-card-excerpt">Author custom dobby and jacquard weave patterns with accent warp/weft color repeats, 27 built-in templates, and instant 2D previews.</p>
+        <h3 class="ms-card-title">Weave design</h3>
+        <p class="ms-card-excerpt">Dobby and layered drafts, warp and weft colour repeats, and a built-in weave library. Jacquard editing is not in this edition.</p>
         <div class="ms-card-footer">
           <span>ReWeave UX Team</span>
           <i class="fa-solid fa-arrow-right"></i>
@@ -75,16 +75,16 @@ permalink: /
       </div>
     </a>
 
-    <a href="{{ '/01-USER-GUIDE' | relative_url }}" class="ms-card" data-category="AI Vision &amp; Analytics" data-title="ai weave recognition: automated pattern capture from fabric photos">
+    <a href="{{ '/store-listing.html' | relative_url }}" class="ms-card" data-category="Developer &amp; Packaging" data-title="microsoft store listing privacy policy and current edition">
       <div class="ms-card-img-wrap">
-        <img src="{{ '/assets/images/image_analyzer_hero.png' | relative_url }}" alt="AI Weave Recognition" loading="lazy" />
+        <img src="{{ '/assets/images/app_icon.png' | relative_url }}" alt="ReWeave app icon" loading="lazy" />
       </div>
       <div class="ms-card-body">
-        <div class="ms-card-date">August 3, 2026</div>
-        <h3 class="ms-card-title">AI Weave Recognition: Photo Pattern Capture</h3>
-        <p class="ms-card-excerpt">Recognize weave structures automatically from fabric photographs using advanced image processing and density estimation.</p>
+        <div class="ms-card-date">November 3, 2026</div>
+        <h3 class="ms-card-title">Store listing and privacy</h3>
+        <p class="ms-card-excerpt">Partner Center copy for this edition, plus the privacy policy and data disclosure the listing must link to.</p>
         <div class="ms-card-footer">
-          <span>ReWeave AI Research</span>
+          <span>ReZephyr</span>
           <i class="fa-solid fa-arrow-right"></i>
         </div>
       </div>
@@ -108,8 +108,8 @@ permalink: /
       </div>
       <div class="ms-card-body">
         <div class="ms-card-date">August 2, 2026</div>
-        <h3 class="ms-card-title">Yarn Materials &amp; Substance 3D PBR Texture Customization</h3>
-        <p class="ms-card-excerpt">Enhance fabric realism with PBR material packs, customizable fiber twist, packing factors, and surface hairiness.</p>
+        <h3 class="ms-card-title">Yarn materials</h3>
+        <p class="ms-card-excerpt">Fiber, twist, and surface settings used by the geometry preview. Substance 3D packs are not part of this edition.</p>
         <div class="ms-card-footer">
           <span>ReWeave Design Team</span>
           <i class="fa-solid fa-arrow-right"></i>
@@ -123,8 +123,8 @@ permalink: /
       </div>
       <div class="ms-card-body">
         <div class="ms-card-date">August 1, 2026</div>
-        <h3 class="ms-card-title">Deploying ReWeave: Native Desktop &amp; MSIX Packaging</h3>
-        <p class="ms-card-excerpt">Built with WinUI 3, .NET 8 self-contained deployment, and single .msixbundle packaging for seamless Windows 10/11 installation.</p>
+        <h3 class="ms-card-title">Windows desktop package</h3>
+        <p class="ms-card-excerpt">WinUI 3 on .NET 10, packaged for Windows 10 and Windows 11 (x86, x64, and ARM64). Microsoft signs the Store build.</p>
         <div class="ms-card-footer">
           <span>ReWeave DevOps</span>
           <i class="fa-solid fa-arrow-right"></i>
@@ -138,8 +138,8 @@ permalink: /
       </div>
       <div class="ms-card-body">
         <div class="ms-card-date">July 28, 2026</div>
-        <h3 class="ms-card-title">Complete Feature Matrix &amp; Engine Capabilities</h3>
-        <p class="ms-card-excerpt">Detailed overview of XPBD sheet drape, Cosserat rod backends, MITC4 FEA solvers, and material parameters.</p>
+        <h3 class="ms-card-title">What this edition includes</h3>
+        <p class="ms-card-excerpt">Design, yarns, geometry, drape, and mechanical tests. Models, Analyzer, Jacquard, and artifact export are outside this Store edition.</p>
         <div class="ms-card-footer">
           <span>ReWeave Product Team</span>
           <i class="fa-solid fa-arrow-right"></i>
