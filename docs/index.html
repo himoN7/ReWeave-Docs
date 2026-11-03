@@ -30,18 +30,26 @@
   </header>
 
   <main>
-    <section class="stage" id="story">
+    <section class="stage is-playing" id="story">
       <div class="stage-copy">
         <p class="kicker" id="kicker">Meet ReWeave</p>
         <h1 id="title">Built to design the cloth</h1>
         <p class="lede" id="lede">Draft the weave, choose the yarn, and see the fabric take shape. ReWeave is in development.</p>
         <p class="more"><a href="00-INDEX.html">Read the guides</a></p>
       </div>
-      <div class="stage-art">
-        <video id="hero-video" hidden muted loop playsinline poster="media/01.jpg">
-          <source src="media/01.mp4" type="video/mp4" />
-        </video>
-        <img id="hero-still" src="media/shots/home.jpg" alt="ReWeave home on a studio desk" />
+      <div class="stage-art" id="stage-art">
+        <img id="still-a" class="is-on" src="media/shots/home.jpg" alt="ReWeave home on a studio desk" />
+        <img id="still-b" alt="" />
+        <video id="hero-video" muted loop playsinline poster="media/01.jpg"></video>
+        <div class="chapters" id="chapters" hidden>
+          <button type="button" aria-pressed="true" data-video="media/01.mp4" data-poster="media/01.jpg">Yarn</button>
+          <button type="button" data-video="media/02.mp4" data-poster="media/02.jpg">Pattern</button>
+          <button type="button" data-video="media/03.mp4" data-poster="media/03.jpg">Analysis</button>
+          <button type="button" data-video="media/04.mp4" data-poster="media/04.jpg">Testing</button>
+          <button type="button" data-video="media/05.mp4" data-poster="media/05.jpg">Drape</button>
+          <button type="button" data-video="media/06.mp4" data-poster="media/06.jpg">Physics</button>
+          <button type="button" data-video="media/07.mp4" data-poster="media/07.jpg">Weave</button>
+        </div>
       </div>
       <div class="picks" id="studio" role="group" aria-label="Studio areas">
         <button type="button" aria-pressed="true" data-still="media/shots/home.jpg" data-kicker="Meet ReWeave" data-title="Built to design the cloth" data-lede="Draft the weave, choose the yarn, and see the fabric take shape. ReWeave is in development.">Home</button>
@@ -55,15 +63,6 @@
         <button type="button" data-still="media/shots/samples.jpg" data-kicker="Studies" data-title="Many cloths, one table" data-lede="Studies of structure, color, and the hand of the yarn.">Studies</button>
         <button type="button" data-still="media/weaver.png" data-kicker="Weaver" data-title="From a brief to a weave" data-lede="A direction for describing cloth in words. What ships is still being decided.">Weaver</button>
         <button type="button" data-video="media/01.mp4" data-poster="media/01.jpg" data-kicker="Story" data-title="A thread, in motion" data-lede="Concept films of yarn, pattern, and drape. They are not the product manual.">Story</button>
-      </div>
-      <div class="chapters" id="chapters" hidden>
-        <button type="button" aria-pressed="true" data-video="media/01.mp4" data-poster="media/01.jpg">Yarn</button>
-        <button type="button" data-video="media/02.mp4" data-poster="media/02.jpg">Pattern</button>
-        <button type="button" data-video="media/03.mp4" data-poster="media/03.jpg">Analysis</button>
-        <button type="button" data-video="media/04.mp4" data-poster="media/04.jpg">Testing</button>
-        <button type="button" data-video="media/05.mp4" data-poster="media/05.jpg">Drape</button>
-        <button type="button" data-video="media/06.mp4" data-poster="media/06.jpg">Physics</button>
-        <button type="button" data-video="media/07.mp4" data-poster="media/07.jpg">Weave</button>
       </div>
     </section>
 
@@ -105,47 +104,84 @@
     </span>
   </footer>
   <script>
+    const stage = document.querySelector(".stage");
+    const copy = document.querySelector(".stage-copy");
     const video = document.getElementById("hero-video");
-    const still = document.getElementById("hero-still");
     const chapters = document.getElementById("chapters");
     const kicker = document.getElementById("kicker");
     const title = document.getElementById("title");
     const lede = document.getElementById("lede");
+    const picks = [...document.querySelectorAll(".picks button")];
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let front = document.getElementById("still-a");
+    let back = document.getElementById("still-b");
+    let timer = 0;
+    let userChose = false;
+    let copyToken = 0;
 
     function showStill(src, alt) {
       video.pause();
-      video.hidden = true;
-      still.hidden = false;
-      still.src = src;
-      still.alt = alt || "";
+      video.classList.remove("is-on");
       chapters.hidden = true;
+      if (front.getAttribute("src") === src) {
+        front.alt = alt || "";
+        front.classList.add("is-on");
+        return;
+      }
+      const incoming = back;
+      let settled = false;
+      const reveal = () => {
+        if (settled) return;
+        settled = true;
+        incoming.onload = null;
+        incoming.alt = alt || "";
+        incoming.classList.add("is-on");
+        front.classList.remove("is-on");
+        back = front;
+        front = incoming;
+      };
+      incoming.onload = reveal;
+      incoming.src = src;
+      if (incoming.complete && incoming.naturalWidth) reveal();
     }
 
     function showVideo(src, poster) {
-      if (reduced) {
-        showStill(poster, title.textContent);
-        chapters.hidden = false;
-        return;
-      }
-      still.hidden = true;
-      video.hidden = false;
+      front.classList.remove("is-on");
+      back.classList.remove("is-on");
       video.poster = poster || "";
-      video.src = src;
+      if (!video.src.endsWith(src)) video.src = src;
+      video.classList.add("is-on");
       chapters.hidden = false;
-      video.play();
+      if (!reduced) video.play();
     }
 
-    document.querySelectorAll(".picks button").forEach((button) => {
-      button.addEventListener("click", () => {
-        document.querySelectorAll(".picks button").forEach((item) => item.setAttribute("aria-pressed", "false"));
-        button.setAttribute("aria-pressed", "true");
+    function applyPick(button, fromUser) {
+      const token = ++copyToken;
+      picks.forEach((item) => item.setAttribute("aria-pressed", "false"));
+      button.setAttribute("aria-pressed", "true");
+      const write = () => {
+        if (token !== copyToken) return;
         kicker.textContent = button.dataset.kicker;
         title.textContent = button.dataset.title;
         lede.textContent = button.dataset.lede;
-        if (button.dataset.video) showVideo(button.dataset.video, button.dataset.poster);
-        else showStill(button.dataset.still, button.dataset.title);
-      });
+        copy.classList.remove("is-out");
+      };
+      if (reduced) write();
+      else {
+        copy.classList.add("is-out");
+        window.setTimeout(write, 160);
+      }
+      if (button.dataset.video) showVideo(button.dataset.video, button.dataset.poster);
+      else showStill(button.dataset.still, button.dataset.title);
+      if (fromUser) {
+        userChose = true;
+        stage.classList.remove("is-playing");
+        window.clearInterval(timer);
+      }
+    }
+
+    picks.forEach((button) => {
+      button.addEventListener("click", () => applyPick(button, true));
     });
 
     chapters.querySelectorAll("button").forEach((button) => {
@@ -155,6 +191,21 @@
         showVideo(button.dataset.video, button.dataset.poster);
       });
     });
+
+    function arm() {
+      window.clearInterval(timer);
+      if (reduced || userChose) return;
+      stage.classList.add("is-playing");
+      timer = window.setInterval(() => {
+        const current = picks.findIndex((button) => button.getAttribute("aria-pressed") === "true");
+        applyPick(picks[(current + 1) % picks.length], false);
+      }, 7000);
+    }
+
+    stage.addEventListener("mouseenter", () => window.clearInterval(timer));
+    stage.addEventListener("mouseleave", arm);
+    stage.addEventListener("focusin", () => window.clearInterval(timer));
+    arm();
   </script>
 </body>
 </html>

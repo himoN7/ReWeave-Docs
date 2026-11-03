@@ -90,18 +90,24 @@ header > a:last-child,
 
 .stage {
   display: grid;
-  grid-template-columns: minmax(340px, 38vw) minmax(0, 1fr);
-  grid-template-rows: 1fr auto auto;
-  min-height: calc(100vh - 54px);
+  grid-template-columns: minmax(320px, 40vw) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: calc(100svh - 54px);
+  min-height: 640px;
+  overflow: hidden;
   background: var(--canvas);
 }
 
 .stage-copy {
   grid-column: 1;
   grid-row: 1;
-  align-self: end;
-  padding: 48px 40px 12px 6vw;
+  align-self: center;
+  max-height: 100%;
+  padding: 32px 40px 24px 6vw;
+  transition: opacity 180ms ease;
 }
+
+.stage-copy.is-out { opacity: 0; }
 
 .kicker,
 .eyebrow {
@@ -110,9 +116,15 @@ header > a:last-child,
   margin-bottom: 12px;
 }
 
+.stage h1 {
+  min-height: 2.2em;
+  font-size: clamp(36px, 3.4vw, 56px);
+}
+
 h1 { font-size: clamp(36px, 3.4vw, 56px); }
 
-.lede {
+.stage .lede {
+  min-height: 4.6em;
   margin-top: 16px;
   max-width: 36ch;
   font-size: 16px;
@@ -133,24 +145,25 @@ h1 { font-size: clamp(36px, 3.4vw, 56px); }
 .stage-art {
   grid-column: 2;
   grid-row: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   min-width: 0;
-  padding: 24px 0 8px;
+  min-height: 0;
 }
 
 .stage-art img,
 .stage-art video {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: calc(100vh - 110px);
+  position: absolute;
+  inset: 12px 12px 12px 0;
+  width: calc(100% - 12px);
+  height: calc(100% - 24px);
   object-fit: contain;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 420ms ease;
 }
 
-.stage-art img[hidden],
-.stage-art video[hidden] { display: none; }
+.stage-art img.is-on,
+.stage-art video.is-on { opacity: 1; }
 
 .picks {
   grid-column: 1 / -1;
@@ -158,19 +171,22 @@ h1 { font-size: clamp(36px, 3.4vw, 56px); }
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding: 8px 6vw 8px;
+  padding: 0 6vw 22px;
 }
 
 .picks button,
 .chapters button {
-  flex: 0 0 auto;
+  position: relative;
+  flex: 1 0 auto;
+  overflow: hidden;
   border: 1px solid transparent;
   background: rgba(255, 255, 255, 0.72);
   border-radius: 8px;
-  padding: 12px 14px;
+  padding: 12px 10px;
   font-size: 14px;
   font-weight: 600;
-  text-align: left;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .picks button[aria-pressed="true"],
@@ -179,13 +195,35 @@ h1 { font-size: clamp(36px, 3.4vw, 56px); }
   background: #fff;
 }
 
+.stage.is-playing .picks button[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: #1a1a1a;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: pick 7s linear;
+}
+
+.stage:hover .picks button[aria-pressed="true"]::after,
+.stage:focus-within .picks button[aria-pressed="true"]::after {
+  animation-play-state: paused;
+}
+
+@keyframes pick { to { transform: scaleX(1); } }
+
 .chapters {
-  grid-column: 1 / -1;
-  grid-row: 3;
+  position: absolute;
+  left: 0;
+  right: 16px;
+  bottom: 8px;
+  z-index: 2;
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
-  padding: 0 6vw 28px;
+  overflow-x: auto;
 }
 
 .chapters[hidden] { display: none; }
@@ -352,31 +390,37 @@ footer a:hover { text-decoration: underline; }
   .band,
   .next { grid-template-columns: 1fr; }
 
-  .stage { min-height: 0; }
-
-  .stage-art {
-    grid-column: 1;
-    grid-row: auto;
-    padding: 16px 16px 0;
-    order: -1;
+  .stage {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
   }
 
   .stage-copy,
   .stage-art,
-  .picks,
-  .chapters {
-    grid-column: 1;
-    grid-row: auto;
+  .picks { grid-column: 1; }
+
+  .stage-art {
+    grid-row: 1;
+    aspect-ratio: 16 / 9;
   }
 
-  .stage-art img,
-  .stage-art video { max-height: none; }
+  .stage-copy { grid-row: 2; }
 
-  .picks { margin-right: 0; padding-right: 16px; }
+  .picks { grid-row: 3; padding-right: 16px; }
+
+  .stage-art img,
+  .stage-art video { inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); }
 
   .next a,
   .next a:first-child { padding: 24px 6vw; border-right: 0; border-bottom: 1px solid var(--line); }
+}
 
-  nav { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .stage-copy,
+  .stage-art img,
+  .stage-art video { transition: none; }
+
+  .stage.is-playing .picks button[aria-pressed="true"]::after { animation: none; }
 }
 
