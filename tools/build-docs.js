@@ -65,7 +65,19 @@ for (const name of files) {
   md = md.replace(/\]\(([^)\s]+)\.md(#[^)\s]*)?\)/g, "]($1.html$2)");
   const heading = md.match(/^#\s+(.+)$/m);
   const title = heading ? heading[1].replace(/[*_`]/g, "") : name.replace(/\.md$/, "");
-  const html = chrome(title, marked.parse(md));
+  const leads = {
+    "00-INDEX.md": ["media/shots/home.jpg", "ReWeave home"],
+    "01-USER-GUIDE.md": ["media/shots/design.jpg", "Design"],
+    "02-GETTING-STARTED.md": ["media/shots/home.jpg", "ReWeave home"],
+    "14-EXPORT-FORMATS.md": ["media/shots/fabric.jpg", "Fabric"],
+    "17-PHYSICS-MODELS.md": ["media/shots/geometry.jpg", "Geometry"],
+  };
+  let body = marked.parse(md);
+  if (leads[name]) {
+    const [src, alt] = leads[name];
+    body = `<figure class="lead-shot"><img class="shot" src="${src}" alt="${alt}" /></figure>\n${body}`;
+  }
+  const html = chrome(title, body);
   const outName = name.replace(/\.md$/, ".html");
   fs.writeFileSync(path.join(outDir, outName), html);
   console.log(outName);

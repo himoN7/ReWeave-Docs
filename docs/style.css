@@ -355,6 +355,10 @@ footer {
 
 .page a { color: var(--blue); }
 
+.lead-shot { margin: 0 0 8px; }
+
+.lead-shot img { border: 1px solid var(--line); }
+
 .page ul, .page ol { padding-left: 18px; }
 
 .page blockquote {
