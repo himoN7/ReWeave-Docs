@@ -1,5 +1,5 @@
-# FabSim-Docs
+# ReWeave public site
 
-This repository hosts the FabSim documentation site with a Fluent-inspired GitHub Pages theme.
+GitHub Pages for this repository is a public product preview only.
 
-The site is built from `main` and deployed automatically via GitHub Actions.
+Manuals, setup steps, architecture notes, and other working documents are not published here. Those files stay in the app repository.
