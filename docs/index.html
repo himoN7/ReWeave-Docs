@@ -1,255 +1,207 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="motion">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ReWeave — Built to design the cloth</title>
-  <meta name="description" content="ReWeave is a studio for weave design, yarns, and fabric simulation. In development from ReZephyr." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600&family=Noto+Sans:wght@400;600&family=Vazirmatn:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="icon" href="assets/images/app_icon.png" />
+  <title>ReWeave — Cloth, in motion</title>
+  <meta name="description" content="ReWeave is a studio for the draft, the yarn, and the fabric they become. In development from ReZephyr. The exploration edition is free." />
+  <meta name="theme-color" content="#f4f6f8" />
+  <link rel="icon" href="media/logo.png" />
   <link rel="stylesheet" href="style.css" />
+  <script>
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.documentElement.classList.remove("motion");
+      document.documentElement.classList.add("reduced");
+    }
+  </script>
 </head>
-<body class="home">
-  <a class="skip" href="#story">Skip to content</a>
-  <header class="overlay" id="topbar">
-    <a class="brand" href="https://rezephyr.ir" rel="noopener">
-      <img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" />
-      ReZephyr
-    </a>
-    <span class="rule" aria-hidden="true"></span>
-    <a class="brand" href="./" aria-label="ReWeave home">
-      <img src="media/logo.png" alt="" width="22" height="22" />
-      ReWeave
-    </a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-i18n="menu">Menu</button>
-    <nav id="site-nav" aria-label="Main navigation">
-      <a href="#story" data-i18n="studio">Studio</a>
-      <a href="#gallery" data-i18n="gallery">Gallery</a>
-      <a href="00-INDEX.html" data-i18n="docs">Docs</a>
-      <a href="support.html" data-i18n="support">Support</a>
+<body>
+  <div class="scroll-rail" id="scroll-rail" aria-hidden="true">
+    <span class="scroll-rail-track"></span>
+    <span class="scroll-rail-draw" id="scroll-stroke"></span>
+    <span class="scroll-rail-head" id="scroll-head"></span>
+  </div>
+  <a class="skip" href="#design">Skip to content</a>
+  <header id="topbar">
+    <a class="brand" href="#top">ReWeave</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" aria-label="Main">
+      <a href="#design">Design</a>
+      <a href="#yarns">Yarns</a>
+      <a href="#geometry">Geometry</a>
+      <a href="#fabric">Fabric</a>
+      <a href="#gallery">Gallery</a>
+      <a href="https://himon7.github.io/ReWeave-Docs/00-INDEX.html">Docs</a>
     </nav>
-    <span class="spacer"></span>
-    <label class="lang">
-      <span class="visually-hidden" data-i18n="language">Language</span>
-      <select id="lang" aria-label="Language">
-        <option value="en">EN</option>
-        <option value="fa">فا</option>
-        <option value="tr">TR</option>
-        <option value="de">DE</option>
-        <option value="zh">中文</option>
-      </select>
-    </label>
-    <a href="privacy-policy.html" data-i18n="privacy">Privacy</a>
   </header>
 
   <main>
-    <section class="hero" id="story">
-      <video id="film-a" class="is-on" autoplay muted loop playsinline poster="media/01.jpg" src="media/01.mp4"></video>
-      <video id="film-b" muted loop playsinline></video>
+    <section class="hero" id="top" aria-label="ReWeave">
+      <div class="hero-media">
+        <video id="film-a" class="is-on" muted loop playsinline preload="auto" poster="media/hero-a.jpg" src="media/01.mp4"></video>
+        <video id="film-b" muted loop playsinline preload="none" poster="media/hero-b.jpg" src="media/07.mp4"></video>
+      </div>
+      <div class="shade" aria-hidden="true"></div>
+      <button id="film-toggle" class="film-toggle" type="button">Play film</button>
       <div class="hero-copy">
-        <p class="kicker" data-i18n="kicker">ReWeave by ReZephyr</p>
-        <h1 data-i18n="heroTitle">Cloth, in motion.</h1>
-        <p data-i18n="heroLede">A studio for the draft, the yarn, and the fabric they become. In development.</p>
-      </div>
-      <div class="films" role="group" aria-label="Concept films">
-        <button type="button" aria-pressed="true" data-video="media/01.mp4" data-poster="media/01.jpg" data-i18n="yarn">Yarn</button>
-        <button type="button" data-video="media/02.mp4" data-poster="media/02.jpg" data-i18n="pattern">Pattern</button>
-        <button type="button" data-video="media/03.mp4" data-poster="media/03.jpg" data-i18n="analysis">Analysis</button>
-        <button type="button" data-video="media/04.mp4" data-poster="media/04.jpg" data-i18n="testing">Testing</button>
-        <button type="button" data-video="media/05.mp4" data-poster="media/05.jpg" data-i18n="drape">Drape</button>
-        <button type="button" data-video="media/06.mp4" data-poster="media/06.jpg" data-i18n="physics">Physics</button>
-        <button type="button" data-video="media/07.mp4" data-poster="media/07.jpg" data-i18n="weave">Weave</button>
+        <p class="kicker">ReWeave by <a href="https://rezephyr.ir">ReZephyr</a></p>
+        <h1>Cloth,<br />in motion.</h1>
+        <p class="lede">A studio for the draft, the yarn, and the fabric they become.</p>
+        <p class="aside">In development. Exploration edition is free.</p>
       </div>
     </section>
 
-    <section class="deck" aria-label="Studio">
-      <article>
-        <img src="media/shots/design.jpg" alt="Design draft on the desk" />
-        <div>
-          <h2 data-i18n="design">Design</h2>
-          <p data-i18n="designBody">Draw the repeat and read it as cloth.</p>
-          <a href="01-USER-GUIDE.html" data-i18n="designLink">Open the guide</a>
+    <article class="chapter" id="design" aria-labelledby="design-title">
+      <div class="chapter-copy">
+        <h2 id="design-title">Design</h2>
+        <p>Draw the repeat and read it as cloth.</p>
+        <a href="https://himon7.github.io/ReWeave-Docs/01-USER-GUIDE.html">Open the guide</a>
+      </div>
+      <div class="frame">
+        <div class="frame-clip">
+          <img src="media/shots/design.jpg" width="2752" height="1536" alt="Design draft on the desk" aria-describedby="cap-design" />
         </div>
-      </article>
-      <article>
-        <img src="media/shots/yarns.jpg" alt="Yarn catalog" />
-        <div>
-          <h2 data-i18n="yarns">Yarns</h2>
-          <p data-i18n="yarnsBody">Warp, weft, and twist, chosen before the cloth is made.</p>
-          <a href="02-GETTING-STARTED.html" data-i18n="yarnsLink">Start here</a>
-        </div>
-      </article>
-      <article>
-        <img src="media/shots/geometry.jpg" alt="Geometry model of a yarn path" />
-        <div>
-          <h2 data-i18n="geometry">Geometry</h2>
-          <p data-i18n="geometryBody">An academic yarn path, shown as a surface you can turn.</p>
-          <a href="17-PHYSICS-MODELS.html" data-i18n="geometryLink">See the models</a>
-        </div>
-      </article>
-      <article>
-        <img src="media/shots/fabric.jpg" alt="Fabric colorway" />
-        <div>
-          <h2 data-i18n="fabric">Fabric</h2>
-          <p data-i18n="fabricBody">The same draft, in a colorway, at the scale of the cloth.</p>
-          <a href="14-EXPORT-FORMATS.html" data-i18n="fabricLink">Export formats</a>
-        </div>
-      </article>
-    </section>
+        <p class="feature" id="cap-design">Draw the weave repeat and read it as cloth.</p>
+      </div>
+    </article>
 
-    <section class="pin" id="gallery">
+    <article class="chapter is-shift" id="yarns" aria-labelledby="yarns-title">
+      <div class="chapter-copy">
+        <h2 id="yarns-title">Yarns</h2>
+        <p>Warp, weft, and twist, chosen before the cloth is made.</p>
+        <a href="https://himon7.github.io/ReWeave-Docs/02-GETTING-STARTED.html">Start here</a>
+      </div>
+      <div class="frame">
+        <div class="frame-clip">
+          <img src="media/shots/yarns.jpg" width="2752" height="1536" alt="Yarn catalog" aria-describedby="cap-yarns" />
+        </div>
+        <p class="feature" id="cap-yarns">Choose warp, weft, and twist before the cloth is made.</p>
+      </div>
+    </article>
+
+    <article class="chapter" id="geometry" aria-labelledby="geometry-title">
+      <div class="chapter-copy">
+        <h2 id="geometry-title">Geometry</h2>
+        <p>An academic yarn path, shown as a surface you can turn.</p>
+        <a href="https://himon7.github.io/ReWeave-Docs/17-PHYSICS-MODELS.html">See the models</a>
+      </div>
+      <div class="frame">
+        <div class="frame-clip">
+          <img src="media/shots/geometry.jpg" width="2752" height="1536" alt="Geometry model of a yarn path" aria-describedby="cap-geometry" />
+        </div>
+        <p class="feature" id="cap-geometry">Turn an academic yarn path as a surface.</p>
+      </div>
+    </article>
+
+    <article class="chapter is-shift" id="fabric" aria-labelledby="fabric-title">
+      <div class="chapter-copy">
+        <h2 id="fabric-title">Fabric</h2>
+        <p>The same draft, in a colorway, at the scale of the cloth.</p>
+        <a href="https://himon7.github.io/ReWeave-Docs/14-EXPORT-FORMATS.html">Export formats</a>
+      </div>
+      <div class="frame">
+        <div class="frame-clip">
+          <img src="media/shots/fabric.jpg" width="2752" height="1536" alt="Fabric colorway" aria-describedby="cap-fabric" />
+        </div>
+        <p class="feature" id="cap-fabric">The same draft in a colorway, at the scale of the cloth.</p>
+      </div>
+    </article>
+
+    <section class="pin" id="gallery" aria-labelledby="gallery-title">
       <div class="pin-sticky">
-        <div class="pin-copy">
-          <h2 data-i18n="galleryTitle">Every view, whole.</h2>
-          <p data-i18n="galleryLede">Scroll and the studio slides past. On a phone, swipe. The pictures stay complete.</p>
+        <div class="pin-head">
+          <h2 id="gallery-title">Every view, whole.</h2>
+          <p>Scroll and the studio slides past. On a phone, swipe. The pictures stay complete.</p>
         </div>
-        <div class="pin-track">
-          <figure><img src="media/shots/home.jpg" alt="ReWeave home" /><figcaption data-i18n="home">Home</figcaption></figure>
-          <figure><img src="media/shots/design-desk.jpg" alt="Design on the desk" /><figcaption data-i18n="desk">Desk</figcaption></figure>
-          <figure><img src="media/shots/simulation.jpg" alt="Fabric simulation" /><figcaption data-i18n="simulation">Simulation</figcaption></figure>
-          <figure><img src="media/shots/tests.jpg" alt="Mechanical tests" /><figcaption data-i18n="tests">Tests</figcaption></figure>
-          <figure><img src="media/shots/samples.jpg" alt="Woven studies" /><figcaption data-i18n="studies">Studies</figcaption></figure>
-          <figure><img src="media/weaver.png" alt="Weaver, from a brief to a weave" /><figcaption>Weaver</figcaption></figure>
-          <figure><img src="media/shots/mark.jpg" alt="ReWeave mark with yarn" /><figcaption data-i18n="mark">Mark</figcaption></figure>
+        <div class="pin-track" id="gallery-track" tabindex="0" aria-label="Gallery">
+          <figure>
+            <div class="frame">
+              <div class="frame-clip">
+                <img src="media/shots/home.jpg" width="2752" height="1536" alt="ReWeave home" aria-describedby="cap-home" />
+              </div>
+              <p class="feature" id="cap-home">Open a ReWeave project from the studio home.</p>
+            </div>
+            <figcaption>Home</figcaption>
+          </figure>
+          <figure>
+            <div class="frame">
+              <div class="frame-clip">
+                <img src="media/shots/design-desk.jpg" width="2752" height="1536" alt="Design on the desk" aria-describedby="cap-desk" />
+              </div>
+              <p class="feature" id="cap-desk">Work the weave repeat on the design desk.</p>
+            </div>
+            <figcaption>Desk</figcaption>
+          </figure>
+          <figure>
+            <div class="frame">
+              <div class="frame-clip">
+                <img src="media/shots/simulation.jpg" width="2752" height="1536" alt="Fabric simulation" aria-describedby="cap-simulation" />
+              </div>
+              <p class="feature" id="cap-simulation">Simulate the cloth from the draft and the yarn.</p>
+            </div>
+            <figcaption>Simulation</figcaption>
+          </figure>
+          <figure>
+            <div class="frame">
+              <div class="frame-clip">
+                <img src="media/shots/tests.jpg" width="2752" height="1536" alt="Mechanical tests" aria-describedby="cap-tests" />
+              </div>
+              <p class="feature" id="cap-tests">Read mechanical tests on the woven cloth.</p>
+            </div>
+            <figcaption>Tests</figcaption>
+          </figure>
+          <figure>
+            <div class="frame">
+              <div class="frame-clip">
+                <img src="media/shots/samples.jpg" width="2752" height="1536" alt="Woven studies" aria-describedby="cap-studies" />
+              </div>
+              <p class="feature" id="cap-studies">Compare woven studies of the same draft.</p>
+            </div>
+            <figcaption>Studies</figcaption>
+          </figure>
+          <figure>
+            <div class="frame">
+              <div class="frame-clip">
+                <img src="media/weaver.png" width="1672" height="941" alt="Weaver, from a brief to a weave" aria-describedby="cap-weaver" />
+              </div>
+              <p class="feature" id="cap-weaver">Weaver turns a short brief into a weave.</p>
+            </div>
+            <figcaption>Weaver</figcaption>
+          </figure>
+          <figure>
+            <div class="frame">
+              <div class="frame-clip">
+                <img src="media/shots/mark.jpg" width="2624" height="1632" alt="ReWeave mark with yarn" aria-describedby="cap-mark" />
+              </div>
+              <p class="feature" id="cap-mark">The ReWeave mark, drawn in yarn.</p>
+            </div>
+            <figcaption>Mark</figcaption>
+          </figure>
         </div>
+        <div class="pin-meter" aria-hidden="true"><span id="gallery-progress"></span></div>
       </div>
     </section>
 
-    <section class="next" aria-label="On this site">
-      <a href="00-INDEX.html"><span data-i18n="docsLabel">Documentation</span><strong data-i18n="nextDocs">Guides for the studio</strong></a>
-      <a href="support.html"><span data-i18n="help">Help</span><strong data-i18n="nextHelp">Support and Store addresses</strong></a>
-      <a href="privacy-policy.html"><span data-i18n="privacy">Privacy</span><strong data-i18n="nextPrivacy">How the app handles information</strong></a>
-      <a href="license.html"><span data-i18n="license">License</span><strong data-i18n="nextLicense">Terms for using ReWeave</strong></a>
+    <section class="close" id="close" aria-labelledby="close-title">
+      <h2 id="close-title">Exploration<br />edition is free.</h2>
+      <p class="close-note">In development.</p>
+      <ul class="close-links">
+        <li><a href="https://himon7.github.io/ReWeave-Docs/00-INDEX.html">Documentation</a></li>
+        <li><a href="https://himon7.github.io/ReWeave-Docs/support.html">Support</a></li>
+        <li><a href="https://himon7.github.io/ReWeave-Docs/privacy-policy.html">Privacy</a></li>
+      </ul>
+      <p class="close-mail"><a href="mailto:himpire@outlook.com">himpire@outlook.com</a></p>
     </section>
   </main>
 
   <footer>
-    <span><span data-i18n="footer">ReWeave by</span> <a href="https://rezephyr.ir">ReZephyr</a></span>
-    <span>
-      <a href="privacy-policy.html" data-i18n="privacy">Privacy</a>
-      <a href="data-disclosure.html" data-i18n="data">Data</a>
-      <a href="support.html" data-i18n="support">Support</a>
-      <a href="license.html" data-i18n="license">License</a>
-    </span>
+    <p>ReWeave by <a href="https://rezephyr.ir">ReZephyr</a></p>
+    <p>
+      <a href="https://himon7.github.io/ReWeave-Docs/00-INDEX.html">Docs</a>
+      <a href="https://himon7.github.io/ReWeave-Docs/support.html">Support</a>
+      <a href="https://himon7.github.io/ReWeave-Docs/privacy-policy.html">Privacy</a>
+    </p>
   </footer>
-  <script>
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const narrow = window.matchMedia("(max-width: 800px)");
-    const bar = document.getElementById("topbar");
-    const toggle = document.querySelector(".nav-toggle");
-    const films = [...document.querySelectorAll(".films button")];
-    let front = document.getElementById("film-a");
-    let back = document.getElementById("film-b");
-    const pin = document.querySelector(".pin");
-    const track = document.querySelector(".pin-track");
-
-    toggle.addEventListener("click", () => {
-      const open = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", open ? "false" : "true");
-      bar.classList.toggle("is-open", !open);
-    });
-    document.getElementById("site-nav").addEventListener("click", (event) => {
-      if (event.target.closest("a")) {
-        toggle.setAttribute("aria-expanded", "false");
-        bar.classList.remove("is-open");
-      }
-    });
-
-    function showFilm(src, poster) {
-      if (front.getAttribute("src") === src) return;
-      const incoming = back;
-      let settled = false;
-      const reveal = () => {
-        if (settled) return;
-        settled = true;
-        incoming.oncanplay = null;
-        incoming.classList.add("is-on");
-        front.classList.remove("is-on");
-        front.pause();
-        back = front;
-        front = incoming;
-        if (!reduced) front.play();
-      };
-      incoming.poster = poster || "";
-      incoming.oncanplay = reveal;
-      incoming.src = src;
-      incoming.load();
-    }
-
-    films.forEach((button) => {
-      button.addEventListener("click", () => {
-        films.forEach((item) => item.setAttribute("aria-pressed", "false"));
-        button.setAttribute("aria-pressed", "true");
-        showFilm(button.dataset.video, button.dataset.poster);
-      });
-    });
-
-    if (reduced) front.removeAttribute("autoplay");
-
-    const cards = document.querySelectorAll(".deck article");
-    if ("IntersectionObserver" in window) {
-      const seen = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-in");
-            seen.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.18 });
-      cards.forEach((card) => seen.observe(card));
-    } else {
-      cards.forEach((card) => card.classList.add("is-in"));
-    }
-
-    function onScroll() {
-      bar.classList.toggle("is-solid", window.scrollY > 24);
-      if (narrow.matches || reduced) {
-        track.style.transform = "";
-        pin.style.height = "";
-        return;
-      }
-      const extra = Math.max(0, track.scrollWidth - window.innerWidth + 48);
-      pin.style.height = (window.innerHeight + extra) + "px";
-      const distance = Math.max(1, pin.offsetHeight - window.innerHeight);
-      const scrolled = Math.min(distance, Math.max(0, window.scrollY - pin.offsetTop));
-      track.style.transform = "translate3d(" + (-(scrolled / distance) * extra) + "px,0,0)";
-    }
-
-    let frame = 0;
-    window.addEventListener("scroll", () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(() => { frame = 0; onScroll(); });
-    }, { passive: true });
-    window.addEventListener("resize", onScroll);
-    narrow.addEventListener("change", onScroll);
-    onScroll();
-
-    const strings = {
-      en: { menu: "Menu", studio: "Studio", gallery: "Gallery", docs: "Docs", docsLabel: "Documentation", support: "Support", privacy: "Privacy", language: "Language", kicker: "ReWeave by ReZephyr", heroTitle: "Cloth, in motion.", heroLede: "A studio for the draft, the yarn, and the fabric they become. In development.", yarn: "Yarn", pattern: "Pattern", analysis: "Analysis", testing: "Testing", drape: "Drape", physics: "Physics", weave: "Weave", design: "Design", designBody: "Draw the repeat and read it as cloth.", designLink: "Open the guide", yarns: "Yarns", yarnsBody: "Warp, weft, and twist, chosen before the cloth is made.", yarnsLink: "Start here", geometry: "Geometry", geometryBody: "An academic yarn path, shown as a surface you can turn.", geometryLink: "See the models", fabric: "Fabric", fabricBody: "The same draft, in a colorway, at the scale of the cloth.", fabricLink: "Export formats", galleryTitle: "Every view, whole.", galleryLede: "Scroll and the studio slides past. On a phone, swipe. The pictures stay complete.", home: "Home", desk: "Desk", simulation: "Simulation", tests: "Tests", studies: "Studies", mark: "Mark", help: "Help", nextDocs: "Guides for the studio", nextHelp: "Support and Store addresses", nextPrivacy: "How the app handles information", license: "License", nextLicense: "Terms for using ReWeave", data: "Data", footer: "ReWeave by" },
-      fa: { menu: "منو", studio: "استودیو", gallery: "گالری", docs: "راهنما", docsLabel: "مستندات", support: "پشتیبانی", privacy: "حریم خصوصی", language: "زبان", kicker: "ReWeave از ReZephyr", heroTitle: "پارچه، در حرکت.", heroLede: "استودیویی برای نقشه بافت، نخ، و پارچه‌ای که از آن‌ها ساخته می‌شود. در حال توسعه.", yarn: "نخ", pattern: "الگو", analysis: "تحلیل", testing: "آزمون", drape: "افتادگی", physics: "فیزیک", weave: "بافت", design: "طراحی", designBody: "تکرار را بکشید و آن را به صورت پارچه بخوانید.", designLink: "باز کردن راهنما", yarns: "نخ‌ها", yarnsBody: "تار، پود و تاب، پیش از ساخته شدن پارچه.", yarnsLink: "از اینجا شروع کنید", geometry: "هندسه", geometryBody: "مسیر دانشگاهی نخ، به صورت سطحی که می‌توانید بچرخانید.", geometryLink: "دیدن مدل‌ها", fabric: "پارچه", fabricBody: "همان نقشه، در یک رنگ‌بندی، در مقیاس پارچه.", fabricLink: "قالب‌های خروجی", galleryTitle: "هر نما، کامل.", galleryLede: "با پیمایش، استودیو کنار می‌رود. در تلفن، بکشید. تصویرها کامل می‌مانند.", home: "خانه", desk: "میز", simulation: "شبیه‌سازی", tests: "آزمون‌ها", studies: "مطالعه‌ها", mark: "نشان", help: "راهنمایی", nextDocs: "راهنمای استودیو", nextHelp: "پشتیبانی و نشانی‌های فروشگاه", nextPrivacy: "نحوه رسیدگی برنامه به اطلاعات", license: "مجوز", nextLicense: "شرایط استفاده از ReWeave", data: "داده‌ها", footer: "ReWeave از" },
-      tr: { menu: "Menü", studio: "Stüdyo", gallery: "Galeri", docs: "Belgeler", docsLabel: "Belgeler", support: "Destek", privacy: "Gizlilik", language: "Dil", kicker: "ReZephyr’den ReWeave", heroTitle: "Kumaş, hareket halinde.", heroLede: "Desen, iplik ve onlardan oluşan kumaş için bir stüdyo. Geliştirme aşamasında.", yarn: "İplik", pattern: "Desen", analysis: "Analiz", testing: "Deneme", drape: "Döküm", physics: "Fizik", weave: "Dokuma", design: "Tasarım", designBody: "Raportu çizin ve onu kumaş olarak okuyun.", designLink: "Kılavuzu aç", yarns: "İplikler", yarnsBody: "Çözgü, atkı ve büküm, kumaş oluşmadan önce.", yarnsLink: "Buradan başlayın", geometry: "Geometri", geometryBody: "Akademik bir iplik yolu, çevirebileceğiniz bir yüzey olarak.", geometryLink: "Modelleri görün", fabric: "Kumaş", fabricBody: "Aynı desen, bir renk düzeninde, kumaş ölçeğinde.", fabricLink: "Dışa aktarma biçimleri", galleryTitle: "Her görünüm, bütün.", galleryLede: "Kaydırın, stüdyo yanınızdan geçsin. Telefonda kaydırın. Görüntüler tam kalır.", home: "Giriş", desk: "Masa", simulation: "Simülasyon", tests: "Denemeler", studies: "Çalışmalar", mark: "İşaret", help: "Yardım", nextDocs: "Stüdyo kılavuzları", nextHelp: "Destek ve Store adresleri", nextPrivacy: "Uygulamanın bilgileri nasıl işlediği", license: "Lisans", nextLicense: "ReWeave kullanım koşulları", data: "Veriler", footer: "ReWeave," },
-      de: { menu: "Menü", studio: "Studio", gallery: "Galerie", docs: "Dokumentation", docsLabel: "Dokumentation", support: "Support", privacy: "Datenschutz", language: "Sprache", kicker: "ReWeave von ReZephyr", heroTitle: "Stoff, in Bewegung.", heroLede: "Ein Studio für die Patrone, das Garn und den Stoff, der daraus wird. In Entwicklung.", yarn: "Garn", pattern: "Muster", analysis: "Analyse", testing: "Prüfung", drape: "Fall", physics: "Physik", weave: "Gewebe", design: "Entwurf", designBody: "Zeichnen Sie den Rapport und lesen Sie ihn als Stoff.", designLink: "Leitfaden öffnen", yarns: "Garne", yarnsBody: "Kette, Schuss und Drehung, bevor der Stoff entsteht.", yarnsLink: "Hier beginnen", geometry: "Geometrie", geometryBody: "Ein akademischer Garnweg, als Fläche, die Sie drehen können.", geometryLink: "Modelle ansehen", fabric: "Stoff", fabricBody: "Dieselbe Patrone, in einer Farbstellung, im Maßstab des Stoffes.", fabricLink: "Exportformate", galleryTitle: "Jede Ansicht, ganz.", galleryLede: "Scrollen Sie, und das Studio gleitet vorbei. Auf dem Telefon wischen. Die Bilder bleiben vollständig.", home: "Start", desk: "Tisch", simulation: "Simulation", tests: "Prüfungen", studies: "Studien", mark: "Zeichen", help: "Hilfe", nextDocs: "Leitfäden für das Studio", nextHelp: "Support und Store-Adressen", nextPrivacy: "Wie die App mit Informationen umgeht", license: "Lizenz", nextLicense: "Bedingungen für ReWeave", data: "Daten", footer: "ReWeave von" },
-      zh: { menu: "菜单", studio: "工作室", gallery: "图库", docs: "文档", docsLabel: "文档", support: "支持", privacy: "隐私", language: "语言", kicker: "ReZephyr 的 ReWeave", heroTitle: "布料，在运动中。", heroLede: "为纹板、纱线以及它们织成的织物而设的工作室。开发中。", yarn: "纱线", pattern: "图案", analysis: "分析", testing: "测试", drape: "悬垂", physics: "物理", weave: "组织", design: "设计", designBody: "绘制循环，并把它读成织物。", designLink: "打开指南", yarns: "纱线", yarnsBody: "经纱、纬纱与捻度，在织物成形之前选定。", yarnsLink: "从这里开始", geometry: "几何", geometryBody: "一条学术纱线路径，呈现为可以转动的表面。", geometryLink: "查看模型", fabric: "织物", fabricBody: "同一张纹板，换一种配色，放到织物的尺度上。", fabricLink: "导出格式", galleryTitle: "每个画面，都完整。", galleryLede: "滚动时工作室从旁边滑过。在手机上滑动。图片保持完整。", home: "主页", desk: "桌面", simulation: "模拟", tests: "测试", studies: "研究", mark: "标志", help: "帮助", nextDocs: "工作室指南", nextHelp: "支持与商店地址", nextPrivacy: "应用如何处理信息", license: "许可", nextLicense: "ReWeave 使用条款", data: "数据", footer: "ReWeave，来自" }
-    };
-    const htmlLang = { en: "en", fa: "fa", tr: "tr", de: "de", zh: "zh-Hans" };
-    const langSelect = document.getElementById("lang");
-
-    function applyLang(code) {
-      const pack = strings[code] || strings.en;
-      document.documentElement.lang = htmlLang[code] || "en";
-      document.documentElement.dir = code === "fa" ? "rtl" : "ltr";
-      document.querySelectorAll("[data-i18n]").forEach((node) => {
-        const value = pack[node.dataset.i18n];
-        if (value) node.textContent = value;
-      });
-      langSelect.value = strings[code] ? code : "en";
-      localStorage.setItem("reweave-lang", langSelect.value);
-    }
-
-    langSelect.addEventListener("change", () => applyLang(langSelect.value));
-    applyLang(localStorage.getItem("reweave-lang") || "en");
-  </script>
+  <script src="main.js"></script>
 </body>
 </html>
