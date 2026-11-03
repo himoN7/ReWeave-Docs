@@ -21,7 +21,8 @@
       ReWeave
     </a>
     <nav aria-label="Main navigation">
-      <a href="#studio">Studio</a>
+      <a href="#story">Studio</a>
+      <a href="#gallery">Gallery</a>
       <a href="00-INDEX.html">Docs</a>
       <a href="support.html">Support</a>
     </nav>
@@ -30,48 +31,89 @@
   </header>
 
   <main>
-    <section class="stage is-playing" id="story">
-      <div class="stage-copy">
-        <p class="kicker" id="kicker">Meet ReWeave</p>
-        <h1 id="title">Built to design the cloth</h1>
-        <p class="lede" id="lede">Draft the weave, choose the yarn, and see the fabric take shape. ReWeave is in development.</p>
-        <p class="more"><a href="00-INDEX.html">Read the guides</a></p>
-      </div>
-      <div class="stage-art" id="stage-art">
-        <img id="still-a" class="is-on" src="media/shots/home.jpg" alt="ReWeave home on a studio desk" />
-        <img id="still-b" alt="" />
-        <video id="hero-video" muted loop playsinline poster="media/01.jpg"></video>
-        <div class="chapters" id="chapters" hidden>
-          <button type="button" aria-pressed="true" data-video="media/01.mp4" data-poster="media/01.jpg">Yarn</button>
-          <button type="button" data-video="media/02.mp4" data-poster="media/02.jpg">Pattern</button>
-          <button type="button" data-video="media/03.mp4" data-poster="media/03.jpg">Analysis</button>
-          <button type="button" data-video="media/04.mp4" data-poster="media/04.jpg">Testing</button>
-          <button type="button" data-video="media/05.mp4" data-poster="media/05.jpg">Drape</button>
-          <button type="button" data-video="media/06.mp4" data-poster="media/06.jpg">Physics</button>
-          <button type="button" data-video="media/07.mp4" data-poster="media/07.jpg">Weave</button>
+    <section class="reel" id="story">
+      <div class="reel-sticky">
+        <div class="meter" aria-hidden="true"><span id="meter"></span></div>
+        <div class="frame" id="frame">
+          <img id="still-a" class="is-on" src="media/shots/home.jpg" alt="ReWeave home on a studio desk" />
+          <img id="still-b" alt="" />
+          <video id="hero-video" muted loop playsinline poster="media/01.jpg"></video>
+          <div class="chapters" id="chapters" hidden>
+            <button type="button" aria-pressed="true" data-video="media/01.mp4" data-poster="media/01.jpg">Yarn</button>
+            <button type="button" data-video="media/02.mp4" data-poster="media/02.jpg">Pattern</button>
+            <button type="button" data-video="media/03.mp4" data-poster="media/03.jpg">Analysis</button>
+            <button type="button" data-video="media/04.mp4" data-poster="media/04.jpg">Testing</button>
+            <button type="button" data-video="media/05.mp4" data-poster="media/05.jpg">Drape</button>
+            <button type="button" data-video="media/06.mp4" data-poster="media/06.jpg">Physics</button>
+            <button type="button" data-video="media/07.mp4" data-poster="media/07.jpg">Weave</button>
+          </div>
         </div>
-      </div>
-      <div class="picks" id="studio" role="group" aria-label="Studio areas">
-        <button type="button" aria-pressed="true" data-still="media/shots/home.jpg" data-kicker="Meet ReWeave" data-title="Built to design the cloth" data-lede="Draft the weave, choose the yarn, and see the fabric take shape. ReWeave is in development.">Home</button>
-        <button type="button" data-still="media/shots/design.jpg" data-kicker="Design" data-title="The draft, on the desk" data-lede="Draw the repeat and read it as cloth.">Design</button>
-        <button type="button" data-still="media/shots/design-desk.jpg" data-kicker="Design" data-title="A repeat you can hold" data-lede="Patterns, palettes, and the draft beside the tools that made them.">Desk</button>
-        <button type="button" data-still="media/shots/yarns.jpg" data-kicker="Yarns" data-title="Yarn, specified" data-lede="Warp, weft, and twist, chosen before the cloth is made.">Yarns</button>
-        <button type="button" data-still="media/shots/geometry.jpg" data-kicker="Geometry" data-title="From the grid to the thread" data-lede="An academic yarn path, shown as a surface you can turn.">Geometry</button>
-        <button type="button" data-still="media/shots/simulation.jpg" data-kicker="Simulation" data-title="The cloth, in color" data-lede="A yarn-interlaced view of the draft you just drew.">Simulation</button>
-        <button type="button" data-still="media/shots/fabric.jpg" data-kicker="Fabric" data-title="Color across the repeat" data-lede="The same draft, in a colorway, at the scale of the cloth.">Fabric</button>
-        <button type="button" data-still="media/shots/tests.jpg" data-kicker="Mechanical tests" data-title="A test for the cloth" data-lede="Load, drape, and the numbers beside the model.">Tests</button>
-        <button type="button" data-still="media/shots/samples.jpg" data-kicker="Studies" data-title="Many cloths, one table" data-lede="Studies of structure, color, and the hand of the yarn.">Studies</button>
-        <button type="button" data-still="media/weaver.png" data-kicker="Weaver" data-title="From a brief to a weave" data-lede="A direction for describing cloth in words. What ships is still being decided.">Weaver</button>
-        <button type="button" data-video="media/01.mp4" data-poster="media/01.jpg" data-kicker="Story" data-title="A thread, in motion" data-lede="Concept films of yarn, pattern, and drape. They are not the product manual.">Story</button>
+        <div class="caption">
+          <p class="kicker" id="kicker">Meet ReWeave</p>
+          <h1 id="title">Built to design the cloth</h1>
+          <p class="lede" id="lede">Draft the weave, choose the yarn, and see the fabric take shape.</p>
+        </div>
+        <div class="dots" role="tablist" aria-label="Studio areas">
+          <button type="button" role="tab" aria-selected="true" data-still="media/shots/home.jpg" data-kicker="Meet ReWeave" data-title="Built to design the cloth" data-lede="Draft the weave, choose the yarn, and see the fabric take shape.">Home</button>
+          <button type="button" role="tab" data-still="media/shots/design.jpg" data-kicker="Design" data-title="The draft, on the desk" data-lede="Draw the repeat and read it as cloth.">Design</button>
+          <button type="button" role="tab" data-still="media/shots/yarns.jpg" data-kicker="Yarns" data-title="Yarn, specified" data-lede="Warp, weft, and twist, chosen before the cloth is made.">Yarns</button>
+          <button type="button" role="tab" data-still="media/shots/geometry.jpg" data-kicker="Geometry" data-title="From the grid to the thread" data-lede="An academic yarn path, shown as a surface you can turn.">Geometry</button>
+          <button type="button" role="tab" data-still="media/shots/fabric.jpg" data-kicker="Fabric" data-title="Color across the repeat" data-lede="The same draft, in a colorway, at the scale of the cloth.">Fabric</button>
+          <button type="button" role="tab" data-still="media/shots/tests.jpg" data-kicker="Tests" data-title="A test for the cloth" data-lede="Load, drape, and the numbers beside the model.">Tests</button>
+          <button type="button" role="tab" data-still="media/weaver.png" data-kicker="Weaver" data-title="From a brief to a weave" data-lede="Describe a cloth in words. What ships is still being decided.">Weaver</button>
+          <button type="button" role="tab" data-video="media/01.mp4" data-poster="media/01.jpg" data-kicker="Story" data-title="A thread, in motion" data-lede="Concept films of yarn, pattern, and drape.">Story</button>
+        </div>
       </div>
     </section>
 
-    <section class="band">
-      <div class="band-copy">
-        <h2>The mark, in yarn</h2>
-        <p>ReWeave is a studio from ReZephyr. The app is in development, and this site is the public preview.</p>
+    <section class="strip" id="gallery">
+      <div class="strip-head">
+        <h2>Every view, in full</h2>
+        <p>Swipe through the studio. Nothing here is cropped.</p>
+        <p class="more"><a href="00-INDEX.html">Read the guides</a></p>
       </div>
-      <img src="media/shots/mark.jpg" alt="ReWeave mark surrounded by yarn and woven samples" />
+      <div class="strip-track" tabindex="0" aria-label="Studio screenshots">
+        <figure>
+          <img src="media/shots/home.jpg" alt="ReWeave home" />
+          <figcaption>Home</figcaption>
+        </figure>
+        <figure>
+          <img src="media/shots/design.jpg" alt="Design draft" />
+          <figcaption>Design</figcaption>
+        </figure>
+        <figure>
+          <img src="media/shots/design-desk.jpg" alt="Design on the desk" />
+          <figcaption>Desk</figcaption>
+        </figure>
+        <figure>
+          <img src="media/shots/simulation.jpg" alt="Fabric simulation" />
+          <figcaption>Simulation</figcaption>
+        </figure>
+        <figure>
+          <img src="media/shots/fabric.jpg" alt="Fabric colorway" />
+          <figcaption>Fabric</figcaption>
+        </figure>
+        <figure>
+          <img src="media/shots/yarns.jpg" alt="Yarn catalog" />
+          <figcaption>Yarns</figcaption>
+        </figure>
+        <figure>
+          <img src="media/shots/geometry.jpg" alt="Geometry model" />
+          <figcaption>Geometry</figcaption>
+        </figure>
+        <figure>
+          <img src="media/shots/tests.jpg" alt="Mechanical tests" />
+          <figcaption>Tests</figcaption>
+        </figure>
+        <figure>
+          <img src="media/shots/samples.jpg" alt="Woven studies" />
+          <figcaption>Studies</figcaption>
+        </figure>
+        <figure>
+          <img src="media/shots/mark.jpg" alt="ReWeave mark with yarn" />
+          <figcaption>Mark</figcaption>
+        </figure>
+      </div>
     </section>
 
     <section class="next" aria-label="On this site">
@@ -104,20 +146,27 @@
     </span>
   </footer>
   <script>
-    const stage = document.querySelector(".stage");
-    const copy = document.querySelector(".stage-copy");
+    const reel = document.querySelector(".reel");
+    const sticky = document.querySelector(".reel-sticky");
+    const scenes = [...document.querySelectorAll(".dots button")];
     const video = document.getElementById("hero-video");
     const chapters = document.getElementById("chapters");
+    const meter = document.getElementById("meter");
     const kicker = document.getElementById("kicker");
     const title = document.getElementById("title");
     const lede = document.getElementById("lede");
-    const picks = [...document.querySelectorAll(".picks button")];
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let front = document.getElementById("still-a");
     let back = document.getElementById("still-b");
-    let timer = 0;
-    let userChose = false;
-    let copyToken = 0;
+    let current = 0;
+    let lock = false;
+
+    reel.style.setProperty("--steps", scenes.length);
+    scenes.forEach((scene) => {
+      if (!scene.dataset.still) return;
+      const image = new Image();
+      image.src = scene.dataset.still;
+    });
 
     function showStill(src, alt) {
       video.pause();
@@ -155,33 +204,41 @@
       if (!reduced) video.play();
     }
 
-    function applyPick(button, fromUser) {
-      const token = ++copyToken;
-      picks.forEach((item) => item.setAttribute("aria-pressed", "false"));
-      button.setAttribute("aria-pressed", "true");
-      const write = () => {
-        if (token !== copyToken) return;
-        kicker.textContent = button.dataset.kicker;
-        title.textContent = button.dataset.title;
-        lede.textContent = button.dataset.lede;
-        copy.classList.remove("is-out");
-      };
-      if (reduced) write();
-      else {
-        copy.classList.add("is-out");
-        window.setTimeout(write, 160);
-      }
-      if (button.dataset.video) showVideo(button.dataset.video, button.dataset.poster);
-      else showStill(button.dataset.still, button.dataset.title);
-      if (fromUser) {
-        userChose = true;
-        stage.classList.remove("is-playing");
-        window.clearInterval(timer);
+    function show(index) {
+      const scene = scenes[index];
+      if (!scene) return;
+      current = index;
+      scenes.forEach((item, i) => item.setAttribute("aria-selected", i === index ? "true" : "false"));
+      kicker.textContent = scene.dataset.kicker;
+      title.textContent = scene.dataset.title;
+      lede.textContent = scene.dataset.lede;
+      if (scene.dataset.video) showVideo(scene.dataset.video, scene.dataset.poster);
+      else showStill(scene.dataset.still, scene.dataset.title);
+      const rail = scene.parentElement;
+      const edge = scene.offsetLeft - 24;
+      if (edge < rail.scrollLeft || edge + scene.offsetWidth > rail.scrollLeft + rail.clientWidth) {
+        rail.scrollTo({ left: edge, behavior: reduced ? "auto" : "smooth" });
       }
     }
 
-    picks.forEach((button) => {
-      button.addEventListener("click", () => applyPick(button, true));
+    function place() {
+      const distance = Math.max(1, reel.offsetHeight - sticky.offsetHeight);
+      const scrolled = Math.min(distance, Math.max(0, window.scrollY - reel.offsetTop));
+      const t = scrolled / distance;
+      meter.style.transform = "scaleX(" + t + ")";
+      const index = Math.min(scenes.length - 1, Math.floor(t * scenes.length));
+      if (!lock && index !== current) show(index);
+    }
+
+    scenes.forEach((scene, index) => {
+      scene.addEventListener("click", () => {
+        const distance = Math.max(1, reel.offsetHeight - sticky.offsetHeight);
+        const top = reel.offsetTop + (index / scenes.length) * distance + 1;
+        lock = true;
+        show(index);
+        window.scrollTo({ top, behavior: reduced ? "auto" : "smooth" });
+        window.setTimeout(() => { lock = false; place(); }, reduced ? 0 : 700);
+      });
     });
 
     chapters.querySelectorAll("button").forEach((button) => {
@@ -192,20 +249,13 @@
       });
     });
 
-    function arm() {
-      window.clearInterval(timer);
-      if (reduced || userChose) return;
-      stage.classList.add("is-playing");
-      timer = window.setInterval(() => {
-        const current = picks.findIndex((button) => button.getAttribute("aria-pressed") === "true");
-        applyPick(picks[(current + 1) % picks.length], false);
-      }, 7000);
-    }
-
-    stage.addEventListener("mouseenter", () => window.clearInterval(timer));
-    stage.addEventListener("mouseleave", arm);
-    stage.addEventListener("focusin", () => window.clearInterval(timer));
-    arm();
+    let frame = 0;
+    window.addEventListener("scroll", () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => { frame = 0; place(); });
+    }, { passive: true });
+    window.addEventListener("resize", place);
+    place();
   </script>
 </body>
 </html>
