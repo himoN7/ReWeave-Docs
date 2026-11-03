@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>06-API-REFERENCE · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<p>﻿# API Reference</p>
+<p>Detailed reference for key services, models, and components.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#service-apis">Service APIs</a></li>
+<li><a href="#model-apis">Model APIs</a></li>
+<li><a href="#viewmodel-apis">ViewModel APIs</a></li>
+<li><a href="#control-apis">Control APIs</a></li>
+<li><a href="#helper-apis">Helper APIs</a></li>
+</ol>
+<h2>Service APIs</h2>
+<h3>FabricPhysicsSimulationService</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Services</code></p>
+<pre><code class="language-csharp">public interface IFabricPhysicsSimulationService
+{
+    Task&lt;SimulationResult&gt; RunSimulationAsync(
+        FabricSimulationSpec spec,
+        SimulationOptions options,
+        CancellationToken cancellationToken = default);
+    
+    void CancelRunningSimulation();
+    
+    bool IsSimulationRunning { get; }
+}
+
+public class FabricPhysicsSimulationService : IFabricPhysicsSimulationService
+{
+    // Implementation
+}
+</code></pre>
+<p><strong>Usage Example:</strong></p>
+<pre><code class="language-csharp">var service = new FabricPhysicsSimulationService();
+var spec = new FabricSimulationSpec { /* ... */ };
+var result = await service.RunSimulationAsync(spec, new SimulationOptions());
+</code></pre>
+<p><strong>Key Methods:</strong></p>
+<ul>
+<li><code>RunSimulationAsync()</code> — Execute fabric simulation</li>
+<li><code>CancelRunningSimulation()</code> — Stop active simulation</li>
+<li><code>IsSimulationRunning</code> — Check if simulation in progress</li>
+</ul>
+<hr>
+<h3>AppProjectCoordinator</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Services</code></p>
+<p>Orchestrates project lifecycle operations.</p>
+<pre><code class="language-csharp">public class AppProjectCoordinator
+{
+    public Task&lt;AppProjectDocument?&gt; CreateNewProjectAsync(
+        AppProjectType type,
+        CancellationToken cancellationToken = default);
+    
+    public Task&lt;AppProjectDocument?&gt; OpenProjectAsync(
+        string filePath,
+        CancellationToken cancellationToken = default);
+    
+    public Task&lt;bool&gt; SaveProjectAsync(
+        AppProjectDocument project,
+        CancellationToken cancellationToken = default);
+    
+    public Task&lt;bool&gt; DeleteProjectAsync(
+        string projectId,
+        CancellationToken cancellationToken = default);
+    
+    public IAsyncEnumerable&lt;AppProjectSummary&gt; GetRecentProjectsAsync(
+        int limit = 10);
+    
+    public Task ExportProjectAsync(
+        AppProjectDocument project,
+        string outputPath,
+        string format = &quot;json&quot;);
+}
+</code></pre>
+<p><strong>Usage Example:</strong></p>
+<pre><code class="language-csharp">var coordinator = new AppProjectCoordinator();
+var project = await coordinator.CreateNewProjectAsync(AppProjectType.FabricSimulation);
+await coordinator.SaveProjectAsync(project);
+</code></pre>
+<hr>
+<h3>ModelBuilderAiAssistCoordinator</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Services</code></p>
+<p>Manages AI-assisted equation generation.</p>
+<pre><code class="language-csharp">public class ModelBuilderAiAssistCoordinator
+{
+    public Task&lt;IEnumerable&lt;string&gt;&gt; SuggestEquationsAsync(
+        ModelBuilderContext context,
+        string userPrompt);
+    
+    public Task&lt;EquationExplanation&gt; ExplainEquationAsync(
+        string equation);
+    
+    public Task&lt;ValidationResult&gt; ValidateEquationAsync(
+        string equation,
+        IEnumerable&lt;string&gt; variables);
+    
+    public Task&lt;ParameterRange&gt; SuggestParameterRangeAsync(
+        string paramName);
+}
+</code></pre>
+<p><strong>Usage Example:</strong></p>
+<pre><code class="language-csharp">var coordinator = new ModelBuilderAiAssistCoordinator();
+var suggestions = await coordinator.SuggestEquationsAsync(
+    context,
+    &quot;Generate equation for yarn crimp factor&quot;);
+</code></pre>
+<hr>
+<h3>FabricImagePaletteExtractor</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Services</code></p>
+<p>Extracts color palettes from images.</p>
+<pre><code class="language-csharp">public class FabricImagePaletteExtractor
+{
+    public async Task&lt;ColorPalette&gt; ExtractPaletteAsync(
+        string imagePath,
+        int colorCount = 5);
+    
+    public ColorPalette OptimizePalette(
+        ColorPalette palette,
+        double saturationBoost = 1.2);
+}
+</code></pre>
+<p><strong>Usage Example:</strong></p>
+<pre><code class="language-csharp">var extractor = new FabricImagePaletteExtractor();
+var palette = await extractor.ExtractPaletteAsync(&quot;fabric-image.jpg&quot;, 8);
+</code></pre>
+<hr>
+<h3>AppSettingsService</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Services</code></p>
+<p>Application preferences and settings.</p>
+<pre><code class="language-csharp">public class AppSettingsService
+{
+    public static AppSettingsService Current { get; }
+    
+    // Properties
+    public ApplicationTheme CurrentTheme { get; set; }
+    public double UIFontSize { get; set; }
+    public bool UseMicaBackdrop { get; set; }
+    public TimeSpan AutosaveInterval { get; set; }
+    public int PhysicsSolverType { get; set; }
+    
+    public void Load();
+    public void Save();
+    
+    public event EventHandler? SettingsChanged;
+}
+</code></pre>
+<p><strong>Usage Example:</strong></p>
+<pre><code class="language-csharp">var settings = AppSettingsService.Current;
+settings.CurrentTheme = ApplicationTheme.Dark;
+settings.AutosaveInterval = TimeSpan.FromMinutes(5);
+settings.Save();
+</code></pre>
+<hr>
+<h3>FabricPhysicsValidationSuite</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Services</code></p>
+<p>Validates fabric specifications and physics parameters.</p>
+<pre><code class="language-csharp">public class FabricPhysicsValidationSuite
+{
+    public ValidationResult ValidateSpec(FabricSimulationSpec spec);
+    public ValidationResult ValidateYarnProperties(YarnSpecification yarn);
+    public ValidationResult ValidateGeometryParams(FabricGeometryParams @params);
+    public ValidationResult ValidateThreadDensity(double endsPerCm, double picksPerCm);
+}
+</code></pre>
+<p><strong>Usage Example:</strong></p>
+<pre><code class="language-csharp">var validator = new FabricPhysicsValidationSuite();
+var result = validator.ValidateSpec(fabricSpec);
+if (!result.IsValid)
+{
+    foreach (var error in result.Errors)
+        Console.WriteLine(error);
+}
+</code></pre>
+<hr>
+<h2>Model APIs</h2>
+<h3>FabricSimulationSpec</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Models</code></p>
+<p>Complete fabric specification for simulation.</p>
+<pre><code class="language-csharp">public class FabricSimulationSpec
+{
+    public WeavePatternData? WeavePattern { get; set; }
+    public FabricGeometryParams? GeometryParams { get; set; }
+    public YarnSpecification[]? Yarns { get; set; }
+    public FiberMaterialProfile[]? Materials { get; set; }
+    public SimulationOptions? Options { get; set; }
+}
+</code></pre>
+<p><strong>Properties:</strong></p>
+<ul>
+<li><code>WeavePattern</code> — 2D interlacing pattern definition</li>
+<li><code>GeometryParams</code> — 3D geometry configuration</li>
+<li><code>Yarns</code> — Yarn specifications (one per yarn system)</li>
+<li><code>Materials</code> — Fiber material properties</li>
+<li><code>Options</code> — Simulation solver options</li>
+</ul>
+<hr>
+<h3>YarnSpecification</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Models</code></p>
+<p>Defines yarn physical properties.</p>
+<pre><code class="language-csharp">public class YarnSpecification
+{
+    public string? Name { get; set; }
+    public double Denier { get; set; }
+    public double LinearDensity { get; set; }
+    public YarnCrossSectionKind CrossSection { get; set; }
+    public double FiberRoughness { get; set; }
+    public Color ColorRgb { get; set; }
+}
+
+public enum YarnCrossSectionKind
+{
+    Round,
+    Oval,
+    Ribbon,
+    Rectangular
+}
+</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code class="language-csharp">var yarn = new YarnSpecification
+{
+    Name = &quot;Warp Yarn&quot;,
+    Denier = 150,
+    LinearDensity = 0.85,
+    CrossSection = YarnCrossSectionKind.Round,
+    FiberRoughness = 0.15
+};
+</code></pre>
+<hr>
+<h3>FabricGeometryParams</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Models</code></p>
+<p>Fabric geometry and deformation parameters.</p>
+<pre><code class="language-csharp">public class FabricGeometryParams
+{
+    public double EndsPerCm { get; set; }
+    public double PicksPerCm { get; set; }
+    public string? YarnPathModel { get; set; }
+    public double CrimpFactor { get; set; }
+    public double WarpYarnThickness { get; set; }
+    public double WeftYarnThickness { get; set; }
+}
+</code></pre>
+<p><strong>Yarn Path Models:</strong></p>
+<ul>
+<li><code>&quot;Peirce&quot;</code> — Classical geometric</li>
+<li><code>&quot;Kemp&quot;</code> — Semi-empirical</li>
+<li><code>&quot;Fourier&quot;</code> — Harmonic</li>
+<li><code>&quot;Bézier&quot;</code> — Smooth interpolation</li>
+<li><code>&quot;Backer&quot;</code> — Wave-based</li>
+<li><code>&quot;Olofsson&quot;</code> — Parametric</li>
+</ul>
+<hr>
+<h3>AppProjectDocument</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Models</code></p>
+<p>Project file structure.</p>
+<pre><code class="language-csharp">public class AppProjectDocument
+{
+    public string? ProjectId { get; set; }
+    public AppProjectType Type { get; set; }
+    public string? Name { get; set; }
+    public DateTime Created { get; set; }
+    public DateTime LastModified { get; set; }
+    public FabricSimulationSpec? FabricSpec { get; set; }
+    public Dictionary&lt;string, object&gt;? Metadata { get; set; }
+}
+
+public enum AppProjectType
+{
+    FabricSimulation,
+    GeometryModel,
+    ColorPalette,
+    WeaveLbrary
+}
+</code></pre>
+<hr>
+<h3>SimulationResult</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Models</code></p>
+<p>Output from physics simulation.</p>
+<pre><code class="language-csharp">public class SimulationResult
+{
+    public Vector3[] VertexPositions { get; set; }
+    public int[] TriangleIndices { get; set; }
+    public double[] StressData { get; set; }
+    public double[] StrainData { get; set; }
+    public FabricProperties Properties { get; set; }
+    public bool IsConverged { get; set; }
+    public TimeSpan ComputationTime { get; set; }
+}
+
+public class FabricProperties
+{
+    public double Thickness { get; set; }
+    public double Porosity { get; set; }
+    public double CoverageFactor { get; set; }
+    public double AirPermeability { get; set; }
+}
+</code></pre>
+<hr>
+<h2>ViewModel APIs</h2>
+<h3>MainViewModel</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.ViewModels</code></p>
+<p>Application-level view model.</p>
+<pre><code class="language-csharp">public partial class MainViewModel : ObservableObject
+{
+    [ObservableProperty]
+    private object? currentPage;
+    
+    [ObservableProperty]
+    private bool isLoading;
+    
+    [RelayCommand]
+    public async Task NavigateToPageAsync(string pageName);
+    
+    [RelayCommand]
+    public async Task OpenProjectAsync(string filePath);
+    
+    [RelayCommand]
+    public async Task SaveProjectAsync();
+    
+    [RelayCommand]
+    public async Task ExportProjectAsync(string format);
+}
+</code></pre>
+<hr>
+<h3>WeaveDesignViewModel</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.ViewModels</code></p>
+<p>Weave pattern editing.</p>
+<pre><code class="language-csharp">public partial class WeaveDesignViewModel : ObservableObject
+{
+    [ObservableProperty]
+    private WeavePatternData? currentWeave;
+    
+    [ObservableProperty]
+    private int gridWidth;
+    
+    [ObservableProperty]
+    private int gridHeight;
+    
+    [RelayCommand]
+    public void ToggleCell(int row, int col);
+    
+    [RelayCommand]
+    public async Task LoadPatternAsync(string patternName);
+    
+    [RelayCommand]
+    public async Task SavePatternAsync(string fileName);
+}
+</code></pre>
+<hr>
+<h3>SimulationViewModel</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.ViewModels</code></p>
+<p>3D simulation control and visualization.</p>
+<pre><code class="language-csharp">public partial class SimulationViewModel : ObservableObject
+{
+    [ObservableProperty]
+    private SimulationResult? simulationResult;
+    
+    [ObservableProperty]
+    private bool isSimulationRunning;
+    
+    [RelayCommand]
+    public async Task RunSimulationAsync();
+    
+    [RelayCommand]
+    public void CancelSimulation();
+    
+    [RelayCommand]
+    public async Task ExportGeometryAsync(string format);
+    
+    // Camera methods
+    [RelayCommand]
+    public void RotateCamera(double deltaX, double deltaY);
+    
+    [RelayCommand]
+    public void ZoomCamera(double factor);
+}
+</code></pre>
+<hr>
+<h2>Control APIs</h2>
+<h3>FabricPhysicsCanvas2D</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Controls</code></p>
+<p>2D yarn visualization control.</p>
+<pre><code class="language-csharp">public class FabricPhysicsCanvas2D : Control
+{
+    public FabricSimulationSpec FabricSpec { get; set; }
+    public SimulationResult? SimulationResult { get; set; }
+    public double ZoomLevel { get; set; }
+    
+    public void Pan(double deltaX, double deltaY);
+    public void ZoomTo(double level);
+    public void ResetView();
+    
+    public event EventHandler&lt;Point&gt;? CellClicked;
+    public event EventHandler? ViewChanged;
+}
+</code></pre>
+<hr>
+<h3>FabricPhysicsCanvas3D</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Controls</code></p>
+<p>3D fabric geometry visualization.</p>
+<pre><code class="language-csharp">public class FabricPhysicsCanvas3D : Control
+{
+    public SimulationResult? Geometry { get; set; }
+    public Camera Camera { get; set; }
+    public double[] StressVisualization { get; set; }
+    public bool ShowWireframe { get; set; }
+    public bool ShowStressMaps { get; set; }
+    
+    public void ResetCamera();
+    public void FitToView();
+    
+    public event EventHandler&lt;Point&gt;? MousePressed;
+    public event EventHandler&lt;Point&gt;? MouseMoved;
+}
+</code></pre>
+<hr>
+<h3>InteractiveWeaveGrid</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Controls</code></p>
+<p>Interactive weave pattern editor.</p>
+<pre><code class="language-csharp">public class InteractiveWeaveGrid : Control
+{
+    public WeavePatternData? Pattern { get; set; }
+    public int CellSize { get; set; }
+    public bool AllowEditing { get; set; }
+    
+    public void SelectCell(int row, int col);
+    public void SelectRange(int startRow, int startCol, int endRow, int endCol);
+    public void ClearSelection();
+    
+    public event EventHandler&lt;WeaveGridCell&gt;? CellChanged;
+}
+</code></pre>
+<hr>
+<h2>Helper APIs</h2>
+<h3>ColorHelper</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Helpers</code></p>
+<p>Color utilities and conversions.</p>
+<pre><code class="language-csharp">public static class ColorHelper
+{
+    public static Color HexToColor(string hexString);
+    public static string ColorToHex(Color color);
+    public static Color LerpColor(Color a, Color b, double t);
+    public static double GetLuminance(Color color);
+    public static Color GetContrastingColor(Color background);
+}
+</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code class="language-csharp">var color = ColorHelper.HexToColor(&quot;#FF5733&quot;);
+var hex = ColorHelper.ColorToHex(color);
+var contrast = ColorHelper.GetContrastingColor(color);
+</code></pre>
+<hr>
+<h3>GeometryHelper</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Helpers</code></p>
+<p>3D geometry utilities.</p>
+<pre><code class="language-csharp">public static class GeometryHelper
+{
+    public static Vector3[] CalculateNormals(Vector3[] vertices, int[] indices);
+    public static Bounds CalculateBounds(Vector3[] vertices);
+    public static double CalculateDistance(Vector3 a, Vector3 b);
+    public static Vector3 Interpolate(Vector3 a, Vector3 b, double t);
+}
+</code></pre>
+<hr>
+<h3>SerializationHelper</h3>
+<p><strong>Namespace:</strong> <code>WinUi_ReWeave.Helpers</code></p>
+<p>JSON serialization utilities.</p>
+<pre><code class="language-csharp">public static class SerializationHelper
+{
+    public static string ToJson&lt;T&gt;(T obj, bool indent = false);
+    public static T? FromJson&lt;T&gt;(string json);
+    public static byte[] ToBytes&lt;T&gt;(T obj);
+    public static T? FromBytes&lt;T&gt;(byte[] data);
+}
+</code></pre>
+<hr>
+<h2>Extension Methods</h2>
+<h3>ObservableObjectExtensions</h3>
+<pre><code class="language-csharp">public static class ObservableObjectExtensions
+{
+    public static void SetIfChanged&lt;T&gt;(
+        this ObservableObject obj,
+        ref T field,
+        T value,
+        string propertyName);
+}
+</code></pre>
+<hr>
+<h2>Enums &amp; Contracts</h2>
+<h3>FabricPhysicsSolverMode</h3>
+<pre><code class="language-csharp">public enum FabricPhysicsSolverMode
+{
+    ParticleSystem,
+    FiniteElementAnalysis,
+    Hybrid
+}
+</code></pre>
+<h3>SimulationOptions</h3>
+<pre><code class="language-csharp">public class SimulationOptions
+{
+    public FabricPhysicsSolverMode SolverMode { get; set; }
+    public double TimeStep { get; set; }
+    public double ConvergenceTolerance { get; set; }
+    public int MaxIterations { get; set; }
+    public bool UseCuda { get; set; }
+}
+</code></pre>
+<hr>
+<h2>Common Usage Patterns</h2>
+<h3>Running a Simulation</h3>
+<pre><code class="language-csharp">// Create specification
+var spec = new FabricSimulationSpec
+{
+    WeavePattern = CreatePlainWeave(8, 8),
+    GeometryParams = new FabricGeometryParams
+    {
+        EndsPerCm = 20,
+        PicksPerCm = 20,
+        YarnPathModel = &quot;Peirce&quot;
+    },
+    Yarns = new[] { CreateCottonYarn() }
+};
+
+// Run simulation
+var service = new FabricPhysicsSimulationService();
+var result = await service.RunSimulationAsync(
+    spec,
+    new SimulationOptions { SolverMode = FabricPhysicsSolverMode.ParticleSystem }
+);
+
+// Use results
+if (result.IsConverged)
+{
+    var geometry = (result.VertexPositions, result.TriangleIndices);
+    var properties = result.Properties;
+}
+</code></pre>
+<hr>
+<p><strong>See Also:</strong> <a href="03-DEVELOPER-GUIDE.html">Developer Guide</a>, <a href="04-ARCHITECTURE.html">Architecture</a></p>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

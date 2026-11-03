@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Liftplan for 8-harness loom · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<p>﻿# Complete Export Formats Guide</p>
+<p><strong>Version:</strong> 0.4.0<br><strong>Last Updated:</strong> July 2026<br><strong>Audience:</strong> Users, CAD Engineers, Production Teams, Developers</p>
+<hr>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#3d-mesh-formats">3D Mesh Formats</a></li>
+<li><a href="#feaanalysis-formats">FEA/Analysis Formats</a></li>
+<li><a href="#loopmachine-formats">Loom/Machine Formats</a></li>
+<li><a href="#vector-graphics-formats">Vector Graphics Formats</a></li>
+<li><a href="#raster-image-formats">Raster Image Formats</a></li>
+<li><a href="#data-export-formats">Data Export Formats</a></li>
+<li><a href="#import-formats">Import Formats</a></li>
+<li><a href="#format-selection-guide">Format Selection Guide</a></li>
+<li><a href="#batch-export">Batch Export</a></li>
+<li><a href="#troubleshooting-export">Troubleshooting Export</a></li>
+</ol>
+<hr>
+<h2>Overview</h2>
+<h3>Export Architecture</h3>
+<pre><code>ReWeave Data
+    ↓
+[Format-Specific Exporter Service]
+    ↓
+[Geometry Builder / Data Serializer]
+    ↓
+[File Writer]
+    ↓
+Output File (.obj, .stl, .wif, etc.)
+</code></pre>
+<h3>Available Export Formats (14+)</h3>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Type</th>
+<th>File Extension</th>
+<th>Best For</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>OBJ</strong></td>
+<td>3D Mesh</td>
+<td><code>.obj</code> + <code>.mtl</code></td>
+<td>3D visualization, CAD</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>STL</strong></td>
+<td>3D Mesh</td>
+<td><code>.stl</code></td>
+<td>3D printing prep</td>
+<td>Large</td>
+</tr>
+<tr>
+<td><strong>3MF</strong></td>
+<td>3D Mesh</td>
+<td><code>.3mf</code></td>
+<td>3D printing submission</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>Abaqus INP</strong></td>
+<td>FEA</td>
+<td><code>.inp</code></td>
+<td>Finite element analysis</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>COMSOL</strong></td>
+<td>FEA</td>
+<td><code>.txt</code></td>
+<td>COMSOL simulation</td>
+<td>Small</td>
+</tr>
+<tr>
+<td><strong>SVG</strong></td>
+<td>Vector</td>
+<td><code>.svg</code></td>
+<td>Web use, design tools</td>
+<td>Small</td>
+</tr>
+<tr>
+<td><strong>DXF</strong></td>
+<td>Vector</td>
+<td><code>.dxf</code></td>
+<td>AutoCAD, CAM</td>
+<td>Small</td>
+</tr>
+<tr>
+<td><strong>WIF</strong></td>
+<td>Loom</td>
+<td><code>.wif</code></td>
+<td>Weaving machine</td>
+<td>Tiny</td>
+</tr>
+<tr>
+<td><strong>CSV Liftplan</strong></td>
+<td>Loom</td>
+<td><code>.csv</code></td>
+<td>Loom control software</td>
+<td>Tiny</td>
+</tr>
+<tr>
+<td><strong>FABJC</strong></td>
+<td>Jacquard</td>
+<td><code>.jc5</code>, <code>.jc6</code>, <code>.jc7</code></td>
+<td>Jacquard machines</td>
+<td>Tiny</td>
+</tr>
+<tr>
+<td><strong>PNG</strong></td>
+<td>Raster</td>
+<td><code>.png</code></td>
+<td>Screenshots, documentation</td>
+<td>Variable</td>
+</tr>
+<tr>
+<td><strong>Analysis CSV</strong></td>
+<td>Data</td>
+<td><code>.csv</code></td>
+<td>Spreadsheet analysis</td>
+<td>Small</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>3D Mesh Formats</h2>
+<h3>OBJ Format</h3>
+<h4><strong>What is OBJ?</strong></h4>
+<pre><code>- Wavefront OBJ format (widely supported)
+- Plain text (human-readable)
+- Paired with .mtl material file
+- Standard for 3D visualization
+- No proprietary licensing
+</code></pre>
+<h4><strong>OBJ File Structure</strong></h4>
+<pre><code>obj_file.obj (geometry)
+├── Vertices (v x y z)
+├── Texture coordinates (vt u v)
+├── Normals (vn x y z)
+└── Faces (f references to v/vt/vn)
+
+obj_file.mtl (materials)
+├── Material name
+├── Color (Kd r g b)
+├── Specularity (Ks r g b)
+├── Shininess (Ns value)
+└── Texture maps (map_Kd filename)
+</code></pre>
+<h4><strong>Export Settings</strong></h4>
+<pre><code>1. File → Export → OBJ
+2. Configuration:
+   - Output Scale: mm / cm / m / inches
+   - Include Colors: Yes/No
+   - Include Materials: Yes/No
+   - Optimize Mesh: Yes/No (reduce vertex count)
+   - Material Library: Separate .mtl file
+
+3. Output:
+   - model.obj (vertex/face data)
+   - model.mtl (material definitions)
+   - model_textures/ (folder with PBR maps if applicable)
+</code></pre>
+<h4><strong>OBJ Quality Settings</strong></h4>
+<pre><code>Normal Detail: 
+- Low: 50k polygons, fast loading
+- Medium: 200k polygons, balanced
+- High: 500k+ polygons, very detailed
+
+Texture Resolution:
+- 512×512: Web suitable
+- 1024×1024: High detail
+- 2048×2048: Professional quality
+
+Optimization:
+- Weld nearby vertices: Reduce duplicate verts
+- Remove unused materials: Clean .mtl file
+- Flip normals: Correct orientation if needed
+</code></pre>
+<h4><strong>Use Cases</strong></h4>
+<pre><code>✓ 3D visualization in Blender, Maya, 3ds Max
+✓ Web 3D viewers (Three.js, Babylon.js)
+✓ Product visualization
+✓ Marketing materials
+✓ Design review with clients
+✓ Integration with game engines
+✓ VR/AR applications
+</code></pre>
+<h4><strong>Example Workflow: OBJ to Blender</strong></h4>
+<pre><code>1. Export from ReWeave as OBJ
+2. Open Blender
+3. File → Import → Wavefront (.obj)
+4. Select model.obj
+5. Materials import as referenced .mtl
+6. Textures load from texture folder
+7. Ready for rendering, animation, compositing
+</code></pre>
+<h3>STL Format</h3>
+<h4><strong>What is STL?</strong></h4>
+<pre><code>- Stereolithography format
+- Binary or ASCII (binary recommended)
+- 3D printing standard
+- Mesh-only (no materials)
+- Widely supported by slicing software
+</code></pre>
+<h4><strong>STL Characteristics</strong></h4>
+<pre><code>Binary STL:
+- Smaller file size
+- Faster to read/write
+- Cannot view as text
+- Preferred for large models
+
+ASCII STL:
+- Human-readable
+- Larger file size
+- Slower processing
+- Useful for debugging
+</code></pre>
+<h4><strong>Export Settings</strong></h4>
+<pre><code>1. File → Export → STL
+2. Configuration:
+   - Format: Binary (recommended)
+   - Output Scale: mm / cm / m / inches
+   - Mesh Quality: Low/Medium/High
+   - Merge Separate Objects: Yes/No
+   - Auto-orient normals: Yes/No
+
+3. Output:
+   - model.stl (single binary file)
+</code></pre>
+<h4><strong>Preparation for 3D Printing</strong></h4>
+<pre><code>1. Export at actual target size (mm recommended)
+2. Use High mesh quality
+3. Open in slicing software:
+   - Prusaslicer
+   - Cura
+   - Simplify3D
+4. Check for:
+   - Correct scale
+   - Proper orientation
+   - No holes or gaps
+5. Generate supports if needed
+6. Slice and print
+</code></pre>
+<h4><strong>Use Cases</strong></h4>
+<pre><code>✓ 3D printing (FDM, SLA, SLS)
+✓ Pre-production prototypes
+✓ Physical samples for testing
+✓ Tactile design verification
+✓ Manufacturing process validation
+</code></pre>
+<h4><strong>Example: Print Preparation</strong></h4>
+<pre><code>1. Export STL at 100 mm scale
+2. Open in Prusaslicer
+3. Load printer profile (Prusa i3 MK3S+)
+4. Orient for optimal print (flat surface down)
+5. Supports added automatically
+6. Check preview
+7. Export G-code
+8. Send to printer
+</code></pre>
+<h3>3MF Format</h3>
+<h4><strong>What is 3MF?</strong></h4>
+<pre><code>- 3D Manufacturing Format
+- ZIP-based container
+- Includes geometry + materials + textures
+- Microsoft-backed standard
+- Supported by major slicing software
+- Superior to STL (preserves colors, materials)
+</code></pre>
+<h4><strong>3MF File Structure</strong></h4>
+<pre><code>model.3mf (ZIP archive)
+├── 3D/
+│   └── model.xml (geometry + materials)
+├── Textures/
+│   ├── texture1.png
+│   └── texture2.png
+└── [Content_Types].xml (manifest)
+</code></pre>
+<h4><strong>Export Settings</strong></h4>
+<pre><code>1. File → Export → 3MF
+2. Configuration:
+   - Output Scale: mm / cm / m / inches
+   - Include Colors: Yes/No
+   - Include Materials: Yes/No
+   - Preserve UV Coordinates: Yes/No
+   - Compress: Yes/No
+
+3. Output:
+   - model.3mf (single ZIP file)
+   - Includes all textures and metadata
+</code></pre>
+<h4><strong>Color &amp; Material Export</strong></h4>
+<pre><code>3MF supports:
+- Per-vertex colors (detailed coloring)
+- Material assignments
+- PBR properties (roughness, metallic)
+- Texture maps
+- Transparency (alpha channel)
+
+Result:
+- Slicing software sees colors
+- 3D printing preserves warp/weft coloring
+- Photorealistic digital preview
+</code></pre>
+<h4><strong>Use Cases</strong></h4>
+<pre><code>✓ Professional 3D printing (color support)
+✓ Modern slicing software (Cura, PrusaSlicer)
+✓ Material Jetting printers (Stratasys, HP)
+✓ CAD software integration
+✓ Design review with full colors
+✓ Fabric pattern visualization for production
+</code></pre>
+<h4><strong>Example: Color 3D Print</strong></h4>
+<pre><code>1. Design fabric with multicolor weave
+2. Export 3D simulation as 3MF (include colors)
+3. Open in slicing software
+4. Colors automatically detected
+5. Map to available material colors
+6. Print on multi-material printer
+7. Result: Physical fabric model in actual colors
+</code></pre>
+<hr>
+<h2>FEA/Analysis Formats</h2>
+<h3>Abaqus INP Format</h3>
+<h4><strong>What is Abaqus INP?</strong></h4>
+<pre><code>- Abaqus finite element input file
+- Industry-standard FEA software
+- Text-based, structured format
+- Widely used in automotive, aerospace
+- Supports complex material models
+- Can be run directly in Abaqus/CAE or batch
+</code></pre>
+<h4><strong>INP File Structure</strong></h4>
+<pre><code>** Header
+*Heading
+Model Name
+
+** Geometry
+*Node
+1, x1, y1, z1
+2, x2, y2, z2
+...
+
+*Element, type=S4R
+1, 1, 2, 6, 5
+2, 2, 3, 7, 6
+...
+
+** Materials
+*Material, name=Cotton
+*Elastic
+E, nu
+*Density
+rho
+
+** Boundary Conditions
+*Boundary
+fixed_node, 1, 3
+
+** Load Steps
+*Step, name=Static
+*Static
+*Boundary
+loaded_node, 2, 2, displacement
+
+*Output, field, variable=PRESELECT
+*Output, history, variable=PRESELECT
+
+*End Step
+</code></pre>
+<h4><strong>Export Settings</strong></h4>
+<pre><code>1. File → Export → Abaqus INP
+2. Configuration:
+   - Solver Type: Standard/Explicit
+   - Element Type: S4R (shell) or C3D8 (solid)
+   - Material Model: From project settings
+   - Boundary Conditions: Load applied direction
+   - Element Size: Mesh density (mm)
+   - Output Variables: Stress, Strain, Displacement
+
+3. Output:
+   - model.inp (complete FEA input file)
+   - Ready to run directly
+</code></pre>
+<h4><strong>Material Definition</strong></h4>
+<pre><code>Cotton Fabric:
+*Material, name=CottonFabric
+*Elastic
+12000.0, 0.3
+*Density
+0.00055
+
+Parameters (typical):
+- E (Young&#39;s modulus): 5000-15000 MPa
+- nu (Poisson&#39;s ratio): 0.25-0.35
+- rho (density): 0.55-0.95 g/cm³
+- Custom elasticity for orthotropic material
+</code></pre>
+<h4><strong>Use Cases</strong></h4>
+<pre><code>✓ Academic research (fabric mechanics)
+✓ Manufacturing validation (stress prediction)
+✓ Material property optimization
+✓ Failure analysis
+✓ Comparative simulations between designs
+✓ Integration with production pipeline
+✓ Advanced nonlinear analysis
+</code></pre>
+<h4><strong>Example Workflow: Abaqus Analysis</strong></h4>
+<pre><code>1. Export from ReWeave as Abaqus INP
+2. Open Abaqus/CAE
+3. File → Import Job... → model.inp
+4. Model loaded with materials and boundary conditions
+5. Configure analysis parameters (if needed)
+6. Job → Submit
+7. Analysis runs (seconds to hours)
+8. Visualize results:
+   - Stress distribution
+   - Strain pattern
+   - Failure zones
+9. Export results for report
+</code></pre>
+<h3>COMSOL Format</h3>
+<h4><strong>What is COMSOL?</strong></h4>
+<pre><code>- COMSOL Multiphysics format
+- Multi-physics solver (not just FEA)
+- Can include thermal, fluid, electromagnetic
+- Text-based mesh format
+- Research-oriented
+</code></pre>
+<h4><strong>Export Settings</strong></h4>
+<pre><code>1. File → Export → COMSOL TXT
+2. Configuration:
+   - Mesh Format: Basic/Refined
+   - Include Material Props: Yes/No
+   - Coordinate System: Cartesian/Cylindrical
+   - Output Scale: mm / cm / m
+
+3. Output:
+   - model.txt (COMSOL-formatted mesh)
+</code></pre>
+<h4><strong>Use Cases</strong></h4>
+<pre><code>✓ Multi-physics simulations
+✓ Thermal analysis (temp-dependent properties)
+✓ Coupled analysis (mechanical + thermal)
+✓ Academic research
+✓ Advanced material modeling
+</code></pre>
+<hr>
+<h2>Loom/Machine Formats</h2>
+<h3>WIF Format (Weaving Interchange Format)</h3>
+<h4><strong>What is WIF?</strong></h4>
+<pre><code>- Industry standard for loom control
+- Version 1.1 (current)
+- Text-based, INI-like structure
+- All loom machines recognize WIF
+- Preserves weave pattern, threading, treadling
+- No proprietary information
+</code></pre>
+<h4><strong>WIF File Structure</strong></h4>
+<pre><code>[FORMAT]
+Version=1.1
+
+[CONTENT]
+Title=Pattern Name
+Creator=ReWeave
+Date=2026-07-03
+
+[THREADING]
+1=1
+2=2
+3=1
+... (repeat for each end/warp thread)
+
+[TREADLING]
+1=1,3,5,7
+2=2,4,6,8
+... (repeat for each pick/weft)
+
+[TIEUP]
+1=1
+2=1
+...
+
+[PALETTE]
+1=0x000000
+2=0xFF0000
+...
+
+[WEAVING]
+UnitOfLength=cm
+</code></pre>
+<h4><strong>Export Settings</strong></h4>
+<pre><code>1. File → Export → WIF
+2. Configuration:
+   - Pattern Name: User-defined
+   - Include Metadata: Yes/No
+   - Color Palette: Included automatically
+   - Thread Count: Auto-calculated
+   - Unit of Length: cm / inches / mm
+
+3. Output:
+   - pattern.wif (single text file)
+</code></pre>
+<h4><strong>Use Cases</strong></h4>
+<pre><code>✓ Transfer pattern to physical loom
+✓ Control Jacquard machines (with adapters)
+✓ Share patterns with other weavers
+✓ Archive patterns (universal format)
+✓ Integration with weaving software
+✓ Production pipeline input
+</code></pre>
+<h4><strong>Example Workflow: WIF to Loom</strong></h4>
+<pre><code>1. Design pattern in ReWeave
+2. Export as WIF
+3. Transfer to loom control computer
+4. Loom software reads WIF
+5. Automatic threading calculation
+6. Loom ready to weave
+7. Enter yarn, start production
+</code></pre>
+<h3>CSV Liftplan Format</h3>
+<h4><strong>What is Liftplan CSV?</strong></h4>
+<pre><code>- Comma-separated values
+- Liftplan format for loom machine control
+- Simple matrix: Rows = picks, Columns = harnesses
+- 1 = raise harness, 0 = lower harness
+- Direct machine input for many looms
+- Used in dobby looms and Jacquard machines
+</code></pre>
+<h4><strong>Liftplan CSV Structure</strong></h4>
+<pre><code># Liftplan for 8-harness loom
+Pick,Harness1,Harness2,Harness3,Harness4,Harness5,Harness6,Harness7,Harness8
+1,1,0,1,0,0,0,0,0
+2,0,1,0,1,0,0,0,0
+3,1,0,1,0,0,0,0,0
+4,0,1,0,1,0,0,0,0
+...
+</code></pre>
+<h4><strong>Export Settings</strong></h4>
+<pre><code>1. File → Export → CSV Liftplan
+2. Configuration:
+   - Number of Harnesses: 4/8/12/16 or custom
+   - Include Header Row: Yes/No
+   - Number Format: 0/1 or Binary
+   - Repeat Pattern: 1, 2, 4, or 8 times
+
+3. Output:
+   - pattern.csv (spreadsheet format)
+   - Ready for loom software import
+</code></pre>
+<h4><strong>Use Cases</strong></h4>
+<pre><code>✓ Dobby loom programming
+✓ Jacquard machine input
+✓ Loom control software integration
+✓ Pattern documentation
+✓ Team sharing and versioning
+</code></pre>
+<h3>FABJC Binary Format (Jacquard)</h3>
+<h4><strong>What is FABJC?</strong></h4>
+<pre><code>- ReWeave proprietary binary format
+- Optimized for Jacquard machine compatibility
+- Supports JC5, JC6, JC7 variants
+- Compressed format
+- Faster machine loading
+- Machine-specific encodings
+</code></pre>
+<h4><strong>Export Settings</strong></h4>
+<pre><code>1. File → Export → FABJC
+2. Configuration:
+   - Machine Type: JC5 / JC6 / JC7
+   - Compression: Yes/No (recommend Yes)
+   - Include Color Codes: Yes/No
+   - Optimization Level: Fast / Balanced / Maximum
+
+3. Output:
+   - pattern.jc5 (or .jc6 / .jc7)
+   - Directly loadable into Jacquard machine
+</code></pre>
+<h4><strong>Use Cases</strong></h4>
+<pre><code>✓ Jacquard machine control
+✓ High-speed production runs
+✓ Multi-color patterns
+✓ Complex designs
+✓ Professional production facilities
+</code></pre>
+<hr>
+<h2>Vector Graphics Formats</h2>
+<h3>SVG Format (Scalable Vector Graphics)</h3>
+<h4><strong>What is SVG?</strong></h4>
+<pre><code>- XML-based vector format
+- Resolution-independent (scalable)
+- Web-standard (browser-native)
+- Human-readable (editable in text editors)
+- Supports colors, gradients, effects
+- Small file size
+- Animatable
+</code></pre>
+<h4><strong>Export Options</strong></h4>
+<pre><code>SVG Weave Draft:
+- Weave pattern as vector grid
+- Clickable cells (interactive)
+- Color-coded threads
+- Scale to any size without loss
+
+SVG Fabric Faces:
+- 3D fabric rendered as 2D SVG
+- Orthographic projection
+- Illustrative style
+- Good for documentation
+</code></pre>
+<h4><strong>Export Settings</strong></h4>
+<pre><code>1. File → Export → SVG
+2. Configuration:
+   - Type: Weave Draft / Fabric Faces
+   - Grid Size: Small (50×50) / Medium / Large (200×200)
+   - Include Grid Lines: Yes/No
+   - Include Labels: Yes/No
+   - Inline Styles: Yes/No
+   - Viewbox: Auto / Fixed dimensions
+
+3. Output:
+   - pattern.svg (single XML file)
+</code></pre>
+<h4><strong>Use Cases</strong></h4>
+<pre><code>✓ Web publication (GitHub README, wikis)
+✓ Design documentation
+✓ Interactive pattern viewers
+✓ CAD software import (convert to paths)
+✓ Printing (scale to any size)
+✓ Animation (SMIL or CSS animations)
+✓ Accessibility (text-based format)
+</code></pre>
+<h4><strong>Example: SVG in Web</strong></h4>
+<pre><code>1. Export pattern as SVG
+2. Add to website HTML:
+   &lt;img src=&quot;pattern.svg&quot; alt=&quot;Weave Pattern&quot;&gt;
+   or
+   &lt;object data=&quot;pattern.svg&quot; type=&quot;image/svg+xml&quot;&gt;&lt;/object&gt;
+3. Renders scalably at any size
+4. Can add interactivity with JavaScript
+5. Fully responsive design
+</code></pre>
+<h3>DXF Format (AutoCAD)</h3>
+<h4><strong>What is DXF?</strong></h4>
+<pre><code>- Drawing Exchange Format (AutoCAD)
+- Vector format (lines, arcs, polylines)
+- Industry standard for CAD
+- Text-based (ASCII DXF) or binary (DXB)
+- Compatible with all CAD software
+- Used in manufacturing, construction, design
+</code></pre>
+<h4><strong>Export Settings</strong></h4>
+<pre><code>1. File → Export → DXF
+2. Configuration:
+   - Format: AutoCAD 2000+ (recommended)
+   - Unit: mm / cm / inches / meters
+   - Precision: Integer / Decimal places
+   - Include Layers: Yes/No
+   - Include Blocks: Yes/No
+
+3. Output:
+   - pattern.dxf (single file)
+   - Ready for CAD import
+</code></pre>
+<h4><strong>Use Cases</strong></h4>
+<pre><code>✓ CAD design workflow integration
+✓ Manufacturing CAM software
+✓ CNC machine tool paths
+✓ Fabric marking patterns
+✓ Production templates
+✓ Design review with architects
+✓ Integration with 2D design tools
+</code></pre>
+<h4><strong>Example Workflow: DXF to CAM</strong></h4>
+<pre><code>1. Export fabric face as DXF
+2. Import into CAM software (e.g., Fusion 360)
+3. Create tool paths from geometry
+4. Export G-code for CNC cutter
+5. Cut fabric patterns physically
+</code></pre>
+<hr>
+<h2>Raster Image Formats</h2>
+<h3>PNG Format</h3>
+<h4><strong>What is PNG?</strong></h4>
+<pre><code>- Portable Network Graphics
+- Raster (pixel-based) format
+- Lossless compression
+- Supports transparency (alpha channel)
+- Web-standard
+- Good quality for screenshots
+</code></pre>
+<h4><strong>Export Options</strong></h4>
+<pre><code>Current Viewport:
+- Capture what you see
+- At current zoom/rotation
+- Resolution: 1920×1080 (adjustable)
+- Format: PNG (recommended)
+
+Six-Orthographic Views:
+- Front, Back, Left, Right, Top, Bottom
+- Six separate PNG files
+- All at same resolution
+- Isometric-like coverage
+- Useful for documentation
+</code></pre>
+<h4><strong>Export Settings</strong></h4>
+<pre><code>1. File → Export → PNG (or Tools → Screenshot)
+2. Configuration:
+   - Resolution: 1920×1080 / 2560×1440 / 4K / Custom
+   - Transparency: Yes/No
+   - Include Grid: Yes/No
+   - Include Measurement: Yes/No
+   - Compression Level: 0-9 (higher = smaller, slower)
+
+3. Output:
+   - viewport.png (current view)
+   - Or: front.png, back.png, left.png, etc. (6 views)
+</code></pre>
+<h4><strong>Use Cases</strong></h4>
+<pre><code>✓ Documentation and reports
+✓ Social media and marketing
+✓ Email and presentations
+✓ Web publishing
+✓ Before/after comparisons
+✓ Portfolio and portfolio
+✓ Quality control documentation
+</code></pre>
+<hr>
+<h2>Data Export Formats</h2>
+<h3>Analysis CSV Format</h3>
+<h4><strong>What is Analysis CSV?</strong></h4>
+<pre><code>- Comma-separated values with analysis data
+- Spreadsheet-compatible (Excel, Google Sheets, Python)
+- One row per metric
+- Detailed numerical data
+- Complete audit trail
+</code></pre>
+<h4><strong>CSV Structure</strong></h4>
+<pre><code>Metric,Value,Unit,Notes
+ThreadDensity_Ends,15,ends/cm,Warp thread count
+ThreadDensity_Picks,15,picks/cm,Weft thread count
+CoveragePercentage,92.5,%,Fabric coverage
+WeightEstimate,145,g/m²,Based on yarn properties
+WarpThreadCount,144,threads,Total warp
+WeftThreadCount,144,threads,Total weft
+PatternRepeatX,12,cells,Horizontal repeat
+PatternRepeatY,12,cells,Vertical repeat
+MaxStress,25.3,MPa,Peak stress in 3D sim
+AvgStress,8.7,MPa,Average stress
+StrainAtBreak,0.15,%,Maximum strain
+</code></pre>
+<h4><strong>Export Settings</strong></h4>
+<pre><code>1. Tools → Export Analysis → CSV
+2. Automatic export after analysis complete
+3. Configuration:
+   - Decimal Places: 2-6 (precision)
+   - Include Metadata: Yes/No
+   - Include Formulas: Yes/No
+   - Timestamp: Yes/No
+
+3. Output:
+   - analysis.csv (single file)
+</code></pre>
+<h4><strong>Use Cases</strong></h4>
+<pre><code>✓ Data analysis in Excel/Sheets
+✓ Python/R statistical analysis
+✓ Documentation and reporting
+✓ Comparative studies
+✓ Performance tracking
+✓ Quality assurance metrics
+✓ Integration with external tools
+</code></pre>
+<h4><strong>Example: Python Analysis</strong></h4>
+<pre><code class="language-python">import pandas as pd
+
+# Load ReWeave analysis
+df = pd.read_csv(&#39;analysis.csv&#39;)
+
+# Calculate metrics
+avg_density = df[df[&#39;Metric&#39;].str.contains(&#39;Density&#39;)][&#39;Value&#39;].mean()
+
+# Generate report
+print(f&quot;Average Density: {avg_density} threads/cm&quot;)
+
+# Plot stress distribution
+df[df[&#39;Metric&#39;].str.contains(&#39;Stress&#39;)].plot()
+</code></pre>
+<hr>
+<h2>Import Formats</h2>
+<h3>Supported Import Formats</h3>
+<h4><strong>Pattern Import</strong></h4>
+<pre><code>WIF Format:
+- File → Import → Pattern (WIF)
+- Reads weave pattern, threading, colors
+- Converts to ReWeave internal format
+- Preserves pattern data
+
+CSV Liftplan:
+- File → Import → Pattern (CSV)
+- Rows = picks, Columns = harnesses
+- Converts liftplan to visual weave
+- May require manual color assignment
+
+JC5/6/7 Binary:
+- File → Import → Pattern (Jacquard)
+- Extracts pattern data
+- Reads machine-specific encoding
+- Limited to available information
+</code></pre>
+<h4><strong>Project Import</strong></h4>
+<pre><code>ReWeave Project:
+- File → Open Recent (if .weave file exists)
+- Or File → Import → Project
+- Restores all settings, patterns, colors
+- Ready to edit immediately
+</code></pre>
+<hr>
+<h2>Format Selection Guide</h2>
+<h3>Decision Tree</h3>
+<pre><code>What do you want to do?
+
+├─ Visualize in 3D software?
+│  ├─ Professional CAD/rendering → OBJ (most compatible)
+│  ├─ Blender/Cycle rendering → OBJ or 3MF
+│  └─ Web viewer → OBJ or glTF (future)
+│
+├─ 3D Print?
+│  ├─ Basic printing → STL
+│  ├─ Color printing → 3MF
+│  └─ Professional facility → 3MF (recommended)
+│
+├─ FEA Analysis?
+│  ├─ Abaqus software → Abaqus INP
+│  ├─ COMSOL software → COMSOL TXT
+│  └─ External FEA tool → STL + load setup manual
+│
+├─ Weave on Loom?
+│  ├─ Any loom (universal) → WIF
+│  ├─ Dobby/Simple loom → CSV Liftplan
+│  └─ Jacquard machine → FABJC or WIF
+│
+├─ CAD Integration?
+│  ├─ AutoCAD → DXF
+│  ├─ Fusion 360 → SVG or DXF
+│  └─ Generic CAD → OBJ or DXF
+│
+├─ Documentation?
+│  ├─ Print/PDF → PNG (high resolution)
+│  ├─ Web/Online → SVG or PNG
+│  └─ Reports → PNG + CSV analysis
+│
+└─ Data Analysis?
+   ├─ Excel/Sheets → CSV Analysis
+   ├─ Python/R → CSV Analysis
+   └─ Academic paper → CSV + analysis plot
+</code></pre>
+<h3>Format Comparison Table</h3>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>File Size</th>
+<th>Quality</th>
+<th>Editability</th>
+<th>Industry Use</th>
+<th>Time to Export</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OBJ</td>
+<td>Medium</td>
+<td>High</td>
+<td>Easy (text)</td>
+<td>Universal</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td>STL</td>
+<td>Large</td>
+<td>High</td>
+<td>None</td>
+<td>3D Print</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td>3MF</td>
+<td>Medium</td>
+<td>Very High</td>
+<td>Medium</td>
+<td>Modern 3D Print</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Abaqus</td>
+<td>Small</td>
+<td>High</td>
+<td>Medium</td>
+<td>FEA</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>COMSOL</td>
+<td>Small</td>
+<td>High</td>
+<td>Medium</td>
+<td>FEA</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>SVG</td>
+<td>Tiny</td>
+<td>Vector</td>
+<td>Easy (text)</td>
+<td>Web/Print</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td>DXF</td>
+<td>Small</td>
+<td>Vector</td>
+<td>Easy (CAD)</td>
+<td>CAD/Mfg</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td>WIF</td>
+<td>Tiny</td>
+<td>Pattern</td>
+<td>Easy (text)</td>
+<td>Looms</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td>CSV Liftplan</td>
+<td>Tiny</td>
+<td>Pattern</td>
+<td>Easy (spreadsheet)</td>
+<td>Looms</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td>FABJC</td>
+<td>Tiny</td>
+<td>Pattern</td>
+<td>None (binary)</td>
+<td>Jacquard</td>
+<td>Fast</td>
+</tr>
+<tr>
+<td>PNG</td>
+<td>Variable</td>
+<td>Good</td>
+<td>None (raster)</td>
+<td>Web/Doc</td>
+<td>Fast</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Batch Export</h2>
+<h3>Export Multiple Formats</h3>
+<h4><strong>Batch Export Workflow</strong></h4>
+<pre><code>1. File → Batch Export
+2. Select desired formats (checkboxes):
+   ☑ OBJ
+   ☑ STL
+   ☑ SVG
+   ☑ DXF
+   ☑ PNG
+   ☑ WIF
+   ☑ CSV Analysis
+
+3. Configure each format (or use defaults)
+4. Choose output folder
+5. Click &quot;Export All&quot;
+6. Progress bar shows status
+7. All files generated simultaneously
+</code></pre>
+<h4><strong>Batch Export Options</strong></h4>
+<pre><code>Format Selection:
+- Preset &quot;3D Suite&quot; (OBJ, STL, 3MF, PNG)
+- Preset &quot;Loom Kit&quot; (WIF, CSV Liftplan, PNG)
+- Preset &quot;CAD Kit&quot; (DXF, SVG, OBJ)
+- Preset &quot;Analysis Kit&quot; (Abaqus INP, CSV, PNG)
+- Custom selection
+
+Output:
+- Single folder with all formats
+- Timestamped subfolders (optional)
+- Manifest file listing contents
+</code></pre>
+<h4><strong>Use Cases</strong></h4>
+<pre><code>✓ Prepare deliverables for clients
+✓ Archival (multiple formats for future)
+✓ Documentation kits
+✓ Production handoff (all needed formats)
+✓ Collaborative projects (formats for different teams)
+</code></pre>
+<hr>
+<h2>Troubleshooting Export</h2>
+<h3>Common Export Issues</h3>
+<h4><strong>&quot;Export Failed&quot; Error</strong></h4>
+<pre><code>Possible Causes:
+1. Invalid file path (special characters, spaces)
+2. Insufficient disk space
+3. File already open in another program
+4. Permission denied on folder
+5. Unsupported scale conversion
+
+Solutions:
+- Save to simpler path (C:\Exports\)
+- Check available disk space (&gt;1 GB recommended)
+- Close file in other programs
+- Run as Administrator (if needed)
+- Try different scale (mm instead of inches)
+</code></pre>
+<h4><strong>Missing Materials in OBJ</strong></h4>
+<pre><code>Cause:
+- Materials not embedded in model
+- Texture files not found
+
+Solution:
+1. Verify .mtl file exists in same folder
+2. Verify texture files in subfolder
+3. Copy all files together to single folder
+4. Re-import in 3D software
+</code></pre>
+<h4><strong>Scale Issues</strong></h4>
+<pre><code>Problem: Geometry too large or too small
+Solution:
+1. Identify current scale (mm, cm, meters)
+2. Export with correct target scale
+3. Example: 1 meter fabric → export in cm (scale ÷ 100)
+4. Verify scale in target software (Tools → Preferences)
+
+Common Scales:
+- ReWeave internal: millimeters
+- 3D printing: millimeters
+- CAD: millimeters or meters (varies)
+- Loom patterns: centimeters
+</code></pre>
+<h4><strong>Color Loss in Export</strong></h4>
+<pre><code>Problem: Colors not showing in exported file
+Causes &amp; Solutions:
+- OBJ: Verify .mtl file included and adjacent
+- STL: STL format doesn&#39;t support color (use 3MF instead)
+- 3MF: Include Colors checkbox must be enabled
+- SVG: Use &quot;Include Colors&quot; option
+- PNG: Screenshot naturally includes colors
+
+Best Practice: Always export colors in OBJ (.mtl file)
+</code></pre>
+<h4><strong>File Corruption</strong></h4>
+<pre><code>Prevention:
+- Never interrupt export (let it complete)
+- Ensure sufficient disk space (3× file size)
+- Disable antivirus scanning during export
+- Export to local drive (not network)
+
+If Corrupted:
+- Delete incomplete file
+- Try again with simpler settings
+- Export smaller region if possible
+- Check system logs for errors
+</code></pre>
+<hr>
+<h2>Format-Specific Tips</h2>
+<h3>OBJ Pro Tips</h3>
+<pre><code>✓ Always include .mtl file
+✓ Keep textures in same folder
+✓ Use &quot;Optimize Mesh&quot; for web use
+✓ Normal vectors necessary for lighting
+✓ Scale model to actual size before export
+</code></pre>
+<h3>STL Pro Tips</h3>
+<pre><code>✓ Use Binary format (faster, smaller)
+✓ Export at actual print size
+✓ Check normals orientation (View → Show Normals)
+✓ Test slice in slicer before printing
+✓ Keep model scale consistent
+</code></pre>
+<h3>3MF Pro Tips</h3>
+<pre><code>✓ Modern slicing software prefers 3MF
+✓ Colors greatly improve visualization
+✓ Textures embedded in single file
+✓ More reliable than STL for color prints
+✓ Compress option saves space
+</code></pre>
+<h3>WIF Pro Tips</h3>
+<pre><code>✓ Universal format (use for sharing)
+✓ Always include pattern name
+✓ Verify threadings before loom loading
+✓ Test with loom software first
+✓ Color information survives export
+</code></pre>
+<h3>SVG Pro Tips</h3>
+<pre><code>✓ Perfect for web publishing
+✓ Scales perfectly (no pixelation)
+✓ Use &quot;Weave Draft&quot; for pattern documentation
+✓ Use &quot;Fabric Faces&quot; for visual appeal
+✓ Edit SVG in Inkscape for post-processing
+</code></pre>
+<hr>
+<h2>Getting Help</h2>
+<p>For export-specific questions:</p>
+<ul>
+<li>See <a href="08-TROUBLESHOOTING.html">Troubleshooting Guide</a></li>
+<li>Check <a href="06-API-REFERENCE.html">API Reference</a> for technical details</li>
+<li>Community forum: <a href="https://forums.ReWeave.example.com">forums.ReWeave.example.com</a></li>
+<li>Email: <a href="mailto:support@ReWeave.example.com">support@ReWeave.example.com</a></li>
+</ul>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

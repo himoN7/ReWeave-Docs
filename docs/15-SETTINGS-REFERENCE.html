@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>15-SETTINGS-REFERENCE · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<p>﻿# Settings &amp; Configuration Reference</p>
+<p><strong>Version:</strong> 0.4.0<br><strong>Last Updated:</strong> July 2026<br><strong>Audience:</strong> Users, Administrators, Developers</p>
+<hr>
+<h2>Quick Reference</h2>
+<h3>Access Settings</h3>
+<pre><code>Main Menu → Settings
+OR
+Keyboard: Ctrl+, (comma)
+</code></pre>
+<h3>Settings Organization</h3>
+<pre><code>Settings are organized by category:
+├─ Appearance &amp; UI
+├─ Physics &amp; Simulation
+├─ AI &amp; Assistant
+├─ Backup &amp; Recovery
+├─ Export &amp; File Handling
+├─ Performance
+├─ Advanced
+└─ About
+</code></pre>
+<hr>
+<h2>Appearance &amp; UI Settings</h2>
+<h3>Theme</h3>
+<h4><strong>Current Options</strong></h4>
+<pre><code>Light Theme:
+- White/light gray backgrounds
+- Dark text
+- High contrast
+- Best for: Daytime, bright rooms
+- Eye strain: Minimal
+
+Dark Theme:
+- Dark gray/black backgrounds
+- Light text
+- Lower brightness
+- Best for: Evening, dim rooms
+- Eye strain: Reduced in low light
+
+Auto Theme:
+- Switches based on system time
+- Sunrise to sunset: Light
+- Sunset to sunrise: Dark
+- Best for: Automatic adaptation
+</code></pre>
+<h4><strong>Setting</strong></h4>
+<pre><code>Location: Settings → Appearance → Theme
+Default: Auto
+Restart Required: No (applies immediately)
+</code></pre>
+<h3>Viewport Backdrop</h3>
+<h4><strong>Backdrop Options</strong></h4>
+<pre><code>Color Variations:
+1. Gray: Neutral (default)
+2. Dark Gray: High contrast for light meshes
+3. Light Gray: High contrast for dark meshes
+4. Gradient Blue: Professional
+5. Gradient Purple: Modern
+6. Checkered: Transparency indication
+7. Custom Color: User-defined
+</code></pre>
+<h4><strong>Setting</strong></h4>
+<pre><code>Location: Settings → Appearance → Viewport Backdrop
+Default: Gray
+Affects: 3D viewport only
+Performance Impact: Negligible
+</code></pre>
+<h3>UI Scaling</h3>
+<h4><strong>Font Size</strong></h4>
+<pre><code>Sizes Available:
+- Small: 90% (compact)
+- Normal: 100% (default)
+- Large: 110% (easier reading)
+- Extra Large: 120% (accessibility)
+
+Location: Settings → Appearance → Font Size
+Default: Normal
+Restart Required: No
+</code></pre>
+<h4><strong>Window Behavior</strong></h4>
+<pre><code>Remember Window Position:
+- On: Restore exact position on restart
+- Off: Start at center
+- Default: On
+
+Remember Window Size:
+- On: Restore exact dimensions
+- Off: Default 1920×1080
+- Default: On
+
+Fullscreen Mode:
+- Off: Windowed
+- On: Fullscreen
+- Default: Off (windowed)
+</code></pre>
+<hr>
+<h2>Physics &amp; Simulation Settings</h2>
+<h3>Default Physics Parameters</h3>
+<h4><strong>Global Physics</strong></h4>
+<pre><code>Gravity (g):
+- Range: 0.0 - 20.0 m/s²
+- Default: 9.81 m/s² (Earth)
+- Affects: Fabric weight in simulation
+- Options: 0 (None), 1.62 (Moon), 9.81 (Earth), Custom
+
+Air Damping:
+- Range: 0.0 - 1.0
+- Default: 0.1
+- Low (0.0): Bouncy, oscillating
+- Medium (0.1-0.3): Realistic
+- High (0.5+): Dampened, static
+
+Wind Force:
+- Range: 0.0 - 10.0
+- Default: 0.0 (no wind)
+- Direction: Global +Y direction
+- Use for: Draping simulation
+
+Friction Coefficient:
+- Range: 0.0 - 2.0
+- Default: 0.5
+- 0.0: Frictionless (ice-like)
+- 0.5: Typical textile
+- 1.0+: Sticky interaction
+</code></pre>
+<h4><strong>Setting Location</strong></h4>
+<pre><code>Settings → Physics → Global Parameters
+Apply To: All new simulations
+Persist: Yes (saved between sessions)
+</code></pre>
+<h3>Solver Configuration</h3>
+<h4><strong>Available Solvers</strong></h4>
+<pre><code>Yarn XPBD (Extensible Position-Based Dynamics):
+- Default solver
+- Fast (~10-30 ms per frame)
+- Stable convergence
+- Good for real-time
+- Use for: Design, quick feedback
+
+Shell FEA (Finite Element):
+- Advanced solver
+- Slower (~100-500 ms per frame)
+- More accurate
+- Research-grade results
+- Use for: Detailed analysis
+
+Solver Selection:
+- Per simulation (not global)
+- Choose when creating new simulation
+- Default: Yarn XPBD
+</code></pre>
+<h3>Convergence Tuning</h3>
+<h4><strong>Solver Iterations</strong></h4>
+<pre><code>Iterations per Frame:
+- Range: 1-20
+- Default: 8
+- Lower: Faster, less accurate
+- Higher: Slower, more accurate
+- Impact: ~10 ms per iteration added
+
+Target: Balance speed vs accuracy
+- Real-time: 4-6 iterations
+- High quality: 10-15 iterations
+- Research: 15-20 iterations
+
+Location: Settings → Physics → Solver Tuning
+Persistence: Global default, overridable per simulation
+</code></pre>
+<h4><strong>Time Step &amp; Tolerance</strong></h4>
+<pre><code>Time Step:
+- Range: 0.001 - 0.05 seconds
+- Default: 0.016 seconds (60 FPS)
+- Smaller: More stable, slower
+- Larger: Faster, less stable
+- Rule: DeltaT ≤ 0.02s for stability
+
+Constraint Tolerance:
+- Range: 0.0001 - 0.01 (in meters)
+- Default: 0.001 m (1 mm)
+- Tighter: More accurate, slower
+- Looser: Faster, less precise
+</code></pre>
+<h3>Material Defaults</h3>
+<h4><strong>Fiber Material Presets</strong></h4>
+<pre><code>Cotton:
+- Young&#39;s Modulus: 5 GPa
+- Poisson Ratio: 0.3
+- Density: 0.00155 g/mm³
+- Damping: 0.05
+
+Silk:
+- Young&#39;s Modulus: 8 GPa
+- Poisson Ratio: 0.32
+- Density: 0.00133 g/mm³
+- Damping: 0.03
+
+Polyester:
+- Young&#39;s Modulus: 12 GPa
+- Poisson Ratio: 0.35
+- Density: 0.00138 g/mm³
+- Damping: 0.08
+
+Wool:
+- Young&#39;s Modulus: 6 GPa
+- Poisson Ratio: 0.28
+- Density: 0.00160 g/mm³
+- Damping: 0.10
+
+Custom:
+- Define your own
+- Saved for reuse
+</code></pre>
+<h4><strong>Setting Location</strong></h4>
+<pre><code>Settings → Physics → Material Defaults
+Affects: New fabric specifications
+Apply: Via FabricSimulationSpec material selection
+</code></pre>
+<hr>
+<h2>AI &amp; Assistant Settings</h2>
+<h3>AI Provider Configuration</h3>
+<h4><strong>Available Providers</strong></h4>
+<pre><code>Offline Mode:
+- Always available
+- No internet required
+- Heuristic-based suggestions
+- Fast response
+- Limited creativity
+
+OpenAI API:
+- Requires API key
+- Internet required
+- GPT-4 model
+- Advanced suggestions
+- Costs apply
+
+Ollama Local:
+- Requires local Ollama installation
+- No internet during inference
+- Privacy-preserving
+- Configurable model
+- No costs
+</code></pre>
+<h4><strong>Configuration</strong></h4>
+<h5><strong>Offline Mode (Default)</strong></h5>
+<pre><code>Location: Settings → AI Assistant → Provider
+Provider: Offline
+No configuration needed
+Always works as fallback
+</code></pre>
+<h5><strong>OpenAI Configuration</strong></h5>
+<pre><code>1. Go to Settings → AI Assistant → OpenAI
+2. Enter API Key:
+   - Get from: https://platform.openai.com/api-keys
+   - Format: sk-... (long string)
+   - Keep secret (don&#39;t share)
+3. Select Model:
+   - GPT-4 (recommended)
+   - GPT-3.5 (faster, less capable)
+4. Test Connection: Click &quot;Test&quot;
+5. Save settings
+
+Usage Charges:
+- Per token basis
+- GPT-4: ~$0.03 per request (typical)
+- Monitor usage in OpenAI dashboard
+</code></pre>
+<h5><strong>Ollama Configuration</strong></h5>
+<pre><code>Prerequisites:
+1. Download Ollama from ollama.ai
+2. Install on your computer
+3. Run: ollama pull llama2
+4. Start Ollama service
+
+Configuration:
+1. Settings → AI Assistant → Ollama
+2. Endpoint: http://localhost:11434
+3. Model: llama2 (or other)
+4. Click &quot;Test Connection&quot;
+5. Should see &quot;Connected&quot;
+
+Testing:
+- First request takes longer (model loads)
+- Subsequent requests faster
+- Works offline after model loaded
+</code></pre>
+<h3>AI Suggestion Parameters</h3>
+<h4><strong>Temperature Setting</strong></h4>
+<pre><code>Range: 0.1 - 2.0
+Default: 0.7
+
+Low (0.1-0.3):
+- Deterministic, focused
+- Same input → same output
+- Good for: Consistent, accurate suggestions
+
+Medium (0.7):
+- Balanced
+- Some creativity
+- Default for good reasons
+
+High (1.0-2.0):
+- Creative, random
+- Same input → different outputs
+- Good for: Brainstorming, exploration
+
+Location: Settings → AI Assistant → Temperature
+</code></pre>
+<h4><strong>Max Tokens</strong></h4>
+<pre><code>Range: 100 - 4000 tokens
+Default: 1024
+
+Lower:
+- Shorter responses
+- Faster processing
+- Lower cost
+
+Higher:
+- Longer, detailed responses
+- More thorough suggestions
+- Higher cost
+</code></pre>
+<h3>AI Usage Limits</h3>
+<h4><strong>Rate Limiting</strong></h4>
+<pre><code>Requests per Minute:
+- Range: 1 - 60
+- Default: 10
+- Prevents: API overuse, quota issues
+
+Daily Limit:
+- Range: 10 - 500
+- Default: 100
+- Prevents: Excessive billing
+
+Track Usage:
+- Settings shows current day/month usage
+- Links to OpenAI dashboard
+- Allows budget monitoring
+</code></pre>
+<hr>
+<h2>Backup &amp; Recovery Settings</h2>
+<h3>Auto-Save Configuration</h3>
+<h4><strong>Auto-Save Timing</strong></h4>
+<pre><code>Enabled: On/Off (default: On)
+Interval: 1 - 30 minutes (default: 5)
+On Navigation: Yes/No (default: Yes)
+
+Behavior:
+- Saves current project to temporary location
+- Doesn&#39;t overwrite user-saved files
+- Automatic in background
+- No user interaction needed
+
+Location: Settings → Backup &amp; Recovery → Auto-Save
+</code></pre>
+<h4><strong>Auto-Save Files</strong></h4>
+<pre><code>Storage Location:
+- Windows: %AppData%\ReWeave\Projects\AutoSave\
+- Mac: ~/Library/ReWeave/Projects/AutoSave/
+- Linux: ~/.local/share/ReWeave/Projects/AutoSave/
+
+Retention:
+- Number of backups: 3-20 (default: 10)
+- Age limit: None (space-based)
+- Auto-cleanup: Oldest deleted when limit reached
+</code></pre>
+<h3>Manual Backup Options</h3>
+<h4><strong>Create Backup</strong></h4>
+<pre><code>File → Create Backup
+Creates timestamped copy:
+- Format: project_YYYYMMDD_HHMMSS.weave
+- Location: %AppData%\ReWeave\Backups\
+- Retention: Manual (not auto-deleted)
+
+Frequency Recommendation:
+- Before major changes: Yes
+- Before exporting: Optional
+- Before closing app: Optional
+</code></pre>
+<h4><strong>Restore from Backup</strong></h4>
+<pre><code>File → Restore from Backup
+Browse available backups:
+- Shows all timestamped versions
+- Select desired date/time
+- Preview before restore
+- Restore creates new working copy
+</code></pre>
+<h3>Recovery Options</h3>
+<h4><strong>Enable Auto-Recovery</strong></h4>
+<pre><code>Location: Settings → Backup &amp; Recovery → Recovery
+Auto-Recovery: On/Off (default: On)
+
+On App Crash:
+1. Restart application
+2. Recovery dialog appears
+3. Option to restore last project
+4. Or start fresh
+
+Recovery Storage:
+- Separate from auto-save
+- Preserved across crashes
+- Manual cleanup available
+</code></pre>
+<hr>
+<h2>Export &amp; File Handling Settings</h2>
+<h3>Default Export Format</h3>
+<h4><strong>Primary Export</strong></h4>
+<pre><code>Location: Settings → Export → Default Format
+Current Options:
+- OBJ (recommended)
+- STL
+- 3MF
+- SVG
+- DXF
+- PNG
+
+This format used:
+- First time export
+- Quick Export button
+- Default in export dialog
+</code></pre>
+<h3>Export Quality Presets</h3>
+<h4><strong>Mesh Quality</strong></h4>
+<pre><code>Low:
+- Fewer polygons (~50k)
+- Faster export
+- Smaller file
+- Use for: Web, quick preview
+
+Medium:
+- Standard polygons (~200k)
+- Balanced speed/quality
+- Typical file size
+- Use for: General use (default)
+
+High:
+- More polygons (~500k+)
+- Slower export
+- Larger files
+- Use for: Detailed analysis
+
+Location: Settings → Export → Mesh Quality
+Per-format settings available
+</code></pre>
+<h4><strong>Image Resolution</strong></h4>
+<pre><code>Options: 640×480, 1024×768, 1920×1080, 2560×1440, 4K (3840×2160), Custom
+Default: 1920×1080
+Used for: PNG export, viewport screenshots
+
+Higher resolution:
+- Better quality prints
+- Larger file size
+- Slower export
+- Better for: Print documentation
+</code></pre>
+<h3>File Association</h3>
+<h4><strong>Open With ReWeave</strong></h4>
+<pre><code>.weave files:
+- Double-click opens in ReWeave
+- Auto-detected if installed
+- Can be reset in: Settings → File Association
+
+Other formats (auto-open):
+- OBJ, STL, PNG: System default
+- CSV, WIF: Text editor default
+</code></pre>
+<hr>
+<h2>Performance Settings</h2>
+<h3>Performance Optimization</h3>
+<h4><strong>GPU Acceleration</strong></h4>
+<pre><code>GPU Acceleration:
+- On: Use graphics card for physics (fast)
+- Off: CPU-only simulation (slower)
+- Default: On (if GPU detected)
+- Auto-detect: Recommended
+
+Threshold:
+- Use GPU when: &gt;4,096 particles
+- Use CPU when: &lt;4,096 particles
+- Hybrid: Automatic selection
+
+Location: Settings → Performance → GPU Acceleration
+Requires: Restart to apply
+GPU Requirements: NVIDIA or AMD (most modern cards)
+</code></pre>
+<h4><strong>Rendering Quality</strong></h4>
+<pre><code>Viewport Quality:
+- Low (faster): 
+  - Simpler shaders
+  - 30 FPS minimum
+  - Low memory
+  
+- Medium (balanced):
+  - Standard shaders
+  - 60 FPS typical
+  - Moderate memory
+  
+- High (best):
+  - Advanced shaders
+  - 60 FPS (if capable)
+  - More memory
+
+Location: Settings → Performance → Rendering Quality
+Default: Medium
+Change doesn&#39;t require restart
+</code></pre>
+<h4><strong>Particle Rendering</strong></h4>
+<pre><code>Show Particles: On/Off
+Affects: 3D viewport display
+Performance: Minor impact when On
+Use for: Debugging yarn paths
+Default: Off
+</code></pre>
+<h3>Memory Management</h3>
+<h4><strong>Memory Limits</strong></h4>
+<pre><code>Max Memory for Simulation:
+- Range: 512 MB - 8 GB
+- Default: System memory ÷ 2
+- Prevents: Excessive RAM usage
+- Effect: Limits particle count
+
+When Limit Reached:
+- Reduce particle count automatically
+- Warn user
+- Or prevent simulation
+
+Location: Settings → Performance → Memory Limit
+Recommended: 2-4 GB on typical system
+</code></pre>
+<h3>Disk Space</h3>
+<h4><strong>Cache Settings</strong></h4>
+<pre><code>Cache Folder: %AppData%\ReWeave\Cache\
+Cache Size Limit: 100 MB - 5 GB
+Default: 1 GB
+
+Cache Contents:
+- Thumbnail images
+- Temporary exports
+- Model compilation data
+
+Auto-Cleanup: On (default)
+- Removes oldest items when limit reached
+- Manual clear available
+</code></pre>
+<hr>
+<h2>Advanced Settings</h2>
+<h3>Experimental Features</h3>
+<h4><strong>Enable Beta Features</strong></h4>
+<pre><code>Location: Settings → Advanced → Beta Features
+Warning: Unstable features ahead
+
+Available Beta:
+- Shell FEA solver (advanced)
+- GPU instancing (performance)
+- Procedural texture generation
+- Custom shader language
+- Multi-scene projects (future)
+
+Opt-in basis (disabled by default)
+Restart required: Yes
+Feedback encouraged: Yes
+</code></pre>
+<h3>Debug &amp; Logging</h3>
+<h4><strong>Logging Level</strong></h4>
+<pre><code>Options:
+- Error: Only critical errors
+- Warning: Errors + warnings
+- Info: General operational info
+- Debug: Detailed diagnostic info
+- Trace: Very verbose (development only)
+
+Default: Warning
+Location: Settings → Advanced → Logging
+
+Log Storage:
+- Location: %AppData%\ReWeave\Logs\
+- Rotation: Daily, 7-day retention
+- Size: Single file ~50 MB
+</code></pre>
+<h4><strong>Enable Debug Mode</strong></h4>
+<pre><code>Enables:
+- Additional validation checks
+- Performance profiler overlay
+- Memory tracking display
+- Shader compilation logs
+- Physics constraint visualization
+
+Location: Settings → Advanced → Debug Mode
+Default: Off
+Performance Impact: 10-20% overhead when on
+</code></pre>
+<h3>Input &amp; Hotkeys</h3>
+<h4><strong>Custom Keyboard Shortcuts</strong></h4>
+<pre><code>Location: Settings → Advanced → Keyboard Shortcuts
+
+Can Customize:
+- File operations (New, Open, Save)
+- View controls (Zoom, Pan, Rotate)
+- Simulation (Play, Pause, Reset)
+- Tools (Export, Analysis)
+- Navigation (Pages, Dialogs)
+
+Cannot Customize:
+- System shortcuts (Alt+F4, etc.)
+- OS-reserved keys
+
+Location: Settings → Advanced → Keyboard
+Click &quot;Reset Defaults&quot; to restore built-in shortcuts
+</code></pre>
+<h3>Accessibility</h3>
+<h4><strong>High Contrast Mode</strong></h4>
+<pre><code>Enabled: On/Off
+Affects: All UI elements
+Improves: Readability for low vision
+Use: When default colors insufficient
+
+Location: Settings → Accessibility → High Contrast
+Restart Required: No
+</code></pre>
+<h4><strong>Keyboard Navigation</strong></h4>
+<pre><code>Tab Navigation:
+- Through all UI elements
+- Follows logical order
+- Ctrl+Tab: Jump to next section
+
+Arrow Keys:
+- Navigate lists and menus
+- Control sliders
+- Grid navigation in weave editor
+
+Location: Settings → Accessibility → Keyboard Nav
+Default: Enabled
+Can disable if preferred
+</code></pre>
+<h4><strong>Screen Reader Support</strong></h4>
+<pre><code>Status: Partial support
+Supported Areas:
+- Main menus
+- Dialog boxes
+- Settings dialogs
+- File operations
+
+Recommended Readers:
+- Windows: Narrator, NVDA
+- Mac: VoiceOver
+- Linux: Orca
+
+Limitations:
+- 3D viewport not fully supported
+- Complex dialogs may need workarounds
+</code></pre>
+<hr>
+<h2>About &amp; System Information</h2>
+<h3>Application Information</h3>
+<pre><code>Version: 0.4.0
+Build: YYYYMMDD.HHmm
+Release Date: July 2026
+Producer: Hamed Rezaei
+
+Framework Version:
+- .NET 8.0
+- Windows App SDK 1.4+
+- WinUI 3
+
+Display:
+- Location: Settings → About
+</code></pre>
+<h3>System Information</h3>
+<h4><strong>Hardware Details</strong></h4>
+<pre><code>Processor: Model and speed
+RAM: Installed memory
+GPU: Graphics card model
+GPU Memory: VRAM available
+Storage: Available disk space
+
+Purpose: For support and compatibility troubleshooting
+</code></pre>
+<h4><strong>Library Versions</strong></h4>
+<pre><code>Community Toolkit: 8.4.2
+HelixToolkit: 2.22.0
+SharpDX: 4.2.0
+
+Purpose: For technical support
+Displayed in: Settings → About → Detailed Info
+</code></pre>
+<h3>Update &amp; License</h3>
+<h4><strong>Check for Updates</strong></h4>
+<pre><code>Manual: Settings → About → Check for Updates
+Automatic: Notify only, no auto-install
+Release Channel: Stable (default)
+
+Notification:
+- Appears on app start if update available
+- Manual check available
+- Always check before updating
+</code></pre>
+<h4><strong>License Information</strong></h4>
+<pre><code>License: [As applicable]
+Terms: [Link to license document]
+Third-party: [Link to attributions]
+
+Location: Settings → About → License
+</code></pre>
+<hr>
+<h2>Keyboard Shortcuts</h2>
+<h3>Settings-Related Shortcuts</h3>
+<pre><code>Open Settings: Ctrl+,
+Settings Search: Ctrl+Shift+,
+Reset Settings: Ctrl+Shift+R (confirmation required)
+</code></pre>
+<hr>
+<h2>Platform-Specific Notes</h2>
+<h3>Windows</h3>
+<pre><code>Settings Storage:
+- Registry: HKEY_CURRENT_USER\Software\ReWeave
+- File: %AppData%\ReWeave\settings.json
+
+Backup:
+- Auto-backup: %AppData%\ReWeave\Backups\
+
+GPU Support:
+- NVIDIA CUDA preferred
+- AMD HIP supported
+- Intel integrated OK (slower)
+</code></pre>
+<h3>macOS</h3>
+<pre><code>Settings Storage:
+- ~/Library/Preferences/com.ReWeave.plist
+- ~/Library/ReWeave/settings.json
+
+Backup:
+- Auto-backup: ~/Library/ReWeave/Backups/
+
+GPU Support:
+- Metal API (Apple GPU)
+- Limited CUDA support
+</code></pre>
+<h3>Linux</h3>
+<pre><code>Settings Storage:
+- ~/.config/ReWeave/settings.json
+- ~/.local/share/ReWeave/
+
+Backup:
+- Auto-backup: ~/.local/share/ReWeave/Backups/
+
+GPU Support:
+- CUDA (NVIDIA)
+- HIP (AMD)
+- Vulkan (experimental)
+</code></pre>
+<hr>
+<h2>Troubleshooting Settings</h2>
+<h3>Common Issues</h3>
+<h4><strong>Settings Not Saving</strong></h4>
+<pre><code>Solutions:
+1. Check permissions on %AppData% folder
+2. Restart application
+3. Check available disk space
+4. Run as Administrator (if needed)
+5. Reset settings to defaults
+</code></pre>
+<h4><strong>Performance Degradation</strong></h4>
+<pre><code>Check:
+- GPU acceleration disabled? (Re-enable)
+- Rendering quality too high? (Reduce)
+- Memory limit too low? (Increase)
+- Logs too verbose? (Reduce logging level)
+- Cache full? (Clear cache)
+</code></pre>
+<h4><strong>Restore Default Settings</strong></h4>
+<pre><code>Full Reset:
+1. Settings → Advanced → Reset All Settings
+2. Confirm action
+3. Restart application
+4. All defaults restored
+
+Partial Reset:
+- Individual sections can reset
+- Located in each section&#39;s menu
+</code></pre>
+<hr>
+<h2>Getting Help</h2>
+<p>For settings-related support:</p>
+<ul>
+<li>See <a href="01-USER-GUIDE.html">User Guide</a></li>
+<li>Check <a href="08-TROUBLESHOOTING.html">Troubleshooting Guide</a></li>
+<li>Search settings help in application</li>
+<li>Contact support: <a href="mailto:support@ReWeave.example.com">support@ReWeave.example.com</a></li>
+</ul>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Data disclosure · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<h1>Data disclosure</h1>
+<p><strong>Last updated:</strong> 3 November 2026
+<strong>Product:</strong> ReWeave (ReZephyr)</p>
+<p>This page lists, in plain terms, what data ReWeave stores and what network
+requests it makes. It supplements the <a href="privacy-policy.html">privacy policy</a>.</p>
+<h2>No account required</h2>
+<p>ReWeave does not require you to sign in or create an account to use core
+features. There is no ReWeave-hosted user database.</p>
+<h2>Local storage (on your PC)</h2>
+<p>ReWeave stores app data locally under your Windows user profile, in
+<code>%LocalAppData%</code> (typically <code>%LocalAppData%\ReZephyr\ReWeave</code> or the
+package&#39;s per-app <code>LocalState</code> folder when installed from the Microsoft
+Store). This includes:</p>
+<ul>
+<li>App settings and preferences (theme, layout, default densities, etc.)</li>
+<li>Local pattern/palette libraries and simulation presets</li>
+<li>Recent project history and autosave/crash-recovery snapshots</li>
+</ul>
+<p>Project files you explicitly save (<code>.reweave</code>) are written wherever you
+choose — your Documents folder or any other location you pick in the Save /
+Save As dialog. ReWeave does not move or copy these files elsewhere on its
+own.</p>
+<p>Uninstalling the app does not automatically delete files in <code>%LocalAppData%</code>
+or project files you saved outside the install folder. Delete them manually
+if you want a full cleanup.</p>
+<h2>Encrypted project files (.reweave)</h2>
+<p><code>.reweave</code> files can be saved in an encrypted format (header <code>WFSP1</code>) so
+that project contents aren&#39;t readable as plain text if the file is opened
+outside ReWeave. Encryption is local only — it protects the file at rest on
+disk and is not a network or cloud feature.</p>
+<h2>Optional network activity</h2>
+<p>ReWeave&#39;s core simulation and design features work fully offline. The app
+makes network requests only when you explicitly trigger one of the
+following:</p>
+<ul>
+<li><strong>Local model.</strong> The current Store edition does not include Model Builder. If you point Weaver at a local server such as Ollama (<code>http://127.0.0.1:11434</code>) or LM Studio, the prompt goes to the address you typed. It leaves the PC only if that address is remote.</li>
+<li><strong>Weaver with a cloud AI provider:</strong> If you enable AI providers in
+Weaver settings and choose a cloud provider (Anthropic Claude, OpenAI,
+Google Gemini or an OpenAI-compatible endpoint), each Weaver turn sends
+your message, recent chat turns, and the draft details Weaver needs
+(weave structure, colours, yarn and sett settings, tool results) to that
+provider using the API key you entered. Your API key and workspace ID are
+stored on this PC encrypted with Windows DPAPI. With AI providers off, the
+Weaver works offline using ReWeave&#39;s built-in mill rules.</li>
+<li><strong>Update check / GitHub releases:</strong> ReWeave may check for newer versions
+using a DevWinUI update check control or by opening the project&#39;s GitHub
+Releases page in your browser when you click &quot;Check for updates&quot; or
+&quot;Releases.&quot; This is a one-time, user-initiated request (or a lightweight
+version check) — ReWeave does not continuously upload your projects,
+simulation results, or usage data to any server.</li>
+<li><strong>Documentation and support links:</strong> Buttons such as &quot;Email,&quot; &quot;GitHub,&quot;
+&quot;Portfolio,&quot; and &quot;Privacy&quot; open a link or your email client using the
+system browser/mail app. ReWeave does not track whether you click these.</li>
+</ul>
+<p>Outside of the cases above, ReWeave does not phone home, does not run
+telemetry/analytics collection, and does not upload your weave designs,
+simulation data, or images to ReWeave-operated servers.</p>
+<h2>Local-only data</h2>
+<p>Everything Weaver writes stays in the local app-data folder above. Nothing in
+this list is sent anywhere by ReWeave.</p>
+<ul>
+<li><strong>Weaver chat history</strong> (<code>WeaveAiChat\chat-history.json</code>): your recent
+Weaver chats, including your messages, replies and the suggestion cards,
+so they appear under <em>Recent chats</em>. <em>Clear</em> and <em>New chat</em> in the pane
+manage it; deleting the file removes all history.</li>
+<li><strong>Saved prompts</strong> (<code>WeaveAiChat</code>): prompts you save from the prompt library.</li>
+<li><strong>Weaver memory</strong> (<code>WeaveMemory\memory.json</code>): design preferences Weaver
+keeps between turns of a project (for example the last structure and
+colourway), used to understand follow-up requests.</li>
+<li><strong>Usage statistics</strong> (<code>Telemetry\copilot-turns-yyyyMM.jsonl</code>): for each
+Weaver turn, its outcome, duration, mode, provider and model name, app
+version, and a random install ID. It never records your messages, replies,
+designs, file paths or keys. You can turn it off in Weaver settings →
+Privacy. Pilot sites can copy a report or the raw records from Settings →
+Weaver diagnostics and choose to share them.</li>
+<li><strong>Reliability record</strong> (<code>reliability\app-sessions-yyyyMM.jsonl</code> and
+<code>reliability\app-faults-yyyyMM.jsonl</code>): when the app started, how long it
+ran, and for anything that went wrong, the error&#39;s type name and the first
+few method names from its stack, with the app version and the same random
+install ID. It never records error messages, file paths, project names or
+designs — message text can contain the name of a file you opened, so it is
+left out on purpose. This is what tells us how often the app runs without a
+crash. It stays on your PC; ReWeave does not send it anywhere.</li>
+<li><strong>Crash log</strong> (<code>logs\last-unhandled-exception.txt</code>): the full text of the
+most recent unexpected error, kept so you can send it with a bug report if
+you choose. Unlike the reliability record, this one <em>does</em> include the error
+message and stack, which may name a file you had open. Nothing reads or
+sends it automatically; delete it at any time.</li>
+<li><strong>Earlier prompt samples</strong> (<code>AiTrainingSamples\weave-ai-samples.jsonl</code>):
+versions before 0.8.0 had a “Contribute to agent training” switch that,
+when turned on, saved prompts and the cards you applied to this file. It was
+never uploaded. The switch has been removed and ReWeave no longer writes
+the file; delete it if it exists.</li>
+<li><strong>Claude Desktop connector (MCP):</strong> If you install the ReWeave extension in
+Claude Desktop, Claude talks to the running app over a local named pipe on
+this PC. The pipe accepts connections only from programs running under
+your Windows account (for example Claude Desktop, VS Code or Cursor).</li>
+</ul>
+<h2>Third-party services</h2>
+<p>If you connect Weaver to a remote AI provider, that service handles the data under its own privacy policy. ReWeave does not control what the provider does with a turn you choose to send.</p>
+<h2>Contact</h2>
+<p>Questions about this disclosure: <a href="mailto:himpire@outlook.com">himpire@outlook.com</a></p>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

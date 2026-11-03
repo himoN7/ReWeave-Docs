@@ -4,40 +4,56 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Privacy policy · ReWeave</title>
-  <meta name="description" content="How ReWeave handles information. ReZephyr does not sell personal information." />
   <link rel="icon" href="assets/images/app_icon.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <a class="brand" href="./">
-      <img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" />
-      ReZephyr
-    </a>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
     <span class="rule" aria-hidden="true"></span>
-    <a class="brand" href="./">
-      <img src="assets/images/app_icon.png" alt="" width="28" height="28" />
-      ReWeave
-    </a>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
     <span class="spacer"></span>
     <a class="soon" href="./">Home</a>
   </header>
   <main class="page">
-    <p class="eyebrow">Privacy</p>
-    <h1>Privacy policy</h1>
-    <p>Last updated 3 November 2026. ReWeave is a Windows desktop app from ReZephyr. This page describes the public product. It is not a technical guide.</p>
-    <ul>
-      <li>You do not need an account to use the design tools.</li>
-      <li>Projects and settings stay on your PC. ReZephyr does not sell personal information and does not run an advertising profile.</li>
-      <li>If you choose a cloud assistant and enter your own key, that conversation is sent to the provider you selected, under that provider’s policy. You can leave that feature off.</li>
-      <li>Links you open, such as documentation or a support message, use your browser or mail app.</li>
-      <li>ReWeave is not directed at children under 13.</li>
-    </ul>
-    <p>Questions about this policy: <a href="mailto:himpire@outlook.com">himpire@outlook.com</a></p>
+<h1>Privacy policy</h1>
+<p><strong>Last updated:</strong> 3 November 2026
+<strong>Product:</strong> ReWeave (ReZephyr)</p>
+<p>This policy describes how ReWeave handles information when you use the Windows desktop app. ReWeave does not require an account, and ReZephyr does not sell personal information.</p>
+<p>The public copy used by the Microsoft Store listing is <a href="https://himon7.github.io/ReWeave-Docs/privacy-policy.html">https://himon7.github.io/ReWeave-Docs/privacy-policy.html</a>.</p>
+<h2>Information stored on your PC</h2>
+<p>Depending on how you use the app, ReWeave stores:</p>
+<ul>
+<li>Project files you save (<code>.reweave</code>), including an optional encrypted form</li>
+<li>Settings, recent projects, and local libraries (weaves, colours, yarns, presets)</li>
+<li>Weaver chat history, saved prompts, and design memory for the open project</li>
+<li>A local reliability record and, if the app closes unexpectedly, one crash log you can choose to send</li>
+<li>Optional Weaver usage statistics that record outcome, duration, mode, and model name, and do not record your messages, designs, or file paths</li>
+</ul>
+<p>You control where projects are saved. Uninstalling the app may leave documents and <code>%LocalAppData%\ReZephyr\ReWeave</code> until you delete them.</p>
+<p>For every local file and every network request, see the <a href="data-disclosure.html">data disclosure</a>.</p>
+<h2>Network</h2>
+<p>Design, geometry, physics, and mechanical tests work offline. ReWeave does not upload projects or simulation results to a ReZephyr server.</p>
+<p>A network request happens only when you start one:</p>
+<ul>
+<li><strong>Weaver with a cloud provider.</strong> If you turn on Anthropic Claude, OpenAI, Google Gemini, or an OpenAI-compatible endpoint, that turn sends your message, recent chat, and the draft details Weaver needs. The API key stays on this PC, protected with Windows DPAPI. With providers off, Weaver stays on the built-in offline rules.</li>
+<li><strong>A local model you configure.</strong> If you point Weaver at an address such as Ollama or LM Studio, the request goes to that address.</li>
+<li><strong>Update check and links.</strong> Checking for updates, opening documentation, or emailing support uses the network or your browser.</li>
+</ul>
+<h2>Children</h2>
+<p>ReWeave is not directed at children under 13.</p>
+<h2>Contact</h2>
+<p>Questions about this policy: <a href="mailto:himpire@outlook.com">himpire@outlook.com</a></p>
+
   </main>
   <footer>
-    <a href="./">ReWeave</a>
-    <span>A creation by ReZephyr</span>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
   </footer>
 </body>
 </html>

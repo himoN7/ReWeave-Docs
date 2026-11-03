@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Run all tests · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<p>﻿# Testing &amp; Quality Assurance</p>
+<p>Complete guide to testing infrastructure, test organization, and quality processes.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#test-overview">Test Overview</a></li>
+<li><a href="#test-organization">Test Organization</a></li>
+<li><a href="#unit-testing">Unit Testing</a></li>
+<li><a href="#integration-testing">Integration Testing</a></li>
+<li><a href="#automation-testing">Automation Testing</a></li>
+<li><a href="#test-execution">Test Execution</a></li>
+<li><a href="#coverage--metrics">Coverage &amp; Metrics</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+</ol>
+<h2>Test Overview</h2>
+<h3>Testing Pyramid</h3>
+<pre><code>        /\           E2E / UI Tests (5-10%)
+       /  \         Slow, Brittle, High value
+      /    \
+     /------\      Integration Tests (15-20%)
+    /        \    Medium speed, Cross-component
+   /          \
+  /            \   Unit Tests (70-85%)
+ /              \  Fast, Isolated, Immediate feedback
+/______________\
+
+Lower level = more tests
+Higher level = fewer, higher-value tests
+</code></pre>
+<h3>Test Statistics</h3>
+<ul>
+<li><strong>Total Tests:</strong> 500+</li>
+<li><strong>Unit Tests:</strong> ~400</li>
+<li><strong>Integration Tests:</strong> ~80</li>
+<li><strong>Automation Tests:</strong> ~20</li>
+<li><strong>Average Run Time:</strong> ~2 minutes (full suite)</li>
+</ul>
+<hr>
+<h2>Test Organization</h2>
+<h3>Directory Structure</h3>
+<pre><code>ReWeave.AutomatedTests/
+├── Unit/
+│   ├── Services/
+│   │   ├── FabricPhysicsServiceTests.cs
+│   │   ├── AppProjectCoordinatorTests.cs
+│   │   └── ...
+│   ├── Models/
+│   │   ├── FabricSimulationSpecTests.cs
+│   │   ├── YarnSpecificationTests.cs
+│   │   └── ...
+│   └── Helpers/
+│       ├── ColorHelperTests.cs
+│       └── ...
+├── Integration/
+│   ├── SimulationPipelineTests.cs
+│   ├── FileIoPersistenceTests.cs
+│   └── ...
+├── Regression/
+│   ├── KnownBugTests.cs
+│   └── PreviousIssueTests.cs
+├── Stress/
+│   ├── LargeSimulationTests.cs
+│   └── PerformanceTests.cs
+├── UiAutomation/
+│   ├── UserWorkflowTests.cs
+│   └── ...
+├── Mocks/
+│   ├── FakeGeometryCalculator.cs
+│   └── ...
+├── Builders/
+│   ├── FabricSpecBuilder.cs
+│   └── ...
+├── Utilities/
+│   ├── TestDataGenerator.cs
+│   └── ...
+└── Snapshots/
+    ├── expected_*.json
+    └── ...
+</code></pre>
+<hr>
+<h2>Unit Testing</h2>
+<h3>Purpose &amp; Characteristics</h3>
+<ul>
+<li><strong>Goal:</strong> Test single component in isolation</li>
+<li><strong>Speed:</strong> &lt; 100ms per test</li>
+<li><strong>Dependencies:</strong> Mocked (use FakeItEasy)</li>
+<li><strong>Scope:</strong> Public methods only</li>
+</ul>
+<h3>Unit Test Structure</h3>
+<pre><code class="language-csharp">[TestFixture]
+public class FabricPhysicsServiceTests
+{
+    private FabricPhysicsService _service;
+    private IGeometryCalculator _calculatorFake;
+    
+    [SetUp]
+    public void Setup()
+    {
+        _calculatorFake = A.Fake&lt;IGeometryCalculator&gt;();
+        _service = new FabricPhysicsService(_calculatorFake);
+    }
+    
+    [TearDown]
+    public void Cleanup()
+    {
+        // Cleanup resources if needed
+    }
+    
+    [Test]
+    public async Task RunSimulationAsync_WithValidSpec_ReturnsConvergedResult()
+    {
+        // Arrange
+        var spec = CreateValidFabricSpec();
+        A.CallTo(() =&gt; _calculatorFake.Calculate(A&lt;double&gt;.Ignored))
+            .Returns(1.0);
+        
+        // Act
+        var result = await _service.RunSimulationAsync(spec);
+        
+        // Assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.IsConverged, Is.True);
+        A.CallTo(() =&gt; _calculatorFake.Calculate(A&lt;double&gt;.Ignored))
+            .MustHaveHappenedOnceExactly();
+    }
+    
+    [Test]
+    [TestCase(null)]
+    [TestCase(&quot;&quot;)]
+    public void ValidateSpec_WithInvalidInput_ThrowsArgumentException(string? invalid)
+    {
+        // Act &amp; Assert
+        Assert.Throws&lt;ArgumentException&gt;(() =&gt; _service.ValidateSpec(invalid));
+    }
+    
+    [Test]
+    [TestCaseSource(nameof(GetInvalidSpecCases))]
+    public void ValidateSpec_WithInvalidCases_ReturnsFalse(FabricSimulationSpec? spec)
+    {
+        // Act
+        var result = _service.ValidateSpec(spec);
+        
+        // Assert
+        Assert.That(result.IsValid, Is.False);
+    }
+    
+    private static IEnumerable&lt;TestCaseData&gt; GetInvalidSpecCases()
+    {
+        yield return new TestCaseData(null).SetName(&quot;NullSpec&quot;);
+        yield return new TestCaseData(new FabricSimulationSpec()).SetName(&quot;EmptySpec&quot;);
+    }
+    
+    private FabricSimulationSpec CreateValidFabricSpec()
+    {
+        return new FabricSimulationSpec
+        {
+            WeavePattern = new WeavePatternData { Width = 8, Height = 8 },
+            Yarns = new[] { CreateTestYarn() }
+        };
+    }
+    
+    private YarnSpecification CreateTestYarn()
+    {
+        return new YarnSpecification
+        {
+            Denier = 150,
+            LinearDensity = 0.85
+        };
+    }
+}
+</code></pre>
+<h3>Mocking with FakeItEasy</h3>
+<pre><code class="language-csharp">// Create fake
+var calculatorFake = A.Fake&lt;IGeometryCalculator&gt;();
+
+// Configure behavior
+A.CallTo(() =&gt; calculatorFake.Calculate(A&lt;double&gt;.Ignored))
+    .Returns(1.0);
+
+// Verify calls
+A.CallTo(() =&gt; calculatorFake.Calculate(0.5))
+    .MustHaveHappenedOnceExactly();
+
+// Test exceptions
+A.CallTo(() =&gt; calculatorFake.Calculate(A&lt;double&gt;.That.IsLessThan(0)))
+    .Throws&lt;ArgumentException&gt;();
+</code></pre>
+<h3>Common Unit Test Patterns</h3>
+<pre><code class="language-csharp">// Test success path
+[Test]
+public void Method_WithValidInput_ReturnsExpectedResult()
+{
+    var result = _service.Process(validInput);
+    Assert.That(result, Is.EqualTo(expected));
+}
+
+// Test error handling
+[Test]
+public void Method_WithInvalidInput_ThrowsException()
+{
+    Assert.Throws&lt;ArgumentException&gt;(() =&gt; _service.Process(invalidInput));
+}
+
+// Test state changes
+[Test]
+public void Method_ModifiesState_AsExpected()
+{
+    _service.Initialize();
+    _service.Execute();
+    Assert.That(_service.IsExecuted, Is.True);
+}
+
+// Test async methods
+[Test]
+public async Task AsyncMethod_WithValidInput_CompletesSuccessfully()
+{
+    var result = await _service.ProcessAsync(input);
+    Assert.That(result, Is.Not.Null);
+}
+
+// Test parameter validation
+[Test]
+[TestCase(null)]
+[TestCase(&quot;&quot;)]
+public void Method_WithNullOrEmpty_ThrowsException(string? param)
+{
+    Assert.Throws&lt;ArgumentException&gt;(() =&gt; _service.Process(param));
+}
+</code></pre>
+<hr>
+<h2>Integration Testing</h2>
+<h3>Purpose &amp; Characteristics</h3>
+<ul>
+<li><strong>Goal:</strong> Test interaction between multiple components</li>
+<li><strong>Speed:</strong> 100ms - 5 seconds per test</li>
+<li><strong>Dependencies:</strong> Real services (or realistic fakes)</li>
+<li><strong>Scope:</strong> End-to-end component workflows</li>
+</ul>
+<h3>Integration Test Example</h3>
+<pre><code class="language-csharp">[TestFixture]
+public class FabricSimulationIntegrationTests
+{
+    private FabricPhysicsService _physicsService;
+    private AppProjectCoordinator _coordinator;
+    private FabricSimulationSpecSerializer _serializer;
+    
+    [SetUp]
+    public void Setup()
+    {
+        _physicsService = new FabricPhysicsService();
+        _coordinator = new AppProjectCoordinator();
+        _serializer = new FabricSimulationSpecSerializer();
+    }
+    
+    [Test]
+    public async Task CompleteSimulationWorkflow_Succeeds()
+    {
+        // Arrange
+        var spec = CreateValidSpec();
+        var project = new AppProjectDocument { FabricSpec = spec };
+        
+        // Act - Save project
+        await _coordinator.SaveProjectAsync(project);
+        
+        // Act - Load project
+        var loadedProject = await _coordinator.OpenProjectAsync(project.ProjectId);
+        
+        // Act - Run simulation
+        var result = await _physicsService.RunSimulationAsync(loadedProject.FabricSpec);
+        
+        // Assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.VertexPositions, Is.Not.Empty);
+        Assert.That(result.IsConverged, Is.True);
+    }
+    
+    [Test]
+    public async Task SerializeDeserialize_PreservesData()
+    {
+        // Arrange
+        var spec = CreateValidSpec();
+        
+        // Act
+        var json = _serializer.Serialize(spec);
+        var deserializedSpec = _serializer.Deserialize(json);
+        
+        // Assert
+        Assert.That(deserializedSpec, Is.EqualTo(spec));
+    }
+}
+</code></pre>
+<hr>
+<h2>Automation Testing</h2>
+<h3>UI Automation Tests</h3>
+<p><strong>Location:</strong> <code>UiAutomation/</code></p>
+<pre><code class="language-csharp">[TestFixture]
+public class UserWorkflowTests
+{
+    private AppWindow _mainWindow;
+    
+    [SetUp]
+    public void Setup()
+    {
+        // Launch application
+        _mainWindow = LaunchApplication();
+    }
+    
+    [Test]
+    public void CreateNewProject_UserCanCompleteWorkflow()
+    {
+        // Navigate to Weave Design
+        _mainWindow.ClickButton(&quot;WeaveDesignNav&quot;);
+        Assert.That(_mainWindow.CurrentPage, Is.EqualTo(&quot;WeaveDesign&quot;));
+        
+        // Create new weave
+        _mainWindow.ClickButton(&quot;NewWeaveBtnNon&quot;);
+        _mainWindow.SelectComboboxItem(&quot;PatternDropdown&quot;, &quot;Plain Weave&quot;);
+        
+        // Set parameters
+        _mainWindow.SetTextBoxValue(&quot;ThreadCountInput&quot;, &quot;20&quot;);
+        
+        // Run simulation
+        _mainWindow.ClickButton(&quot;RunSimulationBtn&quot;);
+        
+        // Verify results appear
+        var viewportReady = _mainWindow.WaitForElement(&quot;SimulationViewport&quot;, 30);
+        Assert.That(viewportReady, Is.True);
+    }
+}
+</code></pre>
+<hr>
+<h2>Test Execution</h2>
+<h3>Running Tests</h3>
+<pre><code class="language-bash"># Run all tests
+dotnet test
+
+# Run specific test class
+dotnet test --filter &quot;ClassName=FabricPhysicsServiceTests&quot;
+
+# Run specific test method
+dotnet test --filter &quot;FullyQualifiedName~FabricPhysicsServiceTests.RunSimulationAsync&quot;
+
+# Run by category
+dotnet test --filter &quot;Category=Integration&quot;
+
+# Verbose output
+dotnet test -v normal
+
+# With diagnostics
+dotnet test -v diagnostic
+</code></pre>
+<h3>CI/CD Test Execution</h3>
+<p><strong>GitHub Actions Workflow:</strong></p>
+<pre><code class="language-yaml">name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: &#39;8.0.x&#39;
+    
+    - name: Restore
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build -c Release
+    
+    - name: Unit Tests
+      run: dotnet test --filter &quot;Category=Unit&quot; -c Release
+    
+    - name: Integration Tests
+      run: dotnet test --filter &quot;Category=Integration&quot; -c Release
+    
+    - name: Coverage Report
+      run: dotnet test /p:CollectCoverage=true
+</code></pre>
+<hr>
+<h2>Coverage &amp; Metrics</h2>
+<h3>Code Coverage</h3>
+<p><strong>Target Coverage:</strong></p>
+<ul>
+<li>Overall: ≥75%</li>
+<li>Services: ≥80%</li>
+<li>Critical paths: 100%</li>
+<li>UI code: ≥50%</li>
+</ul>
+<p><strong>Collect Coverage:</strong></p>
+<pre><code class="language-bash">dotnet test \
+  /p:CollectCoverage=true \
+  /p:CoverageFormat=opencover \
+  /p:Exclude=&quot;[*.Tests]*&quot;
+</code></pre>
+<p><strong>Generate Report:</strong></p>
+<pre><code class="language-bash">reportgenerator \
+  -reports:&quot;coverage.opencover.xml&quot; \
+  -targetdir:&quot;coveragereport&quot; \
+  -reporttypes:&quot;HtmlSummary&quot;
+</code></pre>
+<h3>Metrics Tracked</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Target</th>
+<th>Current</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Code Coverage</strong></td>
+<td>≥75%</td>
+<td>82%</td>
+</tr>
+<tr>
+<td><strong>Test Pass Rate</strong></td>
+<td>100%</td>
+<td>99.2%</td>
+</tr>
+<tr>
+<td><strong>Avg Test Time</strong></td>
+<td>&lt;2s</td>
+<td>1.8s</td>
+</tr>
+<tr>
+<td><strong>Regression Tests</strong></td>
+<td>N/A</td>
+<td>45</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Best Practices</h2>
+<h3>DO ✓</h3>
+<ul>
+<li>✓ Name tests descriptively: <code>Method_Scenario_ExpectedResult</code></li>
+<li>✓ One assertion per test (or related assertions)</li>
+<li>✓ Test behavior, not implementation</li>
+<li>✓ Use builders for complex test data</li>
+<li>✓ Mock external dependencies</li>
+<li>✓ Test edge cases and error conditions</li>
+<li>✓ Keep tests fast and independent</li>
+<li>✓ Use TestCase/TestCaseSource for parametric tests</li>
+</ul>
+<h3>DON&#39;T ✗</h3>
+<ul>
+<li>✗ Test private methods directly</li>
+<li>✗ Have tests depend on each other</li>
+<li>✗ Use Thread.Sleep() for timing</li>
+<li>✗ Create files/database records unnecessarily</li>
+<li>✗ Test multiple behaviors in one test</li>
+<li>✗ Leave tests in &quot;pending&quot; state</li>
+<li>✗ Mix unit and integration tests</li>
+</ul>
+<h3>Test Data Builders</h3>
+<pre><code class="language-csharp">public class FabricSpecBuilder
+{
+    private FabricSimulationSpec _spec = new();
+    
+    public FabricSpecBuilder WithPlainWeave()
+    {
+        _spec.WeavePattern = new WeavePatternData { /* */ };
+        return this;
+    }
+    
+    public FabricSpecBuilder WithCottonYarn()
+    {
+        _spec.Yarns = new[] { CreateCottonYarn() };
+        return this;
+    }
+    
+    public FabricSimulationSpec Build() =&gt; _spec;
+}
+
+// Usage
+var spec = new FabricSpecBuilder()
+    .WithPlainWeave()
+    .WithCottonYarn()
+    .Build();
+</code></pre>
+<hr>
+<h2>Test Categories</h2>
+<h3>By Type</h3>
+<ul>
+<li><strong>Unit:</strong> Isolated component tests</li>
+<li><strong>Integration:</strong> Multi-component workflows</li>
+<li><strong>Regression:</strong> Known bug prevention</li>
+<li><strong>Stress:</strong> Performance under load</li>
+<li><strong>UiAutomation:</strong> End-to-end user workflows</li>
+</ul>
+<h3>By Attribute</h3>
+<pre><code class="language-csharp">[TestFixture]
+[Category(&quot;Unit&quot;)]
+public class QuickTests { }
+
+[TestFixture]
+[Category(&quot;Integration&quot;)]
+public class ComplexTests { }
+
+[TestFixture]
+[Category(&quot;Regression&quot;)]
+public class BugFixTests { }
+
+[TestFixture]
+[Category(&quot;Stress&quot;)]
+[Timeout(60000)]  // 60 seconds
+public class PerformanceTests { }
+</code></pre>
+<hr>
+<h2>Quality Gates</h2>
+<p><strong>Before PR merge:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> All tests pass</li>
+<li><input disabled="" type="checkbox"> ≥75% code coverage</li>
+<li><input disabled="" type="checkbox"> No new warnings</li>
+<li><input disabled="" type="checkbox"> Builds successfully</li>
+</ul>
+<p><strong>Before release:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> All automation tests pass</li>
+<li><input disabled="" type="checkbox"> ≥80% code coverage</li>
+<li><input disabled="" type="checkbox"> Zero critical bugs</li>
+<li><input disabled="" type="checkbox"> Performance validated</li>
+</ul>
+<hr>
+<p><strong>See Also:</strong> <a href="03-DEVELOPER-GUIDE.html">Developer Guide</a>, <a href="07-CONTRIBUTING.html">Contributing</a></p>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

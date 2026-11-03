@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Using dotnet CLI · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<p>﻿# Installation &amp; Setup Guide</p>
+<p>Complete guide for building, developing, and deploying ReWeave.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#system-requirements">System Requirements</a></li>
+<li><a href="#developer-setup">Developer Setup</a></li>
+<li><a href="#building">Building</a></li>
+<li><a href="#running-locally">Running Locally</a></li>
+<li><a href="#publishing--deployment">Publishing &amp; Deployment</a></li>
+<li><a href="#troubleshooting-setup-issues">Troubleshooting Setup Issues</a></li>
+</ol>
+<h2>System Requirements</h2>
+<h3>For Users (Running App)</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Minimum</th>
+<th>Recommended</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>OS</strong></td>
+<td>Windows 10 Build 1809</td>
+<td>Windows 11</td>
+</tr>
+<tr>
+<td><strong>Architecture</strong></td>
+<td>x86 / x64 / ARM64</td>
+<td>x64</td>
+</tr>
+<tr>
+<td><strong>RAM</strong></td>
+<td>2GB</td>
+<td>4GB+</td>
+</tr>
+<tr>
+<td><strong>GPU</strong></td>
+<td>Any DirectX 9+</td>
+<td>Modern GPU for 3D</td>
+</tr>
+<tr>
+<td><strong>Disk</strong></td>
+<td>500MB</td>
+<td>1GB+ (for projects)</td>
+</tr>
+</tbody></table>
+<h3>For Developers (Development)</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>OS</strong></td>
+<td>Windows 10 Build 19041+</td>
+<td>Windows 11 recommended</td>
+</tr>
+<tr>
+<td><strong>Visual Studio</strong></td>
+<td>2022+</td>
+<td>Community Edition acceptable</td>
+</tr>
+<tr>
+<td><strong>.NET SDK</strong></td>
+<td>8.0+</td>
+<td>Required for CLI builds</td>
+</tr>
+<tr>
+<td><strong>Windows App SDK</strong></td>
+<td>Latest</td>
+<td>Installed via VS workload</td>
+</tr>
+<tr>
+<td><strong>Git</strong></td>
+<td>Latest</td>
+<td>For version control</td>
+</tr>
+</tbody></table>
+<h2>Developer Setup</h2>
+<h3>Step 1: Clone Repository</h3>
+<pre><code class="language-bash">git clone https://github.com/yourusername/WinUi-ReWeave.git
+cd WinUi-ReWeave
+</code></pre>
+<h3>Step 2: Install Visual Studio Workload</h3>
+<p><strong>If Visual Studio 2022 is not installed:</strong></p>
+<ol>
+<li>Download <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio Community 2022</a></li>
+<li>Run installer</li>
+<li>Select <strong>Windows App SDK</strong> workload</li>
+<li>Under &quot;Individual components,&quot; ensure:<ul>
+<li>.NET 8 SDK installed</li>
+<li>C# language support enabled</li>
+</ul>
+</li>
+<li>Complete installation</li>
+</ol>
+<p><strong>If Visual Studio is already installed:</strong></p>
+<ol>
+<li>Open <strong>Visual Studio Installer</strong></li>
+<li>Click <strong>Modify</strong> on Visual Studio 2022</li>
+<li>Add <strong>Windows App SDK</strong> workload (if not present)</li>
+<li>Click <strong>Modify</strong></li>
+</ol>
+<h3>Step 3: Restore Dependencies</h3>
+<pre><code class="language-bash"># Using dotnet CLI
+dotnet restore
+
+# Or let Visual Studio handle it automatically on first open
+</code></pre>
+<h3>Step 4: Verify Installation</h3>
+<pre><code class="language-bash"># Check .NET 8 SDK
+dotnet --version
+
+# List installed SDKs
+dotnet --list-sdks
+
+# Should show 8.x.xxx in the output
+</code></pre>
+<h2>Building</h2>
+<h3>Command Line Build</h3>
+<p><strong>Build for x64 Debug:</strong></p>
+<pre><code class="language-bash">cd &quot;WinUi ReWeave&quot;
+dotnet build -p:Platform=x64 -c Debug
+</code></pre>
+<p><strong>Build for x64 Release:</strong></p>
+<pre><code class="language-bash">dotnet build -p:Platform=x64 -c Release
+</code></pre>
+<p><strong>Build for x86:</strong></p>
+<pre><code class="language-bash">dotnet build -p:Platform=x86 -c Debug
+</code></pre>
+<p><strong>Build all platforms:</strong></p>
+<pre><code class="language-bash">dotnet build -p:Platform=x64 -c Debug
+dotnet build -p:Platform=x86 -c Debug
+dotnet build -p:Platform=ARM64 -c Debug  # ARM64 on native machine only
+</code></pre>
+<h3>Visual Studio Build</h3>
+<ol>
+<li>Open <code>WinUi ReWeave.slnx</code> in Visual Studio</li>
+<li>Select platform: <strong>x64</strong> (preferred for development)</li>
+<li>Select configuration: <strong>Debug</strong></li>
+<li><strong>Build</strong> → <strong>Build Solution</strong> (Ctrl+Shift+B)</li>
+</ol>
+<p><strong>Build output location:</strong></p>
+<pre><code>WinUi ReWeave/bin/x64/Debug/
+</code></pre>
+<h3>Build Issues &amp; Solutions</h3>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.NET 8 SDK not found</code></td>
+<td>Install .NET 8 SDK from dotnet.microsoft.com</td>
+</tr>
+<tr>
+<td><code>Windows App SDK missing</code></td>
+<td>Install via Visual Studio Installer workload</td>
+</tr>
+<tr>
+<td><code>Cannot find WinUI</code></td>
+<td>Run <code>dotnet restore</code> to restore packages</td>
+</tr>
+<tr>
+<td><code>Namespace X not found</code></td>
+<td>Clean solution, rebuild (Visual Studio may need restart)</td>
+</tr>
+<tr>
+<td><code>&quot;rimraf&quot; command not found</code></td>
+<td>Install Node.js (required for some build tasks)</td>
+</tr>
+</tbody></table>
+<h2>Running Locally</h2>
+<h3>From Visual Studio (Recommended for Development)</h3>
+<ol>
+<li>Open <code>WinUi ReWeave.slnx</code></li>
+<li>Ensure <strong>x64</strong> is selected as active platform</li>
+<li>Press <strong>F5</strong> or <strong>Debug</strong> → <strong>Start Debugging</strong></li>
+</ol>
+<p><strong>Debugging Features:</strong></p>
+<ul>
+<li>Set breakpoints by clicking line numbers</li>
+<li>Step through code (F10, F11)</li>
+<li>Inspect variables in debugger</li>
+<li>Watch window (Ctrl+Alt+W)</li>
+<li>Immediate window (Ctrl+Alt+I)</li>
+</ul>
+<h3>From Command Line</h3>
+<pre><code class="language-bash"># Build and run
+cd &quot;WinUi ReWeave&quot;
+dotnet build -c Debug
+dotnet run
+
+# Or directly run published build
+dotnet publish -c Release -p:Platform=x64
+# Find .exe in publish folder and run
+</code></pre>
+<h3>Testing Locally</h3>
+<p><strong>Run all tests:</strong></p>
+<pre><code class="language-bash">dotnet test
+</code></pre>
+<p><strong>Run specific test project:</strong></p>
+<pre><code class="language-bash">dotnet test ReWeave.AutomatedTests/ReWeave.AutomatedTests.csproj
+</code></pre>
+<p><strong>Run with coverage (if configured):</strong></p>
+<pre><code class="language-bash">dotnet test /p:CollectCoverage=true
+</code></pre>
+<h2>Publishing &amp; Deployment</h2>
+<h3>MSIX Bundle (Recommended)</h3>
+<p>MSIX is the modern Windows package format. One file contains x86 + x64 + ARM64.</p>
+<h4>Prerequisites</h4>
+<ol>
+<li><p><strong>Test Certificate</strong> (for signing):</p>
+<pre><code class="language-bash">cd scripts
+./create-test-certificate.ps1 -TrustOnThisMachine
+</code></pre>
+<p>Creates: <code>certs/WinUiReWeave-Test.pfx</code>
+Password: <code>ReWeaveTest</code> (or configured value)</p>
+</li>
+<li><p><strong>Trust Certificate</strong> (first time only):</p>
+<pre><code class="language-bash">./trust-test-certificate.cmd
+</code></pre>
+</li>
+</ol>
+<h4>Build MSIX Bundle</h4>
+<p><strong>Via Publish Script:</strong></p>
+<pre><code class="language-bash">publish-msix.cmd
+</code></pre>
+<p><strong>Or PowerShell (if scripts blocked):</strong></p>
+<pre><code class="language-powershell">powershell -ExecutionPolicy Bypass -File .\scripts\publish-msix.ps1
+</code></pre>
+<p><strong>Or Visual Studio:</strong></p>
+<ol>
+<li>Right-click project</li>
+<li><strong>Publish</strong> → <strong>msix</strong> profile</li>
+<li>Follow prompts</li>
+</ol>
+<p><strong>Output Location:</strong></p>
+<pre><code>dist/WinUi ReWeave_&lt;version&gt;_x86_x64_arm64.msixbundle
+</code></pre>
+<h4>One-Click Install</h4>
+<p>Double-click <strong><code>install-msix.cmd</code></strong> — it auto-detects the newest bundle in <code>dist\</code>, trusts the
+test certificate (single UAC prompt, idempotent), and runs <code>Add-AppxPackage</code>. Use this instead
+of the manual trust + <code>Add-AppxPackage</code> steps above.</p>
+<h4>Share with other PCs</h4>
+<pre><code class="language-bash">prepare-release.cmd
+</code></pre>
+<p>This creates <code>release/</code> with everything in one place: <code>Install.cmd</code>, <code>WinUiReWeave-Test.cer</code>,
+and the signed <code>.msixbundle</code>. Zip that folder and send it — the recipient only double-clicks
+<code>Install.cmd</code> (one UAC prompt); no repo or other files are needed.</p>
+<p><strong>Store submission:</strong> pass <code>-StorePublish</code> to <code>publish-msix.ps1</code> (with <code>-c Release</code>) to build an
+unsigned StoreUpload bundle instead of a locally-signed sideload bundle — Partner Center signs
+the upload on ingestion.</p>
+<h3>Publishing on Microsoft Store</h3>
+<ol>
+<li><p><strong>Reserve App</strong> on <a href="https://partner.microsoft.com/dashboard">Partner Center</a></p>
+<ul>
+<li>Get Product Identity Name</li>
+<li>Get Publisher ID</li>
+</ul>
+</li>
+<li><p><strong>Update Package Manifest:</strong></p>
+<ul>
+<li>Edit <code>Package.appxmanifest</code></li>
+<li>Set <code>Identity Name</code> to match Partner Center</li>
+<li>Set <code>Publisher</code> to match</li>
+</ul>
+</li>
+<li><p><strong>Rebuild &amp; Publish:</strong></p>
+<pre><code class="language-bash">publish-msix.cmd
+</code></pre>
+</li>
+<li><p><strong>Upload</strong> <code>.msixbundle</code> to Partner Center → Packages</p>
+</li>
+<li><p><strong>Submit</strong> for certification</p>
+</li>
+</ol>
+<h3>Portable Executable (Alternative)</h3>
+<p><strong>Unpackaged Distribution:</strong></p>
+<pre><code class="language-bash">dotnet publish \
+  -c Release \
+  -p:Platform=x64 \
+  -p:PublishUnpackagedExe=true \
+  -o ./publish-win-x64-unpackaged
+</code></pre>
+<p><strong>Output:</strong> Single <code>.exe</code> file with all dependencies</p>
+<p><strong>Note:</strong> Requires .NET 8 runtime on target machine</p>
+<h3>Manual Distribution</h3>
+<ol>
+<li><p><strong>Create Package:</strong></p>
+<pre><code class="language-bash">publish-msix.cmd
+</code></pre>
+</li>
+<li><p><strong>Sign &amp; Verify:</strong></p>
+<pre><code class="language-bash">Get-AuthenticodeSignature dist/WinUi*.msixbundle
+</code></pre>
+</li>
+<li><p><strong>Test Install</strong> (before distribution):</p>
+<pre><code class="language-powershell">Add-AppxPackage -Path &quot;dist/WinUi ReWeave_&lt;version&gt;_x86_x64_arm64.msixbundle&quot;
+</code></pre>
+<p>Or one-click: <code>install-msix.cmd</code> (trusts the cert + installs).</p>
+</li>
+<li><p><strong>Distribute:</strong></p>
+<ul>
+<li>Host on website</li>
+<li>Email to users</li>
+<li>GitHub releases</li>
+<li>Microsoft Store</li>
+</ul>
+</li>
+</ol>
+<h2>Configuration Files</h2>
+<h3>Build Configuration</h3>
+<p><strong>WinUi ReWeave.csproj:</strong></p>
+<pre><code class="language-xml">&lt;PropertyGroup&gt;
+    &lt;Version&gt;0.4.0&lt;/Version&gt;
+    &lt;TargetFramework&gt;net8.0-windows10.0.19041.0&lt;/TargetFramework&gt;
+    &lt;Platforms&gt;x86;x64;ARM64&lt;/Platforms&gt;
+    &lt;!-- More settings... --&gt;
+&lt;/PropertyGroup&gt;
+</code></pre>
+<p><strong>Update Version:</strong></p>
+<ol>
+<li>Edit <code>WinUi ReWeave.csproj</code></li>
+<li>Change <code>&lt;Version&gt;</code> tag</li>
+<li>Rebuild</li>
+</ol>
+<h3>Package Manifest</h3>
+<p><strong>Package.appxmanifest:</strong></p>
+<pre><code class="language-xml">&lt;Package&gt;
+    &lt;Identity Name=&quot;ReZephyr.ReWeave&quot; Publisher=&quot;CN=2AF31A40-66FB-4D26-826C-C2AD1251C019&quot;/&gt;
+    &lt;Properties&gt;
+        &lt;DisplayName&gt;ReWeave&lt;/DisplayName&gt;
+        &lt;PublisherDisplayName&gt;ReZephyr&lt;/PublisherDisplayName&gt;
+    &lt;/Properties&gt;
+&lt;/Package&gt;
+</code></pre>
+<p><strong>To Update Publisher:</strong></p>
+<ol>
+<li>Edit <code>Package.appxmanifest</code></li>
+<li>Change <code>Publisher</code> attribute</li>
+<li>Regenerate certificate to match</li>
+<li>Rebuild package</li>
+</ol>
+<h3>App Settings</h3>
+<p><strong>Default Locations:</strong></p>
+<pre><code>%AppData%\WinUi ReWeave\       (User data)
+%AppData%\Local\WinUi ReWeave\ (Cache)
+</code></pre>
+<p><strong>Modify Default Settings:</strong></p>
+<ol>
+<li>Edit <code>AppSettings.cs</code> in Services/</li>
+<li>Change default property values</li>
+<li>Rebuild</li>
+</ol>
+<h2>Environment Variables</h2>
+<p><strong>Development:</strong></p>
+<pre><code class="language-powershell">$env:ReWeave_DEBUG = &quot;true&quot;
+$env:ReWeave_PHYSICS_VERBOSE = &quot;true&quot;
+$env:DOTNET_TieredCompilation = &quot;1&quot;
+</code></pre>
+<p><strong>CI/CD:</strong></p>
+<pre><code class="language-bash">export CI=true
+export BUILD_NUMBER=123
+export VERSION=0.4.0
+</code></pre>
+<h2>Advanced Build Scenarios</h2>
+<h3>Clean Build</h3>
+<pre><code class="language-bash"># Clean all artifacts
+dotnet clean
+
+# Or manually
+Remove-Item -Recurse bin/
+Remove-Item -Recurse obj/
+
+# Then rebuild
+dotnet build
+</code></pre>
+<h3>Build for Specific Architecture</h3>
+<pre><code class="language-bash"># ARM64 (only works on ARM64 machine)
+dotnet build -p:Platform=ARM64 -c Release
+
+# x86
+dotnet build -p:Platform=x86 -c Release
+
+# x64
+dotnet build -p:Platform=x64 -c Release
+</code></pre>
+<h3>Parallel Build</h3>
+<pre><code class="language-bash"># Faster on multi-core systems
+dotnet build -m
+</code></pre>
+<h3>Verbose Output</h3>
+<pre><code class="language-bash"># For debugging build issues
+dotnet build -v diagnostic
+</code></pre>
+<h2>Troubleshooting Setup Issues</h2>
+<h3>&quot;Windows App SDK not installed&quot;</h3>
+<p><strong>Solution:</strong></p>
+<pre><code class="language-powershell"># Check installed versions
+Get-AppxPackage -Name &quot;WindowsAppRuntimeMain&quot;
+
+# If not found:
+# 1. Open Visual Studio Installer
+# 2. Modify Visual Studio 2022
+# 3. Install &quot;Windows App SDK&quot; workload
+# 4. Restart computer
+</code></pre>
+<h3>&quot;.NET 8 SDK not found&quot;</h3>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Download <a href="https://dotnet.microsoft.com/download/dotnet/8.0">.NET 8 SDK</a></li>
+<li>Run installer</li>
+<li>Verify: <code>dotnet --version</code> shows 8.x.xxx</li>
+<li>Restart Visual Studio</li>
+</ol>
+<h3>&quot;Project file not found&quot;</h3>
+<p><strong>Solution:</strong></p>
+<pre><code class="language-bash"># Ensure you&#39;re in correct directory
+cd &quot;WinUi ReWeave&quot;
+ls *.csproj  # Should list the .csproj file
+
+# Try explicit path
+dotnet build &quot;WinUi ReWeave.csproj&quot;
+</code></pre>
+<h3>&quot;Cannot open package&quot;</h3>
+<p><strong>Solution:</strong></p>
+<pre><code class="language-bash"># Run Visual Studio as Administrator
+# Right-click: Run as Administrator
+# Then open solution
+
+# Or rebuild from command line:
+dotnet clean
+dotnet restore
+dotnet build
+</code></pre>
+<h3>Build succeeds but app won&#39;t launch</h3>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Check platform matches (x86 vs x64)</li>
+<li>Ensure correct startup project selected</li>
+<li>Clean and rebuild:<pre><code class="language-bash">dotnet clean
+dotnet build
+</code></pre>
+</li>
+<li>Try launching from: <code>bin/x64/Debug/WinUi ReWeave.exe</code></li>
+</ol>
+<h3>&quot;Namespace not found&quot; errors after restore</h3>
+<p><strong>Solution:</strong></p>
+<pre><code class="language-bash"># Clean and restore
+dotnet clean
+dotnet restore
+
+# Restart Visual Studio
+# Then rebuild
+</code></pre>
+<h3>Certificate issues with MSIX</h3>
+<p><strong>Solution:</strong></p>
+<pre><code class="language-bash"># Remove old certificate
+Remove-Item certs/WinUiReWeave-Test.pfx
+
+# Create new certificate
+./scripts/create-test-certificate.ps1 -TrustOnThisMachine
+
+# Trust on current machine
+./scripts/trust-test-certificate.cmd
+
+# Rebuild package
+publish-msix.cmd
+</code></pre>
+<hr>
+<h2>Next Steps</h2>
+<ol>
+<li><strong>Complete setup</strong> following steps 1-4 above</li>
+<li><strong>Build</strong> the application</li>
+<li><strong>Run</strong> locally to verify</li>
+<li><strong>Run tests</strong> to ensure environment</li>
+<li><strong>Read</strong> <a href="03-DEVELOPER-GUIDE.html">Developer Guide</a></li>
+</ol>
+<p>For issues not covered here, see <a href="08-TROUBLESHOOTING.html">Troubleshooting Guide</a>.</p>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

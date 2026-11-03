@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ReWeave Export · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<p>﻿# Data Models &amp; Formats</p>
+<p>Complete reference for project file structures, data serialization, and model specifications.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#project-file-format">Project File Format</a></li>
+<li><a href="#fabric-simulation-spec">Fabric Simulation Spec</a></li>
+<li><a href="#weave-pattern-data">Weave Pattern Data</a></li>
+<li><a href="#yarn-specifications">Yarn Specifications</a></li>
+<li><a href="#simulation-results">Simulation Results</a></li>
+<li><a href="#importexport-formats">Import/Export Formats</a></li>
+<li><a href="#model-builder-packages">Model Builder Packages</a></li>
+</ol>
+<h2>Project File Format</h2>
+<h3>ReWeave Project (.weave)</h3>
+<p><strong>File Type:</strong> JSON-based with <code>.weave</code> extension</p>
+<p><strong>Storage Location:</strong></p>
+<pre><code>%AppData%\WinUi ReWeave\Projects\
+├── proj-123.weave
+├── proj-456.weave
+└── ...
+
+%AppData%\WinUi ReWeave\Recovery\    (Auto-saved backups)
+├── proj-123_recovery.weave
+└── ...
+</code></pre>
+<h3>Project File Structure</h3>
+<pre><code class="language-json">{
+  &quot;projectId&quot;: &quot;proj-2024-001&quot;,
+  &quot;projectType&quot;: &quot;FabricSimulation&quot;,
+  &quot;version&quot;: &quot;0.4.0&quot;,
+  &quot;metadata&quot;: {
+    &quot;name&quot;: &quot;My Weave Design&quot;,
+    &quot;description&quot;: &quot;Custom plain weave with cotton yarns&quot;,
+    &quot;created&quot;: &quot;2024-01-15T10:30:00Z&quot;,
+    &quot;lastModified&quot;: &quot;2024-01-15T14:45:00Z&quot;,
+    &quot;author&quot;: &quot;Your Name&quot;,
+    &quot;tags&quot;: [&quot;cotton&quot;, &quot;plain-weave&quot;, &quot;prototype&quot;],
+    &quot;thumbnail&quot;: &quot;base64-encoded-png-image&quot;
+  },
+  &quot;fabricSimulationSpec&quot;: {
+    &quot;weavePattern&quot;: { /* ... */ },
+    &quot;geometryParams&quot;: { /* ... */ },
+    &quot;yarns&quot;: [ /* ... */ ],
+    &quot;materials&quot;: [ /* ... */ ],
+    &quot;simulationOptions&quot;: { /* ... */ }
+  },
+  &quot;colorPalette&quot;: {
+    &quot;warpColors&quot;: [&quot;#FF0000&quot;, &quot;#00FF00&quot;, &quot;#0000FF&quot;],
+    &quot;weftColors&quot;: [&quot;#FFFF00&quot;, &quot;#FF00FF&quot;, &quot;#00FFFF&quot;]
+  },
+  &quot;uiState&quot;: {
+    &quot;currentViewMode&quot;: &quot;2D&quot;,
+    &quot;cameraPosition&quot;: { &quot;x&quot;: 0, &quot;y&quot;: 0, &quot;z&quot;: 10 },
+    &quot;zoomLevel&quot;: 1.0
+  }
+}
+</code></pre>
+<hr>
+<h2>Fabric Simulation Spec</h2>
+<p>Complete specification of fabric for simulation.</p>
+<h3>Schema</h3>
+<pre><code class="language-json">{
+  &quot;fabricSimulationSpec&quot;: {
+    &quot;weavePattern&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;description&quot;: &quot;2D weave interlacing pattern&quot;
+    },
+    &quot;geometryParams&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;description&quot;: &quot;3D geometry configuration&quot;
+    },
+    &quot;yarns&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;description&quot;: &quot;Array of yarn specifications&quot;,
+      &quot;items&quot;: { &quot;type&quot;: &quot;object&quot; }
+    },
+    &quot;materials&quot;: {
+      &quot;type&quot;: &quot;array&quot;,
+      &quot;description&quot;: &quot;Fiber material profiles&quot;,
+      &quot;items&quot;: { &quot;type&quot;: &quot;object&quot; }
+    },
+    &quot;simulationOptions&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;description&quot;: &quot;Solver and algorithm options&quot;
+    }
+  }
+}
+</code></pre>
+<h3>Full Example</h3>
+<pre><code class="language-json">{
+  &quot;weavePattern&quot;: {
+    &quot;name&quot;: &quot;Plain Weave&quot;,
+    &quot;width&quot;: 8,
+    &quot;height&quot;: 8,
+    &quot;patternRepeatUnit&quot;: 2,
+    &quot;gridData&quot;: [
+      [1, 0, 1, 0, 1, 0, 1, 0],
+      [0, 1, 0, 1, 0, 1, 0, 1],
+      [1, 0, 1, 0, 1, 0, 1, 0],
+      [0, 1, 0, 1, 0, 1, 0, 1],
+      [1, 0, 1, 0, 1, 0, 1, 0],
+      [0, 1, 0, 1, 0, 1, 0, 1],
+      [1, 0, 1, 0, 1, 0, 1, 0],
+      [0, 1, 0, 1, 0, 1, 0, 1]
+    ]
+  },
+  &quot;geometryParams&quot;: {
+    &quot;endsPerCm&quot;: 20.0,
+    &quot;picksPerCm&quot;: 18.0,
+    &quot;yarnPathModel&quot;: &quot;Peirce&quot;,
+    &quot;crimpFactor&quot;: 0.15,
+    &quot;warpYarnThickness&quot;: 0.5,
+    &quot;weftYarnThickness&quot;: 0.48,
+    &quot;fabricThickness&quot;: 0.8
+  },
+  &quot;yarns&quot;: [
+    {
+      &quot;id&quot;: &quot;warp&quot;,
+      &quot;name&quot;: &quot;Warp Yarn&quot;,
+      &quot;denier&quot;: 150,
+      &quot;linearDensity&quot;: 0.85,
+      &quot;crossSection&quot;: &quot;Round&quot;,
+      &quot;fiberRoughness&quot;: 0.15,
+      &quot;color&quot;: { &quot;r&quot;: 255, &quot;g&quot;: 0, &quot;b&quot;: 0, &quot;a&quot;: 255 }
+    },
+    {
+      &quot;id&quot;: &quot;weft&quot;,
+      &quot;name&quot;: &quot;Weft Yarn&quot;,
+      &quot;denier&quot;: 145,
+      &quot;linearDensity&quot;: 0.82,
+      &quot;crossSection&quot;: &quot;Round&quot;,
+      &quot;fiberRoughness&quot;: 0.12,
+      &quot;color&quot;: { &quot;r&quot;: 0, &quot;g&quot;: 0, &quot;b&quot;: 255, &quot;a&quot;: 255 }
+    }
+  ],
+  &quot;materials&quot;: [
+    {
+      &quot;id&quot;: &quot;cotton&quot;,
+      &quot;name&quot;: &quot;100% Cotton&quot;,
+      &quot;fiberType&quot;: &quot;Cellulose&quot;,
+      &quot;density&quot;: 1.54,
+      &quot;elasticity&quot;: 0.05,
+      &quot;dampingFactor&quot;: 0.1
+    }
+  ],
+  &quot;simulationOptions&quot;: {
+    &quot;solverType&quot;: &quot;ParticleSystem&quot;,
+    &quot;timeStep&quot;: 0.001,
+    &quot;convergenceTolerance&quot;: 1e-6,
+    &quot;maxIterations&quot;: 1000,
+    &quot;useGpuAcceleration&quot;: true,
+    &quot;threadCount&quot;: 4
+  }
+}
+</code></pre>
+<hr>
+<h2>Weave Pattern Data</h2>
+<h3>Format</h3>
+<pre><code class="language-csharp">public class WeavePatternData
+{
+    public string? Name { get; set; }
+    public int Width { get; set; }      // Number of warp ends
+    public int Height { get; set; }     // Number of weft picks
+    public int PatternRepeatUnit { get; set; }
+    public int[][]? GridData { get; set; }  // 1 = warp over, 0 = weft over
+    public string? Category { get; set; }
+    public Dictionary&lt;string, string&gt;? Metadata { get; set; }
+}
+</code></pre>
+<h3>Grid Data Explanation</h3>
+<p>Grid is 2D array where:</p>
+<ul>
+<li><code>1</code> = Warp yarn passes over weft yarn</li>
+<li><code>0</code> = Weft yarn passes over warp yarn</li>
+</ul>
+<p><strong>Plain Weave Example (2x2):</strong></p>
+<pre><code>[
+  [1, 0],
+  [0, 1]
+]
+
+Visual (top-down):
+  Warp
+  ↓
+  W w    (W = over, w = under)
+  w W
+  ↑
+  Weft
+</code></pre>
+<h3>Built-in Pattern Categories</h3>
+<p>Available patterns:</p>
+<ul>
+<li><code>&quot;PlainWeave&quot;</code></li>
+<li><code>&quot;TwillWeave&quot;</code></li>
+<li><code>&quot;SatinWeave&quot;</code></li>
+<li><code>&quot;RibWeave&quot;</code></li>
+<li><code>&quot;HoneycombWeave&quot;</code></li>
+<li><code>&quot;WaffleWeave&quot;</code></li>
+<li><code>&quot;HuckabackWeave&quot;</code></li>
+<li><code>&quot;VelvetWeave&quot;</code></li>
+<li><code>&quot;DamaskWeave&quot;</code></li>
+</ul>
+<hr>
+<h2>Yarn Specifications</h2>
+<h3>Complete Yarn Model</h3>
+<pre><code class="language-json">{
+  &quot;yarnSpecification&quot;: {
+    &quot;id&quot;: &quot;yarn-001&quot;,
+    &quot;name&quot;: &quot;Primary Yarn&quot;,
+    &quot;yarnSystem&quot;: &quot;Warp&quot;,
+    &quot;denier&quot;: 150,
+    &quot;linearDensity&quot;: 0.85,
+    &quot;crossSection&quot;: &quot;Oval&quot;,
+    &quot;crossSectionDimensions&quot;: {
+      &quot;majorAxis&quot;: 0.8,
+      &quot;minorAxis&quot;: 0.6
+    },
+    &quot;fiberRoughness&quot;: 0.15,
+    &quot;color&quot;: {
+      &quot;r&quot;: 255,
+      &quot;g&quot;: 0,
+      &quot;b&quot;: 0,
+      &quot;a&quot;: 255
+    },
+    &quot;material&quot;: {
+      &quot;fiberType&quot;: &quot;Polyester&quot;,
+      &quot;density&quot;: 1.38,
+      &quot;elasticity&quot;: 0.08,
+      &quot;dampingFactor&quot;: 0.12
+    },
+    &quot;properties&quot;: {
+      &quot;tensileStrength&quot;: 450.0,
+      &quot;elongationAtBreak&quot;: 25.0,
+      &quot;youngModulus&quot;: 1200.0
+    }
+  }
+}
+</code></pre>
+<h3>Cross-Section Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Use Case</th>
+<th>Properties</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Round</strong></td>
+<td>Natural fibers</td>
+<td>Most common, isotropic</td>
+</tr>
+<tr>
+<td><strong>Oval</strong></td>
+<td>Twisted yarns</td>
+<td>Realistic for most yarns</td>
+</tr>
+<tr>
+<td><strong>Ribbon</strong></td>
+<td>Flat wires, ribbons</td>
+<td>Non-isotropic, flat appearance</td>
+</tr>
+<tr>
+<td><strong>Rectangular</strong></td>
+<td>Industrial yarns</td>
+<td>Sharp edges, geometric</td>
+</tr>
+</tbody></table>
+<h3>Denier Reference</h3>
+<p>Common deniers:</p>
+<ul>
+<li><code>50</code> — Very fine (silk, lingerie)</li>
+<li><code>100</code> — Fine (dress fabrics)</li>
+<li><code>150</code> — Medium (common apparel)</li>
+<li><code>300</code> — Coarse (upholstery)</li>
+<li><code>600</code> — Very coarse (industrial)</li>
+</ul>
+<h3>Material Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Range</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Density</strong></td>
+<td>0.9-1.54</td>
+<td>g/cm³</td>
+</tr>
+<tr>
+<td><strong>Elasticity</strong></td>
+<td>0.0-0.5</td>
+<td>Dimensional change</td>
+</tr>
+<tr>
+<td><strong>Dampening</strong></td>
+<td>0.05-0.5</td>
+<td>Energy absorption</td>
+</tr>
+<tr>
+<td><strong>Roughness</strong></td>
+<td>0.0-1.0</td>
+<td>Surface texture</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Simulation Results</h2>
+<h3>Result Structure</h3>
+<pre><code class="language-json">{
+  &quot;simulationResult&quot;: {
+    &quot;metadata&quot;: {
+      &quot;simulationId&quot;: &quot;sim-2024-001&quot;,
+      &quot;timestamp&quot;: &quot;2024-01-15T14:45:00Z&quot;,
+      &quot;computationTime&quot;: 12.5,
+      &quot;isConverged&quot;: true,
+      &quot;convergenceError&quot;: 9.8e-7
+    },
+    &quot;geometry&quot;: {
+      &quot;vertexCount&quot;: 10240,
+      &quot;triangleCount&quot;: 3410,
+      &quot;vertices&quot;: [
+        { &quot;x&quot;: 0.0, &quot;y&quot;: 0.0, &quot;z&quot;: 0.0 },
+        { &quot;x&quot;: 0.1, &quot;y&quot;: 0.0, &quot;z&quot;: 0.05 }
+        // ... more vertices
+      ],
+      &quot;triangles&quot;: [
+        [0, 1, 2],
+        [1, 2, 3]
+        // ... more triangles
+      ]
+    },
+    &quot;analysis&quot;: {
+      &quot;fabricProperties&quot;: {
+        &quot;thickness&quot;: 0.8,
+        &quot;porosity&quot;: 0.45,
+        &quot;coverageFactor&quot;: 0.78,
+        &quot;airPermeability&quot;: 125.5,
+        &quot;tensileStrength&quot;: 180.0
+      },
+      &quot;stressData&quot;: [
+        12.5, 14.3, 11.8
+        // ... per vertex
+      ],
+      &quot;strainData&quot;: [
+        0.05, 0.04, 0.06
+        // ... per vertex
+      ]
+    }
+  }
+}
+</code></pre>
+<h3>Export Formats</h3>
+<p><strong>OBJ (3D Model):</strong></p>
+<pre><code class="language-obj"># ReWeave Export
+# Vertices
+v 0.0 0.0 0.0
+v 0.1 0.0 0.05
+v 0.2 0.0 0.0
+
+# Faces
+f 1 2 3
+f 2 3 4
+</code></pre>
+<p><strong>CSV (Analysis Data):</strong></p>
+<pre><code class="language-csv">Vertex,X,Y,Z,Stress,Strain
+1,0.0,0.0,0.0,12.5,0.05
+2,0.1,0.0,0.05,14.3,0.04
+3,0.2,0.0,0.0,11.8,0.06
+</code></pre>
+<hr>
+<h2>Import/Export Formats</h2>
+<h3>Supported Import Formats</h3>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Extension</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ReWeave</td>
+<td><code>.weave</code></td>
+<td>Native format</td>
+</tr>
+<tr>
+<td>Jacquard ASCII</td>
+<td><code>.asc</code></td>
+<td>Jacquard machine format</td>
+</tr>
+<tr>
+<td>Jacquard DUP</td>
+<td><code>.dup</code></td>
+<td>Jacquard designer format</td>
+</tr>
+<tr>
+<td>PNG/JPG</td>
+<td><code>.png/.jpg</code></td>
+<td>For color palette extraction</td>
+</tr>
+<tr>
+<td>SVG</td>
+<td><code>.svg</code></td>
+<td>Vector designs</td>
+</tr>
+</tbody></table>
+<h3>Supported Export Formats</h3>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Extension</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ReWeave</td>
+<td><code>.weave</code></td>
+<td>Project archival</td>
+</tr>
+<tr>
+<td>JSON</td>
+<td><code>.json</code></td>
+<td>Data interchange</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td><code>.csv</code></td>
+<td>Spreadsheet analysis</td>
+</tr>
+<tr>
+<td>SVG</td>
+<td><code>.svg</code></td>
+<td>2D visualization</td>
+</tr>
+<tr>
+<td>PNG/JPG</td>
+<td><code>.png/.jpg</code></td>
+<td>Image sharing</td>
+</tr>
+<tr>
+<td>OBJ</td>
+<td><code>.obj</code></td>
+<td>3D CAD import</td>
+</tr>
+<tr>
+<td>FBX</td>
+<td><code>.fbx</code></td>
+<td>Game engine import</td>
+</tr>
+<tr>
+<td>PDF</td>
+<td><code>.pdf</code></td>
+<td>Documentation</td>
+</tr>
+</tbody></table>
+<h3>Color Palette Format</h3>
+<pre><code class="language-json">{
+  &quot;colorPalette&quot;: {
+    &quot;name&quot;: &quot;Cotton Blend&quot;,
+    &quot;colors&quot;: [
+      {
+        &quot;name&quot;: &quot;Red&quot;,
+        &quot;hexValue&quot;: &quot;#FF0000&quot;,
+        &quot;rgba&quot;: { &quot;r&quot;: 255, &quot;g&quot;: 0, &quot;b&quot;: 0, &quot;a&quot;: 255 },
+        &quot;usage&quot;: &quot;warp&quot;
+      },
+      {
+        &quot;name&quot;: &quot;Blue&quot;,
+        &quot;hexValue&quot;: &quot;#0000FF&quot;,
+        &quot;rgba&quot;: { &quot;r&quot;: 0, &quot;g&quot;: 0, &quot;b&quot;: 255, &quot;a&quot;: 255 },
+        &quot;usage&quot;: &quot;weft&quot;
+      }
+    ]
+  }
+}
+</code></pre>
+<hr>
+<h2>Model Builder Packages</h2>
+<h3>Package Structure</h3>
+<pre><code class="language-json">{
+  &quot;modelBuilderPackage&quot;: {
+    &quot;metadata&quot;: {
+      &quot;packageId&quot;: &quot;pkg-2024-001&quot;,
+      &quot;name&quot;: &quot;Advanced Crimp Calculator&quot;,
+      &quot;version&quot;: &quot;1.0.0&quot;,
+      &quot;author&quot;: &quot;Your Name&quot;,
+      &quot;description&quot;: &quot;Calculates crimp factor based on yarn properties&quot;,
+      &quot;created&quot;: &quot;2024-01-15T10:30:00Z&quot;,
+      &quot;lastModified&quot;: &quot;2024-01-15T14:45:00Z&quot;
+    },
+    &quot;parameters&quot;: [
+      {
+        &quot;id&quot;: &quot;yarn_denier&quot;,
+        &quot;name&quot;: &quot;Yarn Denier&quot;,
+        &quot;type&quot;: &quot;number&quot;,
+        &quot;description&quot;: &quot;Yarn denier (weight)&quot;,
+        &quot;min&quot;: 50,
+        &quot;max&quot;: 1000,
+        &quot;default&quot;: 150,
+        &quot;unit&quot;: &quot;denier&quot;
+      },
+      {
+        &quot;id&quot;: &quot;thread_density&quot;,
+        &quot;name&quot;: &quot;Thread Density&quot;,
+        &quot;type&quot;: &quot;number&quot;,
+        &quot;description&quot;: &quot;Ends per centimeter&quot;,
+        &quot;min&quot;: 5,
+        &quot;max&quot;: 100,
+        &quot;default&quot;: 20,
+        &quot;unit&quot;: &quot;ends/cm&quot;
+      }
+    ],
+    &quot;governingEquations&quot;: [
+      {
+        &quot;id&quot;: &quot;eq-crimp&quot;,
+        &quot;name&quot;: &quot;Crimp Factor&quot;,
+        &quot;expression&quot;: &quot;0.2 * log(yarn_denier) * (thread_density / 20)&quot;,
+        &quot;description&quot;: &quot;Calculate crimp based on yarn properties&quot;
+      }
+    ],
+    &quot;outputs&quot;: [
+      {
+        &quot;id&quot;: &quot;out_crimp&quot;,
+        &quot;name&quot;: &quot;Crimp Factor&quot;,
+        &quot;equation&quot;: &quot;eq-crimp&quot;,
+        &quot;unit&quot;: &quot;ratio&quot;,
+        &quot;min&quot;: 0.0,
+        &quot;max&quot;: 1.0
+      }
+    ],
+    &quot;parameterPresets&quot;: [
+      {
+        &quot;name&quot;: &quot;Fine Cotton&quot;,
+        &quot;values&quot;: {
+          &quot;yarn_denier&quot;: 100,
+          &quot;thread_density&quot;: 30
+        }
+      },
+      {
+        &quot;name&quot;: &quot;Coarse Polyester&quot;,
+        &quot;values&quot;: {
+          &quot;yarn_denier&quot;: 300,
+          &quot;thread_density&quot;: 15
+        }
+      }
+    ]
+  }
+}
+</code></pre>
+<h3>Package Manifest</h3>
+<pre><code class="language-json">{
+  &quot;manifest&quot;: {
+    &quot;manifestVersion&quot;: &quot;1.0&quot;,
+    &quot;packageId&quot;: &quot;pkg-2024-001&quot;,
+    &quot;name&quot;: &quot;My Custom Model&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;author&quot;: &quot;Your Name&quot;,
+    &quot;license&quot;: &quot;MIT&quot;,
+    &quot;dependencies&quot;: [],
+    &quot;capabilities&quot;: [
+      &quot;EquationResolution&quot;,
+      &quot;ParameterBinding&quot;,
+      &quot;ViewerControls&quot;
+    ]
+  }
+}
+</code></pre>
+<h3>Validation Schema</h3>
+<p>Packages are validated against:</p>
+<ol>
+<li>Manifest correctness</li>
+<li>Equation syntax and validity</li>
+<li>Parameter ranges and types</li>
+<li>Output consistency</li>
+</ol>
+<hr>
+<h2>Data Type Reference</h2>
+<h3>Numeric Types</h3>
+<pre><code class="language-csharp">double        // 64-bit floating point (default for measurements)
+float         // 32-bit floating point
+decimal       // High precision (not used in simulation)
+int           // Integer count values
+</code></pre>
+<h3>Common Units</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Unit</th>
+<th>Range</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Denier</strong></td>
+<td>denier</td>
+<td>50-1000</td>
+</tr>
+<tr>
+<td><strong>Density</strong></td>
+<td>ends/cm or picks/cm</td>
+<td>5-100</td>
+</tr>
+<tr>
+<td><strong>Linear Density</strong></td>
+<td>g/cm</td>
+<td>0.01-2.0</td>
+</tr>
+<tr>
+<td><strong>Thickness</strong></td>
+<td>mm</td>
+<td>0.1-5.0</td>
+</tr>
+<tr>
+<td><strong>Crimp</strong></td>
+<td>ratio</td>
+<td>0.0-1.0</td>
+</tr>
+<tr>
+<td><strong>Elasticity</strong></td>
+<td>ratio</td>
+<td>0.0-1.0</td>
+</tr>
+<tr>
+<td><strong>Stress</strong></td>
+<td>MPa</td>
+<td>0-2000</td>
+</tr>
+<tr>
+<td><strong>Strain</strong></td>
+<td>ratio</td>
+<td>0.0-1.0</td>
+</tr>
+</tbody></table>
+<h3>Color Representation</h3>
+<pre><code class="language-json">{
+  &quot;colorRgba&quot;: {
+    &quot;r&quot;: 255,      // 0-255
+    &quot;g&quot;: 128,      // 0-255
+    &quot;b&quot;: 64,       // 0-255
+    &quot;a&quot;: 255       // 0-255 (0=transparent, 255=opaque)
+  },
+  &quot;colorHex&quot;: &quot;#FF8040&quot;
+}
+</code></pre>
+<hr>
+<p><strong>See Also:</strong> <a href="06-API-REFERENCE.html">API Reference</a>, <a href="04-ARCHITECTURE.html">Architecture</a></p>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

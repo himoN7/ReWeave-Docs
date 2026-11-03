@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Full clean build · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<p>﻿# Deployment &amp; Release</p>
+<p>Complete deployment procedures for building, packaging, and releasing ReWeave.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#release-planning">Release Planning</a></li>
+<li><a href="#build-process">Build Process</a></li>
+<li><a href="#msix-packaging">MSIX Packaging</a></li>
+<li><a href="#quality-checks">Quality Checks</a></li>
+<li><a href="#deployment-options">Deployment Options</a></li>
+<li><a href="#release-management">Release Management</a></li>
+<li><a href="#version-management">Version Management</a></li>
+</ol>
+<h2>Release Planning</h2>
+<h3>Release Cycle</h3>
+<p><strong>Semantic Versioning:</strong> <code>MAJOR.MINOR.PATCH</code></p>
+<ul>
+<li><strong>MAJOR:</strong> Breaking changes (0.x.x → 1.0.0)</li>
+<li><strong>MINOR:</strong> New features, backward compatible (0.3.0 → 0.4.0)</li>
+<li><strong>PATCH:</strong> Bug fixes, patches (0.4.0 → 0.4.1)</li>
+</ul>
+<h3>Release Schedule</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Frequency</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Major</strong></td>
+<td>Yearly</td>
+<td>0.x.x → 1.0.0</td>
+</tr>
+<tr>
+<td><strong>Minor</strong></td>
+<td>Monthly</td>
+<td>0.3.x → 0.4.0</td>
+</tr>
+<tr>
+<td><strong>Patch</strong></td>
+<td>As needed</td>
+<td>0.4.0 → 0.4.1</td>
+</tr>
+</tbody></table>
+<h3>Pre-Release Checklist</h3>
+<ul>
+<li><input disabled="" type="checkbox"> All tests pass (100% pass rate)</li>
+<li><input disabled="" type="checkbox"> Code coverage ≥75%</li>
+<li><input disabled="" type="checkbox"> No critical bugs open</li>
+<li><input disabled="" type="checkbox"> Documentation updated</li>
+<li><input disabled="" type="checkbox"> Performance validated</li>
+<li><input disabled="" type="checkbox"> Security review complete</li>
+<li><input disabled="" type="checkbox"> Translation/localization done</li>
+<li><input disabled="" type="checkbox"> User guide updated</li>
+</ul>
+<hr>
+<h2>Build Process</h2>
+<h3>Version Update</h3>
+<p><strong>Update in <code>WinUi ReWeave.csproj</code>:</strong></p>
+<pre><code class="language-xml">&lt;PropertyGroup&gt;
+    &lt;Version&gt;0.4.0&lt;/Version&gt;
+    &lt;AssemblyVersion&gt;0.4.0.0&lt;/AssemblyVersion&gt;
+    &lt;FileVersion&gt;0.4.0.0&lt;/FileVersion&gt;
+    &lt;InformationalVersion&gt;0.4.0&lt;/InformationalVersion&gt;
+    &lt;ApplicationDisplayVersion&gt;0.4.0&lt;/ApplicationDisplayVersion&gt;
+    &lt;ApplicationVersion&gt;40000&lt;/ApplicationVersion&gt;
+&lt;/PropertyGroup&gt;
+</code></pre>
+<p><strong>ApplicationVersion calculation:</strong></p>
+<pre><code>ApplicationVersion = MAJOR*10000 + MINOR*100 + PATCH
+Example: 0.4.0 → 0*10000 + 4*100 + 0 = 400
+</code></pre>
+<h3>Release Build</h3>
+<pre><code class="language-bash"># Full clean build
+dotnet clean
+dotnet restore
+
+# Build for x64
+dotnet build -c Release -p:Platform=x64
+
+# Build for x86
+dotnet build -c Release -p:Platform=x86
+
+# Build for ARM64 (on ARM64 machine)
+dotnet build -c Release -p:Platform=ARM64
+</code></pre>
+<h3>Build Verification</h3>
+<pre><code class="language-bash"># Check build output
+ls &quot;WinUi ReWeave/bin/x64/Release/net8.0-windows10.0.19041.0/&quot;
+
+# Expected files:
+# - WinUi ReWeave.exe
+# - WinUi ReWeave.dll
+# - Dependencies...
+</code></pre>
+<hr>
+<h2>MSIX Packaging</h2>
+<h3>Prerequisites</h3>
+<ol>
+<li><p><strong>Test Certificate:</strong></p>
+<pre><code class="language-bash">cd scripts
+./create-test-certificate.ps1 -TrustOnThisMachine
+# Creates: certs/WinUiReWeave-Test.pfx
+</code></pre>
+</li>
+<li><p><strong>Trust Certificate:</strong></p>
+<pre><code class="language-bash">./trust-test-certificate.cmd
+</code></pre>
+</li>
+</ol>
+<h3>Package Build Process</h3>
+<p><strong>Using Script:</strong></p>
+<pre><code class="language-bash">publish-msix.cmd
+</code></pre>
+<p><strong>Manual Process:</strong></p>
+<pre><code class="language-powershell"># Set environment
+$ProjectPath = &quot;WinUi ReWeave/WinUi ReWeave.csproj&quot;
+
+# Build MSIX bundle
+dotnet publish `
+  -c Release `
+  -f net8.0-windows10.0.19041.0 `
+  -p:GenerateAppxPackageOnBuild=true `
+  -p:AppxPackageSigningEnabled=true `
+  -p:PackageCertificateKeyFile=&quot;$(pwd)/certs/WinUiReWeave-Test.pfx&quot; `
+  -p:PackageCertificatePassword=&quot;ReWeaveTest&quot; `
+  &quot;$ProjectPath&quot;
+</code></pre>
+<h3>Package Output</h3>
+<p><strong>Location:</strong></p>
+<pre><code>WinUi ReWeave/AppPackages/
+└── WinUi ReWeave_0.4.0_x64_ARM64/
+    ├── WinUi ReWeave_0.4.0_x64_ARM64.msixbundle
+    ├── WinUi ReWeave_0.4.0_x64.msix
+    ├── WinUi ReWeave_0.4.0_arm64.msix
+    ├── Install.ps1
+    ├── Dependencies/
+    │   ├── x64/
+    │   ├── x86/
+    │   └── arm64/
+    └── ...
+</code></pre>
+<p><strong>Distribution File:</strong></p>
+<pre><code>dist/WinUi ReWeave_0.4.0_x64_ARM64.msixbundle
+</code></pre>
+<h3>Package Signing</h3>
+<p><strong>View Certificate:</strong></p>
+<pre><code class="language-powershell">Get-ChildItem Cert:\CurrentUser\My | 
+  Where-Object { $_.Subject -like &quot;*himpi*&quot; }
+</code></pre>
+<p><strong>Verify Signature:</strong></p>
+<pre><code class="language-powershell">Get-AuthenticodeSignature &quot;dist/WinUi ReWeave_0.4.0_x64_ARM64.msixbundle&quot;
+</code></pre>
+<hr>
+<h2>Quality Checks</h2>
+<h3>Pre-Deployment Testing</h3>
+<pre><code class="language-bash"># Run full test suite
+dotnet test --configuration Release
+
+# Run specific test category
+dotnet test --filter &quot;Category=Integration|Regression&quot;
+
+# Generate coverage report
+dotnet test /p:CollectCoverage=true /p:CoverageFormat=opencover
+
+# Performance validation
+dotnet test --filter &quot;Category=Stress&quot; -v normal
+</code></pre>
+<h3>Manual Testing Checklist</h3>
+<ul>
+<li><input disabled="" type="checkbox"> <strong>Install:</strong> Successfully install MSIX on clean Windows 10/11</li>
+<li><input disabled="" type="checkbox"> <strong>Startup:</strong> App launches without errors</li>
+<li><input disabled="" type="checkbox"> <strong>UI:</strong> All controls respond correctly</li>
+<li><input disabled="" type="checkbox"> <strong>Core Features:</strong><ul>
+<li><input disabled="" type="checkbox"> Can create new weave</li>
+<li><input disabled="" type="checkbox"> Can run 2D simulation</li>
+<li><input disabled="" type="checkbox"> Can run 3D simulation</li>
+<li><input disabled="" type="checkbox"> Can export data</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> <strong>Performance:</strong> No lag or freezing</li>
+<li><input disabled="" type="checkbox"> <strong>Stability:</strong> Run for 30+ minutes without crashes</li>
+<li><input disabled="" type="checkbox"> <strong>Settings:</strong> Settings persist across restarts</li>
+</ul>
+<h3>Security Checks</h3>
+<ul>
+<li><input disabled="" type="checkbox"> No hardcoded credentials</li>
+<li><input disabled="" type="checkbox"> No sensitive data logged</li>
+<li><input disabled="" type="checkbox"> All inputs validated</li>
+<li><input disabled="" type="checkbox"> Security review completed</li>
+</ul>
+<hr>
+<h2>Deployment Options</h2>
+<h3>Option 1: MSIX Bundle (Recommended)</h3>
+<p><strong>File:</strong> <code>WinUi ReWeave_0.4.0_x64_ARM64.msixbundle</code></p>
+<p><strong>Distribution Methods:</strong></p>
+<ul>
+<li>Website download</li>
+<li>GitHub releases</li>
+<li>Email</li>
+<li>Cloud storage</li>
+</ul>
+<p><strong>Installation:</strong></p>
+<pre><code class="language-powershell">Add-AppxPackage -Path &quot;WinUi ReWeave_0.4.0_x64_ARM64.msixbundle&quot;
+</code></pre>
+<h3>Option 2: Microsoft Store</h3>
+<p><strong>Submission Steps:</strong></p>
+<ol>
+<li><p><strong>Create Developer Account:</strong></p>
+<ul>
+<li>Visit <a href="https://partner.microsoft.com/dashboard">Partner Center</a></li>
+<li>Create account and app entry</li>
+</ul>
+</li>
+<li><p><strong>Update Package Manifest:</strong></p>
+<pre><code class="language-xml">&lt;Package&gt;
+    &lt;Identity Name=&quot;WinUiReWeave&quot; 
+               Publisher=&quot;CN=Hamed Rezaei&quot;/&gt;
+&lt;/Package&gt;
+</code></pre>
+</li>
+<li><p><strong>Upload Bundle:</strong></p>
+<ul>
+<li>Go to Partner Center</li>
+<li>Products → Your App → Packages</li>
+<li>Upload <code>.msixbundle</code></li>
+</ul>
+</li>
+<li><p><strong>Configure Store Listing:</strong></p>
+<ul>
+<li>Add screenshots</li>
+<li>Write description</li>
+<li>Set pricing</li>
+<li>Configure availability</li>
+</ul>
+</li>
+<li><p><strong>Submit for Certification:</strong></p>
+<ul>
+<li>Review submission</li>
+<li>Submit for Microsoft certification</li>
+<li>Wait 2-3 days for approval</li>
+</ul>
+</li>
+<li><p><strong>Monitor and Update:</strong></p>
+<ul>
+<li>Track downloads/ratings</li>
+<li>Respond to reviews</li>
+<li>Plan updates</li>
+</ul>
+</li>
+</ol>
+<h3>Option 3: Portable Executable</h3>
+<p><strong>Create Portable Build:</strong></p>
+<pre><code class="language-bash">dotnet publish \
+  -c Release \
+  -p:Platform=x64 \
+  -p:PublishUnpackagedExe=true \
+  -p:SelfContained=true \
+  -o ./publish-portable
+</code></pre>
+<p><strong>Output:</strong> Single <code>.exe</code> file with runtime included</p>
+<p><strong>Distribution:</strong> Direct <code>.exe</code> download (larger file, no installation needed)</p>
+<h3>Option 4: GitHub Releases</h3>
+<p><strong>Create Release:</strong></p>
+<pre><code class="language-bash"># Create tag
+git tag v0.4.0
+git push origin v0.4.0
+
+# Create release on GitHub
+# Add release notes
+# Upload:
+# - WinUi ReWeave_0.4.0_x64_ARM64.msixbundle
+# - WinUi-ReWeave-portable-0.4.0.exe
+# - sha256-checksums.txt
+</code></pre>
+<hr>
+<h2>Release Management</h2>
+<h3>Release Notes Template</h3>
+<pre><code class="language-markdown"># ReWeave 0.4.0
+
+**Release Date:** January 15, 2024
+
+## What&#39;s New
+
+### Features
+- ✨ Added Olofsson yarn model
+- ✨ Improved AI equation suggestions
+- ✨ New export formats (FBX, GLTF)
+
+### Improvements
+- 🚀 30% faster 3D simulation
+- 🎨 Enhanced UI responsiveness
+- 📚 Extended documentation
+
+### Bug Fixes
+- 🐛 Fixed memory leak in physics engine
+- 🐛 Corrected crimp factor calculation
+- 🐛 Resolved crashes on large grids
+
+## System Requirements
+- Windows 10 Build 1809+ / Windows 11
+- 4GB RAM
+- 500MB disk space
+
+## Installation
+[Download MSIX Bundle](link-to-bundle)
+
+## Known Issues
+- Large grids (&gt;256x256) may be slow on older hardware
+- GPU rendering requires up-to-date drivers
+
+## Upgrading
+Simply install the new version over existing installation.
+
+## Credits
+- **Producer:** Hamed Rezaei
+- **Contributors:** [List]
+</code></pre>
+<h3>Changelog Management</h3>
+<p><strong>File:</strong> <code>CHANGELOG.md</code></p>
+<pre><code class="language-markdown"># Changelog
+
+All notable changes to ReWeave are documented here.
+
+## [0.4.0] - 2024-01-15
+
+### Added
+- Olofsson yarn path model
+- AI-assisted equation builder enhancements
+- FBX and GLTF export formats
+
+### Changed
+- Performance optimizations for physics engine
+- Improved UI responsiveness
+
+### Fixed
+- Memory leak in simulation context
+- Incorrect crimp factor formula
+
+## [0.3.9] - 2024-01-01
+
+### Added
+- Model Builder parameters presets
+
+### Fixed
+- Export dialog not remembering last location
+</code></pre>
+<hr>
+<h2>Version Management</h2>
+<h3>Version Scheme</h3>
+<p><strong>Current:</strong> <code>0.4.0</code></p>
+<p><strong>Next Minor:</strong> <code>0.5.0</code> (new features)
+<strong>Next Patch:</strong> <code>0.4.1</code> (bug fixes)
+<strong>Next Major:</strong> <code>1.0.0</code> (breaking changes)</p>
+<h3>Update Paths</h3>
+<p><strong>0.3.x → 0.4.0:</strong></p>
+<ul>
+<li>Backward compatible</li>
+<li>Auto-migrate projects if needed</li>
+<li>Show migration notice</li>
+</ul>
+<p><strong>0.4.0 → 0.4.1:</strong></p>
+<ul>
+<li>No breaking changes</li>
+<li>Direct upgrade</li>
+<li>No data migration</li>
+</ul>
+<p><strong>0.4.x → 1.0.0:</strong></p>
+<ul>
+<li>Breaking changes possible</li>
+<li>Migration guide required</li>
+<li>Separate download recommended</li>
+</ul>
+<h3>Version Information</h3>
+<p><strong>Display Version:</strong></p>
+<pre><code class="language-xml">&lt;ApplicationDisplayVersion&gt;0.4.0&lt;/ApplicationDisplayVersion&gt;
+</code></pre>
+<p><strong>File Version:</strong></p>
+<pre><code class="language-xml">&lt;FileVersion&gt;0.4.0.0&lt;/FileVersion&gt;
+</code></pre>
+<p><strong>Query at Runtime:</strong></p>
+<pre><code class="language-csharp">var version = AppVersion.Current;  // &quot;0.4.0&quot;
+var buildDate = AppVersion.BuildDate;  // DateTime
+</code></pre>
+<hr>
+<h2>Rollback Procedure</h2>
+<p><strong>If Critical Issue Found:</strong></p>
+<ol>
+<li><p><strong>Immediate Actions:</strong></p>
+<pre><code class="language-bash"># Remove latest release
+git tag -d v0.4.0
+git push origin --delete v0.4.0
+</code></pre>
+</li>
+<li><p><strong>Revert to Previous:</strong></p>
+<pre><code class="language-bash">git revert HEAD
+git push origin main
+git tag v0.4.0-rollback
+</code></pre>
+</li>
+<li><p><strong>Notify Users:</strong></p>
+<ul>
+<li>GitHub issue with explanation</li>
+<li>Recommend downgrade</li>
+<li>Provide previous version download</li>
+</ul>
+</li>
+<li><p><strong>Investigation:</strong></p>
+<ul>
+<li>Root cause analysis</li>
+<li>Fix implementation</li>
+<li>Extensive testing</li>
+<li>New release (0.4.1)</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>Deployment Checklist</h2>
+<p><strong>Final Pre-Release:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Version number updated everywhere</li>
+<li><input disabled="" type="checkbox"> Changelog completed</li>
+<li><input disabled="" type="checkbox"> Release notes written</li>
+<li><input disabled="" type="checkbox"> All tests pass (100%)</li>
+<li><input disabled="" type="checkbox"> Code coverage ≥75%</li>
+<li><input disabled="" type="checkbox"> Performance validated</li>
+<li><input disabled="" type="checkbox"> Security review complete</li>
+<li><input disabled="" type="checkbox"> Documentation updated</li>
+<li><input disabled="" type="checkbox"> Build succeeds without warnings</li>
+<li><input disabled="" type="checkbox"> Package signed correctly</li>
+<li><input disabled="" type="checkbox"> Installation tested on clean system</li>
+<li><input disabled="" type="checkbox"> All features verified working</li>
+<li><input disabled="" type="checkbox"> No known critical bugs</li>
+<li><input disabled="" type="checkbox"> Package ready for distribution</li>
+</ul>
+<p><strong>Post-Release:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Release published</li>
+<li><input disabled="" type="checkbox"> Users notified</li>
+<li><input disabled="" type="checkbox"> GitHub released created</li>
+<li><input disabled="" type="checkbox"> Store listing updated</li>
+<li><input disabled="" type="checkbox"> Website updated</li>
+<li><input disabled="" type="checkbox"> Documentation deployed</li>
+<li><input disabled="" type="checkbox"> Monitoring enabled</li>
+<li><input disabled="" type="checkbox"> Support ready for issues</li>
+</ul>
+<hr>
+<p><strong>See Also:</strong> <a href="05-INSTALLATION-SETUP.html">Installation &amp; Setup</a>, <a href="10-TESTING-QUALITY.html">Testing &amp; Quality</a></p>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

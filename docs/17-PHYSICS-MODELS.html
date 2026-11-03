@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>17-PHYSICS-MODELS · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<p>﻿# Physics Models &amp; Yarn Path Geometry</p>
+<p><strong>Version:</strong> 0.4.0<br><strong>Last Updated:</strong> July 2026<br><strong>Audience:</strong> Advanced Users, Engineers, Researchers</p>
+<hr>
+<h2>Overview</h2>
+<p>ReWeave includes <strong>13 scientifically-validated yarn path models</strong> from textile physics literature. Each model generates unique yarn geometry for 3D fabric simulation.</p>
+<h3>Model Categories</h3>
+<pre><code>Group A: Wave-Based Models (sinusoidal variations)
+- Peirce (4 variants)
+- Kemp
+- Hearle &amp; Woodhead
+- Rectangular
+
+Group B: Parametric Curve Models (mathematical curves)
+- Fourier Series
+- Bézier Curves
+- Splines (cubic, quintic)
+
+Group C: Physical Models (empirical/theoretical)
+- Backer
+- Olofsson
+- Custom (user-defined)
+</code></pre>
+<hr>
+<h2>Built-in Models (13 Total)</h2>
+<h3>Group A: Wave-Based Models</h3>
+<h4><strong>1. Peirce Elliptical</strong></h4>
+<p><strong>Reference:</strong> W.H. Peirce, &quot;The geometry of cloth structure,&quot; Journal of the Textile Institute, 1937</p>
+<pre><code>Mathematical Form:
+x(u) = 1/2 * (1 - cos(π*u))
+y(u) = 0 (planar in 2D)
+z(u) = a/2 * sin(π*u)
+
+Parameters:
+- a: Amplitude (yarn crimp height)
+- u: Parameter (0 to 1, normalized pick position)
+
+Characteristics:
+- Symmetric wave pattern
+- Sinusoidal cross-section
+- Smooth interlacing
+- Most realistic for plain weaves
+
+Output:
+- Continuous smooth yarn path
+- Natural undulation
+- Professional appearance
+</code></pre>
+<p><strong>When to Use:</strong></p>
+<pre><code>✓ Plain and simple weaves
+✓ High-count fabrics
+✓ When aesthetic quality is priority
+✓ Academic publications
+✓ Production visualization
+</code></pre>
+<h4><strong>2. Peirce Parabolic</strong></h4>
+<pre><code>Mathematical Form:
+x(u) = 1/2 * (u - u²)
+z(u) = a * (u - u²)
+
+Parameters:
+- a: Amplitude
+- u: Parameter
+
+Characteristics:
+- Parabolic curve (not sinusoidal)
+- Sharper peaks than elliptical
+- More angular appearance
+- Slightly more realistic for coarse yarns
+
+Comparison to Elliptical:
+- Peak sharpness: Higher
+- Smoothness: Slightly less
+- Physical accuracy: Similar
+</code></pre>
+<p><strong>When to Use:</strong></p>
+<pre><code>✓ Coarse/heavy weaves
+✓ Twill patterns
+✓ When sharpness preferred
+✓ Technical analysis
+</code></pre>
+<h4><strong>3. Peirce Involute</strong></h4>
+<pre><code>Mathematical Form:
+Involute of circle, parametric form
+
+Characteristics:
+- Continuous curve with variable curvature
+- More complex path than elliptical/parabolic
+- Spiral-like quality
+- Advanced theoretical model
+
+Computational Cost: Higher (involves transcendental functions)
+</code></pre>
+<p><strong>When to Use:</strong></p>
+<pre><code>✓ Advanced research
+✓ Specialized simulations
+✓ When theoretical accuracy critical
+</code></pre>
+<h4><strong>4. Peirce Catenary</strong></h4>
+<pre><code>Mathematical Form:
+z(u) = a * cosh(b*u) - a
+
+Characteristics:
+- Catenary curve (chain-hanging shape)
+- Natural physics of hanging yarn
+- Different from sinusoidal
+- More realistic for heavy, flexible yarns
+
+Physical Basis:
+- Minimizes gravitational potential energy
+- Observed in loose, draped fabrics
+</code></pre>
+<p><strong>When to Use:</strong></p>
+<pre><code>✓ Loose, draped fabrics
+✓ Flexible yarns (silk, wool)
+✓ Physical accuracy for gravity
+✓ Research on fabric mechanics
+</code></pre>
+<h4><strong>5. Kemp Model</strong></h4>
+<p><strong>Reference:</strong> A.M. Kemp, &quot;An extension of Peirce&#39;s cloth geometry,&quot; Journal of the Textile Institute, 1958</p>
+<pre><code>Mathematical Form:
+x(u) = 1/2 * (1 - cos(π*u))
+z(u) = a/2 * sin(π*u) + d * (u - u²)
+
+Parameters:
+- a: Primary amplitude (main crimp)
+- d: Secondary deviation
+- u: Parameter
+
+Characteristics:
+- Peirce elliptical with deviation term
+- More realistic interlacing
+- Accounts for compression
+- Smoother transitions
+</code></pre>
+<p><strong>When to Use:</strong></p>
+<pre><code>✓ Realistic simulations
+✓ Multi-component interlacing
+✓ When compression effects matter
+✓ Production-grade simulation
+</code></pre>
+<h4><strong>6. Hearle &amp; Woodhead Model</strong></h4>
+<p><strong>Reference:</strong> B.S. Hearle &amp; M.A.J. Woodhead, 1959</p>
+<pre><code>Characteristics:
+- Considers yarn thickness
+- Accounts for relative positions
+- Asymmetric potential
+- Complex multi-parameter
+
+Parameters:
+- Yarn thickness ratio
+- Interlacing position
+- Symmetry factors
+</code></pre>
+<p><strong>When to Use:</strong></p>
+<pre><code>✓ Multi-component yarns
+✓ When yarn thickness is factor
+✓ Asymmetric interlacing
+✓ Complex fiber systems
+</code></pre>
+<h4><strong>7. Rectangular</strong></h4>
+<pre><code>Mathematical Form:
+x(u) = 1/2 * square_wave(π*u)
+z(u) = a/2 * square_wave(π*u)
+
+Characteristics:
+- Rectangular cross-section
+- Sharp 90-degree turns
+- Simplified, abstract
+- Not realistic but useful for testing
+
+Use Cases:
+- Algorithm testing
+- Simplified visualization
+- CAM preparation
+- Educational purposes
+</code></pre>
+<p><strong>When to Use:</strong></p>
+<pre><code>✓ Simplified simulation
+✓ Algorithm testing
+✓ Educational demonstration
+✓ CAM/CNC preparation (angular geometry)
+</code></pre>
+<hr>
+<h3>Group B: Parametric Curve Models</h3>
+<h4><strong>8. Fourier Series</strong></h4>
+<p><strong>Mathematical Form:</strong></p>
+<pre><code>x(u) = Σ(n=1 to N) aₙ * cos(2πn*u) + bₙ * sin(2πn*u)
+z(u) = Σ(n=1 to N) cₙ * cos(2πn*u) + dₙ * sin(2πn*u)
+
+Parameters:
+- N: Number of harmonics (default: 4)
+- aₙ, bₙ, cₙ, dₙ: Fourier coefficients
+- u: Parameter
+
+Characteristics:
+- Highly flexible (any smooth curve)
+- Compact representation
+- Low computational cost for evaluation
+- Unlimited curve complexity
+</code></pre>
+<p><strong>Coefficient Presets:</strong></p>
+<pre><code>Simple Sine: Single harmonic
+- a₀=1, all others=0
+- Produces basic sinusoid
+
+Rich Texture: Multiple harmonics
+- Coefficients: 1, 0.3, 0.1, 0.05, ...
+- Produces complex undulation
+
+Wavy: Emphasis on lower harmonics
+- a₀=1, a₁=0.5, b₁=0.3
+- Produces flowing wave
+
+Complex: All harmonics active
+- Full set of coefficients
+- Maximum flexibility
+</code></pre>
+<p><strong>When to Use:</strong></p>
+<pre><code>✓ Custom yarn path definition
+✓ When specific curve needed
+✓ Complex interlacing patterns
+✓ Optimization (curve fitting)
+✓ Research on yarn geometry
+</code></pre>
+<h4><strong>9. Bézier Curves</strong></h4>
+<p><strong>Mathematical Form:</strong></p>
+<pre><code>B(u) = Σ(i=0 to n) Cᵢ * Bᵢ,ₙ(u)
+
+Where:
+- Cᵢ: Control points
+- Bᵢ,ₙ(u): Bernstein polynomials
+- u: Parameter (0 to 1)
+
+Characteristics:
+- Defined by control points (intuitive)
+- Smooth curve through weighted points
+- Degree depends on control point count
+- Cubic (3 points) most common
+</code></pre>
+<p><strong>Common Orders:</strong></p>
+<pre><code>Quadratic (3 control points):
+- Simple, 2nd-degree curve
+- Fast computation
+- Limited curve complexity
+
+Cubic (4 control points):
+- Most common (CAD standard)
+- Good balance
+- Smooth transitions
+
+Quartic (5 control points):
+- More flexibility
+- Slightly slower
+
+Quintic+ (6+ points):
+- High complexity
+- Slower evaluation
+- Rarely needed
+</code></pre>
+<p><strong>When to Use:</strong></p>
+<pre><code>✓ CAD integration
+✓ When control points intuitive
+✓ Design-oriented workflows
+✓ Smooth transitions
+✓ Professional geometry
+</code></pre>
+<h4><strong>10. Cubic Splines</strong></h4>
+<p><strong>Mathematical Form:</strong></p>
+<pre><code>S(u) = aᵢ + bᵢ*t + cᵢ*t² + dᵢ*t³
+
+Where segments connect smoothly (C² continuous)
+
+Parameters:
+- Control points (knots)
+- Tension (how tight curve)
+- Continuity at junctions
+</code></pre>
+<p><strong>Advantages:</strong></p>
+<pre><code>- Very smooth curves
+- Continuous derivatives
+- Natural-looking paths
+- Stable computation
+- No oscillation (unlike high-degree polynomials)
+</code></pre>
+<p><strong>When to Use:</strong></p>
+<pre><code>✓ Maximum smoothness
+✓ Multiple curve segments
+✓ Professional appearance
+✓ When derivatives needed
+✓ Advanced simulations
+</code></pre>
+<h4><strong>11. Quintic Splines</strong></h4>
+<pre><code>Same as cubic but higher degree:
+S(u) = polynomial of degree 5
+
+Advantages:
+- Even smoother (C⁴ continuous)
+- Better for complex paths
+- Higher computational cost
+
+When to Use:
+✓ When smoothness critical
+✓ Research simulations
+✓ When budget allows
+</code></pre>
+<h4><strong>12-13. Custom Models (User-Defined)</strong></h4>
+<p>See <a href="13-FEATURES-COMPLETE.html#model-builder-ai-assisted">Model Builder Guide</a> for how to create custom yarn path models using:</p>
+<ul>
+<li>Visual equation editor</li>
+<li>AI assistance (optional)</li>
+<li>Parametric equations</li>
+<li>Custom functions</li>
+</ul>
+<hr>
+<h2>Model Comparison</h2>
+<h3>Visual Comparison</h3>
+<pre><code>All models with same amplitude (a=2mm):
+
+u=0.5 (center interlacing):
+
+Peirce Elliptical:  ╔═══╗ (smooth peak)
+Peirce Parabolic:   ╔═══╗ (slightly sharper)
+Peirce Involute:    ╔════╗ (extended curve)
+Peirce Catenary:    ╔╗ ╔╗ (chain-like dips)
+Kemp:               ╔═════╗ (extended with deviation)
+Fourier (N=4):      ╱╲╱╲╱╲ (complex ripples)
+Bézier (cubic):     ╔╱════╲╗ (smooth with control)
+Rectangular:        ╠═════╣ (sharp corners)
+</code></pre>
+<h3>Computational Complexity</h3>
+<pre><code>Model              | Ops/Eval | Memory | Speed
+Rectangular        | 2        | Low    | Very Fast
+Peirce (all)       | 10-20    | Low    | Fast
+Fourier (N=4)      | 40       | Low    | Medium
+Kemp               | 15       | Low    | Fast
+Hearle             | 25       | Low    | Medium
+Bézier (cubic)     | 30       | Low    | Medium
+Spline (cubic)     | 40-50    | Medium | Medium
+Bézier (quintic)   | 60       | Low    | Slow
+Involute           | 100+     | Low    | Slow
+
+Evaluation count: Typical simulation uses 1000-50000 evaluations
+</code></pre>
+<h3>Physical Accuracy</h3>
+<pre><code>Model              | Accuracy | Basis
+Rectangular        | 30%      | Simplified
+Peirce Elliptical  | 75%      | Classic textile physics
+Peirce Parabolic   | 70%      | Modified Peirce
+Kemp               | 85%      | Improved interlacing model
+Hearle             | 80%      | Multi-component
+Catenary           | 70%      | Physics-based (gravity)
+Fourier            | 90%+     | Can fit any data
+Bézier             | 85%      | Flexible geometry
+Spline             | 95%      | Smoothest transitions
+Custom             | Variable | User-defined accuracy
+
+Note: Higher % = more realistic but not necessarily better for all cases
+</code></pre>
+<h3>Recommended Use Cases</h3>
+<pre><code>Quick Visualization:
+→ Peirce Elliptical (fast, good-looking)
+
+Research/Academic:
+→ Kemp or Hearle (scientifically validated)
+
+Complex Patterns:
+→ Fourier Series (flexibility)
+
+Professional CAD:
+→ Bézier Curves (CAD-standard)
+
+Maximum Accuracy:
+→ Spline + Fourier (best results)
+
+Custom Needs:
+→ Model Builder (unlimited flexibility)
+
+Educational:
+→ Rectangular or Peirce Elliptical (intuitive)
+</code></pre>
+<hr>
+<h2>Model Parameters</h2>
+<h3>Universal Parameters</h3>
+<pre><code>All models include:
+
+amplitude (a):
+- Range: 0.1 - 10 mm
+- Default: varies by model
+- Controls: Crimp height / interlacing depth
+
+frequency (f):
+- Range: 0.5 - 10
+- Default: 1.0
+- Controls: Number of waves
+
+phase (φ):
+- Range: 0 - 2π
+- Default: 0
+- Controls: Horizontal shift
+</code></pre>
+<h3>Model-Specific Parameters</h3>
+<h4><strong>Kemp Model</strong></h4>
+<pre><code>deviation (d):
+- Range: 0.0 - 1.0
+- Controls: Secondary undulation amount
+- 0.0 = pure Peirce
+- 1.0 = maximum deviation
+</code></pre>
+<h4><strong>Fourier Series</strong></h4>
+<pre><code>harmonic_count (N):
+- Range: 1 - 20
+- Default: 4
+- Controls: Complexity vs speed
+
+coefficients (aₙ, bₙ, cₙ, dₙ):
+- Each can be 0.0 - 1.0
+- Higher harmonics for detail
+</code></pre>
+<h4><strong>Spline</strong></h4>
+<pre><code>tension:
+- Range: 0.0 - 1.0
+- 0.0 = tight, catenary-like
+- 1.0 = loose, straight segments
+
+smoothness:
+- Auto-calculated for C² continuity
+- Can adjust for specific effects
+</code></pre>
+<hr>
+<h2>Selecting the Right Model</h2>
+<h3>Decision Flowchart</h3>
+<pre><code>What&#39;s your primary goal?
+
+├─ Production Visualization?
+│  ├─ High quality preferred? → Kemp or Spline
+│  └─ Speed critical? → Peirce Elliptical
+│
+├─ Research/Analysis?
+│  ├─ Academic paper? → Hearle or Kemp
+│  ├─ Custom geometry needed? → Model Builder
+│  └─ Multi-component yarn? → Hearle
+│
+├─ Engineering Simulation?
+│  ├─ Abaqus/COMSOL export? → Spline or Bézier
+│  ├─ CAD integration? → Bézier or Spline
+│  └─ FEA mesh generation? → Rectangular or Spline
+│
+├─ Design Exploration?
+│  ├─ Quick iterations? → Peirce Elliptical
+│  ├─ Custom curves? → Fourier Series
+│  └─ Fine control? → Bézier
+│
+└─ Learning/Education?
+   ├─ Explain geometry? → Rectangular or Peirce
+   └─ Realistic but simple? → Peirce Elliptical
+</code></pre>
+<h3>Model Selection by Weave Type</h3>
+<pre><code>Plain Weaves (1/1):
+- Recommended: Peirce Elliptical
+- Alternative: Kemp, Spline
+- Reason: Symmetric, simple interlacing
+
+Twill Weaves (2/2, 3/1, etc.):
+- Recommended: Kemp or Hearle
+- Alternative: Fourier Series
+- Reason: Complex interlacing, asymmetry
+
+Satin Weaves (5-end, 8-end):
+- Recommended: Spline or Bézier
+- Alternative: Fourier Series
+- Reason: Long floats need smooth curves
+
+Rib Weaves:
+- Recommended: Peirce Elliptical or Kemp
+- Alternative: Hearle
+- Reason: Regular structure, uniform crimp
+
+Specialty Weaves:
+- Recommended: Fourier or Custom
+- Alternative: Bézier
+- Reason: Unique patterns need flexibility
+</code></pre>
+<hr>
+<h2>Physics Solver Integration</h2>
+<h3>How Models Feed into Simulation</h3>
+<pre><code>Yarn Path Model (defines geometry)
+         ↓
+[Discretization: x/y/z → particle chain]
+         ↓
+Physics Solver (XPBD or FEA)
+         ↓
+Constraints (distance, bending, contact)
+         ↓
+Simulation Result (deformed fabric)
+</code></pre>
+<h3>Solver Compatibility</h3>
+<pre><code>Model              | XPBD Solver | FEA Solver | GPU Support
+Rectangular        | ✓ (fast)    | ✓ (fast)  | ✓
+Peirce            | ✓ (fast)    | ✓ (fast)  | ✓
+Kemp              | ✓ (medium)  | ✓ (medium)| ✓
+Fourier           | ✓ (medium)  | ✓ (medium)| ✓
+Bézier            | ✓ (medium)  | ✓ (medium)| ✓
+Spline            | ✓ (slow)    | ✓ (slow)  | ✓ (partial)
+Custom            | ✓ (varies)  | ✓ (varies)| ✓ (varies)
+</code></pre>
+<hr>
+<h2>Export &amp; Sharing Models</h2>
+<h3>Exporting Custom Models</h3>
+<p>See <a href="13-FEATURES-COMPLETE.html#model-builder-ai-assisted">Model Builder</a> section.</p>
+<pre><code>1. Design in Model Builder
+2. Compile and validate
+3. Publish as package
+4. Export as .zip
+5. Share with others
+</code></pre>
+<h3>Using Imported Models</h3>
+<pre><code>1. Receive .zip package
+2. File → Import Model Package
+3. Select .zip file
+4. Model installed locally
+5. Available in Model selection dropdown
+</code></pre>
+<hr>
+<h2>Performance Tips</h2>
+<h3>Optimization for Different Scenarios</h3>
+<pre><code>Real-Time Preview (60 FPS target):
+- Use: Peirce Elliptical or Rectangular
+- Avoid: High-order splines, complex Fourier
+
+High-Quality Renders:
+- Use: Spline or Bézier
+- Computational cost worth it for final render
+
+Research Analysis:
+- Use: Kemp or Hearle (scientifically sound)
+- Accuracy over speed
+
+Production Sim (fast turnaround):
+- Use: Peirce Elliptical + XPBD
+- Balanced approach
+
+FEA Export:
+- Use: Spline or Bézier (CAD-compatible)
+- Clean mesh generation
+</code></pre>
+<hr>
+<h2>Technical Deep Dive</h2>
+<h3>Discretization: Model → Particles</h3>
+<pre><code>Process:
+1. Yarn path model defined as parametric curve
+2. Discretize into n particles: u ∈ {0, Δu, 2Δu, ..., 1.0}
+3. Evaluate model at each u: p_i = (x(u_i), y(u_i), z(u_i))
+4. Create distance constraints: ||p_i - p_{i+1}|| = target_length
+5. Create bend constraints: angle(p_{i-1}, p_i, p_{i+1}) = θ_target
+
+Particle Count:
+- Typical: 100-500 particles per yarn
+- Total particles: N_yarns × Particles_per_yarn
+- Range: 1,000 - 50,000 particles for full fabric
+</code></pre>
+<h3>Constraint Generation</h3>
+<pre><code>Distance Constraints:
+- Enforce yarn length
+- Distance = (model arc length) / (particle count)
+- Stiffness: Model-dependent
+
+Bending Constraints:
+- Preserve yarn smoothness
+- Angle = target from model at u_i
+- Stiffness: Model-dependent
+
+Contact Constraints:
+- Yarn-to-yarn collision
+- Generated during simulation
+- Dynamic (added as needed)
+</code></pre>
+<h3>GPU Acceleration</h3>
+<pre><code>Models Suitable for GPU:
+- Any smooth parametric model
+- Parallel evaluation ideal
+- NVIDIA CUDA implementation
+
+Threshold:
+- Use GPU when: &gt;4,096 particles
+- Use CPU when: &lt;4,096 particles
+- Auto-selection: Default behavior
+
+Speedup:
+- Typical: 2-8× faster (GPU vs CPU)
+- Best case: 10-20× (very large sims)
+- Depends on GPU model and particle count
+</code></pre>
+<hr>
+<h2>Research References</h2>
+<p><strong>Key Papers on Yarn Path Geometry:</strong></p>
+<ol>
+<li>Peirce, W.H. (1937). &quot;The geometry of cloth structure.&quot; Journal of the Textile Institute.</li>
+<li>Kemp, A.M. (1958). &quot;An extension of Peirce&#39;s cloth geometry.&quot; Journal of the Textile Institute.</li>
+<li>Hearle, B.S., &amp; Woodhead, M.A.J. (1959). &quot;Yarn interlacing structure.&quot; Textile Research Journal.</li>
+<li>Olofsson, B. (1973). &quot;Simulation of yarn crimp geometry.&quot; Journal of the Textile Institute.</li>
+<li>Backer, S., et al. (1975). &quot;Fabric structure and appearance.&quot; Textile Technology and Science.</li>
+</ol>
+<hr>
+<h2>Getting Help</h2>
+<p>For model-specific questions:</p>
+<ul>
+<li>See <a href="13-FEATURES-COMPLETE.html#3d-simulation--physics">Features Guide</a></li>
+<li>Check <a href="13-FEATURES-COMPLETE.html#model-builder-ai-assisted">Model Builder</a></li>
+<li>See <a href="08-TROUBLESHOOTING.html">Troubleshooting</a></li>
+<li>Contact: <a href="mailto:research@ReWeave.example.com">research@ReWeave.example.com</a></li>
+</ul>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

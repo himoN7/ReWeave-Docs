@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ReWeave User Guide · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<h1>ReWeave User Guide</h1>
+<p>Complete guide for using ReWeave to design, preview, and simulate fabrics.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#step-by-step-tutorials">Step-by-Step Tutorials</a></li>
+<li><a href="#main-sections">Main Sections</a></li>
+<li><a href="#weave-design">Weave Design</a></li>
+<li><a href="#2d--3d-simulation">2D &amp; 3D Simulation</a></li>
+<li><a href="#model-builder">Model Builder</a></li>
+<li><a href="#export--analysis">Export &amp; Analysis</a></li>
+<li><a href="#settings--preferences">Settings &amp; Preferences</a></li>
+<li><a href="#faqs">FAQs</a></li>
+</ol>
+<h2>Overview</h2>
+<p>ReWeave is a comprehensive fabric simulation tool designed for textile professionals and researchers. It enables:</p>
+<ul>
+<li><strong>Design</strong> custom weave patterns with an infinite canvas</li>
+<li><strong>Preview</strong> 2D yarn interlacing with realistic visualization</li>
+<li><strong>Simulate</strong> 3D fabric geometry using academic yarn path models</li>
+<li><strong>Analyze</strong> fabric properties and physics</li>
+<li><strong>Export</strong> designs in multiple formats</li>
+</ul>
+<h3>System Requirements</h3>
+<ul>
+<li><strong>OS:</strong> Windows 10 (Build 1809) or Windows 11</li>
+<li><strong>Architecture:</strong> x86, x64, or ARM64</li>
+<li><strong>Display:</strong> 1080p or higher recommended</li>
+<li><strong>RAM:</strong> 4GB minimum (8GB recommended)</li>
+</ul>
+<h2>Step-by-Step Tutorials</h2>
+<h3>Tutorial 1: Getting Started (10 minutes)</h3>
+<p><strong>Goal:</strong> Create and save your first fabric project</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li><p><strong>Launch the Application</strong></p>
+<ul>
+<li>Click the ReWeave icon on desktop or Start menu</li>
+<li>Wait for the app to load (first launch may take 30 seconds)</li>
+<li>You&#39;ll see the Home page with recent projects</li>
+</ul>
+</li>
+<li><p><strong>Create a New Project</strong></p>
+<ul>
+<li>Click the <strong>&quot;New Project&quot;</strong> button in the center</li>
+<li>Or use menu: File → New (Ctrl+N)</li>
+<li>A new blank project opens automatically</li>
+</ul>
+</li>
+<li><p><strong>Save Your Project</strong></p>
+<ul>
+<li>Click File → Save (Ctrl+S)</li>
+<li>Choose a location (default: <code>Documents/ReWeave Projects/</code>)</li>
+<li>Enter project name: &quot;My First Fabric&quot;</li>
+<li>Click <strong>Save</strong></li>
+<li>Notice the title bar now shows your project name</li>
+</ul>
+</li>
+<li><p><strong>Explore the Interface</strong></p>
+<ul>
+<li><strong>Left Sidebar:</strong> Navigation between pages (Home, Weave Design, Fabric Physics, etc.)</li>
+<li><strong>Top Menu Bar:</strong> File, Edit, View, Tools, Help menus</li>
+<li><strong>Right Panel:</strong> Properties and settings for current section</li>
+<li><strong>Canvas Area:</strong> Main editing area (center)</li>
+</ul>
+</li>
+<li><p><strong>Optional: Enable Auto-Save</strong></p>
+<ul>
+<li>Go to Settings (Ctrl+Comma)</li>
+<li>Find &quot;Backup &amp; Recovery&quot;</li>
+<li>Check &quot;Enable Auto-Save&quot;</li>
+<li>Set interval to &quot;Every 5 minutes&quot;</li>
+<li>Click <strong>Apply</strong></li>
+</ul>
+</li>
+</ol>
+<p><strong>✓ You&#39;ve created your first project!</strong></p>
+<hr>
+<h3>Tutorial 2: Design a Weave Pattern (15 minutes)</h3>
+<p><strong>Goal:</strong> Create a custom weave pattern using the interactive designer</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li><p><strong>Open Weave Design Page</strong></p>
+<ul>
+<li>Click <strong>Weave Design</strong> in the left sidebar</li>
+<li>You see the canvas grid and design tools</li>
+</ul>
+</li>
+<li><p><strong>Choose a Starting Point</strong></p>
+<p><strong>Option A - Start from Template (Recommended for beginners):</strong></p>
+<ul>
+<li>Click the <strong>Patterns</strong> button in top toolbar</li>
+<li>Select <strong>&quot;Plain Weave 1/1&quot;</strong> from the list</li>
+<li>Click <strong>Load Pattern</strong></li>
+<li>A basic weave pattern appears on the canvas</li>
+</ul>
+<p><strong>Option B - Start Blank:</strong></p>
+<ul>
+<li>Set grid size in the toolbar</li>
+<li>Enter Width: 8 and Height: 8 (for a simple 8×8 weave)</li>
+<li>Click <strong>Create Grid</strong></li>
+</ul>
+</li>
+<li><p><strong>Understand the Grid</strong></p>
+<ul>
+<li><strong>Warp (vertical threads):</strong> Columns</li>
+<li><strong>Weft (horizontal threads):</strong> Rows</li>
+<li><strong>Click a cell:</strong> Toggle whether warp crosses over weft (black) or under (white)</li>
+<li><strong>Current weave:</strong> Shows the draft pattern</li>
+</ul>
+</li>
+<li><p><strong>Modify the Pattern</strong></p>
+<ul>
+<li>Click several cells to create a different pattern (e.g., twill)</li>
+<li>Watch the pattern change in real-time</li>
+<li>Right-click a cell to see options (undo, flip, etc.)</li>
+</ul>
+</li>
+<li><p><strong>Set Thread Properties</strong></p>
+<ul>
+<li>In the right panel, find <strong>Yarn Properties</strong></li>
+<li>Set <strong>Thread Count:</strong> 20 ends/cm, 20 picks/cm</li>
+<li>Set <strong>Denier:</strong> 150 (medium yarn thickness)</li>
+<li>Set <strong>Fiber Type:</strong> Cotton (affects simulation)</li>
+</ul>
+</li>
+<li><p><strong>Add Colors</strong> (Optional)</p>
+<ul>
+<li>Click <strong>Colors</strong> in toolbar</li>
+<li>Select colors for warp and weft</li>
+<li>Click cells while color mode is active to paint the weave</li>
+<li>Creates a colored weave pattern</li>
+</ul>
+</li>
+<li><p><strong>Save Your Weave Design</strong></p>
+<ul>
+<li>Go to File → Save (Ctrl+S)</li>
+<li>Your design is saved to the current project</li>
+</ul>
+</li>
+</ol>
+<p><strong>✓ You&#39;ve created your first weave pattern!</strong></p>
+<hr>
+<h3>Tutorial 3: Preview Weave in 2D (10 minutes)</h3>
+<p><strong>Goal:</strong> See how your weave looks with realistic yarn visualization</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li><p><strong>Navigate to Fabric Physics</strong></p>
+<ul>
+<li>Click <strong>Fabric Physics</strong> in the left sidebar</li>
+<li>You see tabs for &quot;2D Simulation&quot; and &quot;3D Simulation&quot;</li>
+<li>Click the <strong>2D Simulation</strong> tab</li>
+</ul>
+</li>
+<li><p><strong>Load Your Weave</strong></p>
+<ul>
+<li>The system automatically loads your weave from Weave Design</li>
+<li>You see your weave pattern with yarn represented as ovals</li>
+</ul>
+</li>
+<li><p><strong>Understand the 2D View</strong></p>
+<ul>
+<li><strong>Warp Yarns:</strong> Vertical ovals showing how they interlace</li>
+<li><strong>Weft Yarns:</strong> Horizontal ovals</li>
+<li><strong>Colors:</strong> Reflect the colors you set in Weave Design</li>
+<li><strong>Density:</strong> Number of ends/cm and picks/cm shown in title</li>
+</ul>
+</li>
+<li><p><strong>Adjust 2D Parameters</strong></p>
+<ul>
+<li>In the right panel, find <strong>Yarn Parameters</strong></li>
+<li>Change <strong>Yarn Diameter:</strong> From 0.5 mm to 0.8 mm</li>
+<li>Watch the visualization update - yarns get thicker</li>
+<li>Try <strong>Fiber Roughness:</strong> Increase it to see texture effects</li>
+</ul>
+</li>
+<li><p><strong>Pan, Zoom, and Rotate</strong></p>
+<ul>
+<li><strong>Zoom:</strong> Mouse scroll wheel to zoom in/out</li>
+<li><strong>Pan:</strong> Middle mouse button + drag to move view</li>
+<li><strong>Reset View:</strong> Click <strong>Reset</strong> button in toolbar</li>
+<li><strong>Fullscreen:</strong> Press F11 to maximize the view</li>
+</ul>
+</li>
+<li><p><strong>Export the 2D View</strong></p>
+<ul>
+<li>Click <strong>Export</strong> button</li>
+<li>Choose <strong>&quot;Screenshot (PNG)&quot;</strong></li>
+<li>The 2D view is saved as PNG image</li>
+</ul>
+</li>
+</ol>
+<p><strong>✓ You&#39;ve previewed your weave in 2D!</strong></p>
+<hr>
+<h3>Tutorial 4: Run 3D Simulation (15 minutes)</h3>
+<p><strong>Goal:</strong> Simulate fabric 3D geometry and see how it drapes</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li><p><strong>Open 3D Simulation</strong></p>
+<ul>
+<li>In Fabric Physics page, click <strong>3D Simulation</strong> tab</li>
+<li>A 3D viewport appears with your weave structure</li>
+</ul>
+</li>
+<li><p><strong>Choose a Physics Model</strong></p>
+<ul>
+<li>In the right panel, find <strong>Yarn Path Model</strong></li>
+<li>Drop-down shows options:<ul>
+<li><strong>Peirce Elliptical</strong> - Most common, classical model (recommended for beginners)</li>
+<li><strong>Peirce Parabolic</strong> - Sharper yarn peaks</li>
+<li><strong>Fourier Series</strong> - Harmonic representation</li>
+<li><strong>Bézier Curves</strong> - Smooth interpolation</li>
+<li>Others available (Kemp, Hearle, etc.)</li>
+</ul>
+</li>
+<li>Select <strong>Peirce Elliptical</strong></li>
+</ul>
+</li>
+<li><p><strong>Understand the 3D View</strong></p>
+<ul>
+<li><strong>Warp yarns:</strong> Run vertically through the fabric</li>
+<li><strong>Weft yarns:</strong> Run horizontally</li>
+<li><strong>3D paths:</strong> Show realistic yarn interlacing</li>
+<li><strong>Geometry:</strong> Automatically calculated from physics model</li>
+</ul>
+</li>
+<li><p><strong>Configure Simulation Parameters</strong></p>
+<ul>
+<li>Find <strong>Solver Type:</strong> Choose &quot;XPBD&quot; (faster, real-time)</li>
+<li>Set <strong>Iterations:</strong> 10 (higher = more accurate but slower)</li>
+<li>Set <strong>Time Step:</strong> 0.016 (default, 60 FPS)</li>
+<li>Leave other parameters at defaults for now</li>
+</ul>
+</li>
+<li><p><strong>Run the Simulation</strong></p>
+<ul>
+<li>Click <strong>Run Simulation</strong> button (or press Space)</li>
+<li>The fabric is simulated, yarns adjust to physics</li>
+<li>Watch the simulation progress bar</li>
+<li>Once complete, you see the final 3D geometry</li>
+</ul>
+</li>
+<li><p><strong>Interact with the 3D Model</strong></p>
+<ul>
+<li><strong>Rotate:</strong> Right-click + drag to rotate</li>
+<li><strong>Pan:</strong> Middle-click + drag to move</li>
+<li><strong>Zoom:</strong> Mouse scroll to zoom in/out</li>
+<li><strong>Reset:</strong> Click <strong>Reset Camera</strong> button</li>
+<li><strong>Orthographic Views:</strong> Press:<ul>
+<li><strong>7</strong> for top view</li>
+<li><strong>1</strong> for front view</li>
+<li><strong>3</strong> for right view</li>
+<li><strong>0</strong> for isometric view</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Change Visualization</strong></p>
+<ul>
+<li>Find <strong>Display Options</strong></li>
+<li>Toggle:<ul>
+<li><strong>Show Warp Yarns</strong> (on/off)</li>
+<li><strong>Show Weft Yarns</strong> (on/off)</li>
+<li><strong>Show Mesh</strong> (on/off)</li>
+<li><strong>Wireframe Mode</strong> (see internal structure)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Export the 3D Model</strong></p>
+<ul>
+<li>Click <strong>Export</strong> in toolbar</li>
+<li>Choose format:<ul>
+<li><strong>OBJ</strong> - For 3D printing or CAD</li>
+<li><strong>STL</strong> - For 3D printing</li>
+<li><strong>PNG</strong> - Screenshot of current view</li>
+</ul>
+</li>
+<li>Select save location and format options</li>
+</ul>
+</li>
+</ol>
+<p><strong>✓ You&#39;ve completed a 3D fabric simulation!</strong></p>
+<hr>
+<h3>Tutorial 5: Analyze Fabric Properties (10 minutes)</h3>
+<p><strong>Goal:</strong> View calculated fabric properties and metrics</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li><p><strong>Open Fabric Analysis Page</strong></p>
+<ul>
+<li>Click <strong>Fabric Analysis</strong> in the left sidebar</li>
+<li>You see various calculated properties displayed</li>
+</ul>
+</li>
+<li><p><strong>View Calculated Properties</strong></p>
+<ul>
+<li><strong>Coverage Factor:</strong> Percentage of fabric covered by yarns</li>
+<li><strong>Crimp Percentage:</strong> Waviness in warp/weft (%)</li>
+<li><strong>Thickness:</strong> Estimated fabric thickness (mm)</li>
+<li><strong>Density:</strong> Yarn count and fabric density</li>
+<li><strong>Porosity:</strong> Air gaps in the fabric (%)</li>
+<li><strong>Weight:</strong> Calculated per square meter (g/m²)</li>
+</ul>
+</li>
+<li><p><strong>Understand the Analysis</strong></p>
+<ul>
+<li>Properties are automatically calculated from:<ul>
+<li>Your weave pattern</li>
+<li>Yarn properties (denier, diameter)</li>
+<li>Physics simulation results</li>
+</ul>
+</li>
+<li>These values help predict fabric behavior</li>
+</ul>
+</li>
+<li><p><strong>Compare Properties</strong></p>
+<ul>
+<li>If you&#39;ve saved multiple designs, click <strong>Compare</strong> tab</li>
+<li>Load a second design to compare</li>
+<li>See side-by-side property comparison</li>
+</ul>
+</li>
+<li><p><strong>Export Analysis Report</strong></p>
+<ul>
+<li>Click <strong>Export Report</strong> button</li>
+<li>Choose format:<ul>
+<li><strong>PDF</strong> - Professional report format</li>
+<li><strong>CSV</strong> - Spreadsheet data</li>
+<li><strong>JSON</strong> - Raw data for analysis</li>
+</ul>
+</li>
+<li>Report includes all calculated properties</li>
+</ul>
+</li>
+</ol>
+<p><strong>✓ You&#39;ve analyzed fabric properties!</strong></p>
+<hr>
+<h3>Tutorial 6: Use Model Builder for Custom Models (20 minutes)</h3>
+<p><strong>Goal:</strong> Create a custom yarn path model using the visual editor</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li><p><strong>Open Model Builder</strong></p>
+<ul>
+<li>Click <strong>Model Builder</strong> in the left sidebar</li>
+<li>You see the model editor interface</li>
+</ul>
+</li>
+<li><p><strong>Create a New Model</strong></p>
+<ul>
+<li>Click <strong>Create Model</strong> button</li>
+<li>Choose <strong>&quot;Start from Blank&quot;</strong></li>
+<li>A new model workspace opens</li>
+</ul>
+</li>
+<li><p><strong>Add Input Parameters</strong></p>
+<ul>
+<li>In the left panel, find <strong>Inputs</strong></li>
+<li>Click <strong>Add Parameter</strong></li>
+<li>Create parameter: Name = &quot;u&quot;, Type = &quot;Real&quot;, Min = 0, Max = 1</li>
+<li>This represents the position along the yarn (0 to 1)</li>
+<li>Click <strong>Add Parameter</strong> again</li>
+<li>Create parameter: Name = &quot;amplitude&quot;, Type = &quot;Real&quot;, Min = 0, Max = 1</li>
+<li>This controls yarn wave height</li>
+</ul>
+</li>
+<li><p><strong>Define the Yarn Path Equation</strong></p>
+<ul>
+<li>Find the <strong>Equations</strong> panel</li>
+<li>Click <strong>Add Equation</strong></li>
+<li>Name the output: &quot;x&quot; (horizontal position)</li>
+<li>Write equation: <code>u</code> (yarn moves horizontally as u changes)</li>
+<li>Click <strong>Save Equation</strong></li>
+</ul>
+</li>
+<li><p><strong>Add More Equations</strong></p>
+<ul>
+<li>Click <strong>Add Equation</strong> again</li>
+<li>Name output: &quot;z&quot; (vertical position)</li>
+<li>Write equation: <code>amplitude * sin(3.14159 * u)</code> (creates a wave)</li>
+<li>This creates the classic sinusoidal yarn path</li>
+</ul>
+</li>
+<li><p><strong>Test the Model</strong></p>
+<ul>
+<li>Click <strong>Test Model</strong> button</li>
+<li>A preview shows your yarn path</li>
+<li>Adjust amplitude slider to see it change</li>
+<li>The yarn should form a wave pattern</li>
+</ul>
+</li>
+<li><p><strong>Use AI Assistance</strong> (Optional)</p>
+<ul>
+<li>Click <strong>AI Suggest</strong> button</li>
+<li>Describe what you want: &quot;Create a catenary yarn path&quot;</li>
+<li>AI suggests equation: <code>amplitude * cosh(frequency * u) - amplitude</code></li>
+<li>Review the suggestion and click <strong>Accept</strong> to use it</li>
+</ul>
+</li>
+<li><p><strong>Publish Your Model</strong></p>
+<ul>
+<li>Once satisfied, click <strong>Publish Model</strong></li>
+<li>Give it a name: &quot;My Wave Model&quot;</li>
+<li>Add description: &quot;Custom sinusoidal yarn path&quot;</li>
+<li>Click <strong>Save to Library</strong></li>
+<li>Your model is now available in the physics models list!</li>
+</ul>
+</li>
+</ol>
+<p><strong>✓ You&#39;ve created a custom physics model!</strong></p>
+<hr>
+<h3>Tutorial 7: Export Your Work (10 minutes)</h3>
+<p><strong>Goal:</strong> Export your designs in various formats for different uses</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li><p><strong>Basic Export</strong></p>
+<ul>
+<li>Go to File → <strong>Export</strong> (Ctrl+E)</li>
+<li>Choose your export format:</li>
+</ul>
+</li>
+<li><p><strong>Export Weave Design (SVG)</strong></p>
+<ul>
+<li>Select format: <strong>SVG (2D Weave Draft)</strong></li>
+<li>Shows the weave pattern as scalable vector</li>
+<li>Great for sharing or printing</li>
+<li>Choose save location</li>
+<li>Click <strong>Export</strong></li>
+</ul>
+</li>
+<li><p><strong>Export 3D Model (OBJ)</strong></p>
+<ul>
+<li>Select format: <strong>OBJ (3D Mesh)</strong></li>
+<li>This exports the 3D geometry as 3D model file</li>
+<li>Can be opened in:<ul>
+<li>3D printing software (Cura, Prusaslicer)</li>
+<li>CAD software (FreeCAD, Fusion 360)</li>
+<li>Game engines (Unity, Unreal)</li>
+</ul>
+</li>
+<li>Choose save location</li>
+<li>Click <strong>Export</strong></li>
+</ul>
+</li>
+<li><p><strong>Export for 3D Printing (STL)</strong></p>
+<ul>
+<li>Select format: <strong>STL (3D Print)</strong></li>
+<li>Binary STL format (compact, efficient)</li>
+<li>Optimized for 3D printing</li>
+<li>Choose save location</li>
+<li>Click <strong>Export</strong></li>
+</ul>
+</li>
+<li><p><strong>Export Analysis Data (CSV)</strong></p>
+<ul>
+<li>Select format: <strong>CSV (Analysis Data)</strong></li>
+<li>Exports all calculated properties as spreadsheet</li>
+<li>Open with Excel or Google Sheets</li>
+<li>Great for data analysis or reporting</li>
+<li>Choose save location</li>
+<li>Click <strong>Export</strong></li>
+</ul>
+</li>
+<li><p><strong>Batch Export</strong> (If designed for loom)</p>
+<ul>
+<li>Select format: <strong>WIF (Weave Interchange Format)</strong></li>
+<li>Export to loom control software</li>
+<li>Choose save location</li>
+<li>Click <strong>Export</strong></li>
+</ul>
+</li>
+<li><p><strong>Check Export Settings</strong></p>
+<ul>
+<li>Before exporting, you can configure:<ul>
+<li><strong>Resolution:</strong> For image exports (DPI)</li>
+<li><strong>Color Space:</strong> RGB, CMYK, Grayscale</li>
+<li><strong>Compression:</strong> Quality level</li>
+</ul>
+</li>
+<li>Adjust these in <strong>Export Settings</strong> if needed</li>
+</ul>
+</li>
+</ol>
+<p><strong>✓ You&#39;ve exported your designs in multiple formats!</strong></p>
+<hr>
+<h3>Tutorial 8: Save and Manage Projects (10 minutes)</h3>
+<p><strong>Goal:</strong> Properly save, organize, and recover your work</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li><p><strong>Save Current Project</strong></p>
+<ul>
+<li>Click File → <strong>Save</strong> (Ctrl+S)</li>
+<li>Project saved to your current location</li>
+<li>Title bar shows project name</li>
+</ul>
+</li>
+<li><p><strong>Save As (Create New Version)</strong></p>
+<ul>
+<li>Click File → <strong>Save As</strong></li>
+<li>Enter new name: &quot;My Fabric v2&quot;</li>
+<li>Keep the old version intact</li>
+<li>New version is now active</li>
+</ul>
+</li>
+<li><p><strong>Auto-Save Configuration</strong></p>
+<ul>
+<li>Go to Settings (Ctrl+,)</li>
+<li>Find <strong>Backup &amp; Recovery</strong> section</li>
+<li>Enable <strong>Auto-Save</strong></li>
+<li>Set frequency: &quot;Every 5 minutes&quot;</li>
+<li>Changes are now automatically saved</li>
+<li>Click <strong>Apply</strong></li>
+</ul>
+</li>
+<li><p><strong>Create Manual Backup</strong></p>
+<ul>
+<li>Go to File → <strong>Backup</strong></li>
+<li>Choose backup location (external drive, cloud, etc.)</li>
+<li>A complete copy of your project is created</li>
+<li>Great before making major changes</li>
+</ul>
+</li>
+<li><p><strong>Open Recent Projects</strong></p>
+<ul>
+<li>Click File → <strong>Recent Files</strong></li>
+<li>You see list of recently opened projects</li>
+<li>Click one to open it quickly</li>
+</ul>
+</li>
+<li><p><strong>Recover from Crash</strong></p>
+<ul>
+<li>If app crashes, it shows recovery dialog on restart</li>
+<li>Choose <strong>Recover</strong> to restore last saved state</li>
+<li>Your work is preserved</li>
+</ul>
+</li>
+<li><p><strong>Organize Project Folder</strong></p>
+<ul>
+<li>Go to File → <strong>Open Folder</strong></li>
+<li>Navigate to <code>Documents/ReWeave Projects/</code></li>
+<li>You can:<ul>
+<li>Create subfolders for different projects</li>
+<li>Rename project files</li>
+<li>Copy/backup important files</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>✓ You&#39;ve learned project management!</strong></p>
+<hr>
+<h3>Tutorial 9: Configure Settings and Preferences (10 minutes)</h3>
+<p><strong>Goal:</strong> Customize the app to your preferences</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li><p><strong>Open Settings</strong></p>
+<ul>
+<li>Click Settings in the menu or press Ctrl+Comma</li>
+<li>Settings window opens with tabs</li>
+</ul>
+</li>
+<li><p><strong>Appearance Settings</strong></p>
+<ul>
+<li>Find <strong>Theme</strong> dropdown</li>
+<li>Choose: Light, Dark, or Auto (follows Windows settings)</li>
+<li>Toggle <strong>Mica Backdrop</strong> on/off (pretty background effect)</li>
+<li>Set <strong>Font Size:</strong> Default or increase for larger text</li>
+<li>Click <strong>Apply</strong></li>
+</ul>
+</li>
+<li><p><strong>Physics Defaults</strong></p>
+<ul>
+<li>Find <strong>Default Physics Model</strong></li>
+<li>Select your preferred yarn model (e.g., Peirce Elliptical)</li>
+<li>Set <strong>Default Solver:</strong> XPBD for speed, Shell for accuracy</li>
+<li>Set <strong>Default Iterations:</strong> 10-20 (higher = better quality)</li>
+<li>Click <strong>Apply</strong></li>
+</ul>
+</li>
+<li><p><strong>Performance Settings</strong></p>
+<ul>
+<li>Find <strong>GPU Acceleration</strong></li>
+<li>Enable for faster simulations (if you have dedicated graphics)</li>
+<li>Set <strong>Particle Count Threshold:</strong> Leave at default (50,000)</li>
+<li>Click <strong>Apply</strong></li>
+</ul>
+</li>
+<li><p><strong>Material Library</strong></p>
+<ul>
+<li>Find <strong>Material Settings</strong></li>
+<li>View available materials: Cotton, Silk, Polyester, Wool, etc.</li>
+<li>For each material, you see:<ul>
+<li>Density</li>
+<li>Stiffness</li>
+<li>Damping</li>
+</ul>
+</li>
+<li>These affect simulation behavior</li>
+</ul>
+</li>
+<li><p><strong>AI Assistant Settings</strong> (Optional)</p>
+<ul>
+<li>Find <strong>AI Assistant</strong></li>
+<li>Choose <strong>Provider:</strong><ul>
+<li><strong>Offline</strong> - Free, no internet needed (basic suggestions)</li>
+<li><strong>OpenAI</strong> - More advanced, requires API key</li>
+<li><strong>Ollama</strong> - Local LLM (advanced, requires setup)</li>
+</ul>
+</li>
+<li>Set <strong>Temperature:</strong> 0.5 (conservative) to 1.0 (creative)</li>
+<li>Click <strong>Apply</strong></li>
+</ul>
+</li>
+<li><p><strong>Advanced Settings</strong></p>
+<ul>
+<li>Find <strong>Advanced</strong> tab</li>
+<li><strong>Debug Logging:</strong> Enable if troubleshooting</li>
+<li><strong>Memory Limit:</strong> Set maximum RAM usage</li>
+<li><strong>Precision:</strong> Balance between speed and accuracy</li>
+<li>Click <strong>Apply</strong></li>
+</ul>
+</li>
+<li><p><strong>Save and Close</strong></p>
+<ul>
+<li>Click <strong>OK</strong> to save all changes</li>
+<li>Settings are remembered for next session</li>
+</ul>
+</li>
+</ol>
+<p><strong>✓ You&#39;ve configured your preferences!</strong></p>
+<hr>
+<h3>Tutorial 10: Complete Workflow (60 minutes)</h3>
+<p><strong>Goal:</strong> Complete an entire fabric design from start to export</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li><p><strong>Start New Project</strong> (5 minutes)</p>
+<ul>
+<li>Launch app or create new project (Ctrl+N)</li>
+<li>Save as &quot;Cotton Twill Project&quot; (Ctrl+S)</li>
+</ul>
+</li>
+<li><p><strong>Design Weave</strong> (15 minutes)</p>
+<ul>
+<li>Go to Weave Design</li>
+<li>Load &quot;Twill 2/2&quot; pattern template</li>
+<li>Customize:<ul>
+<li>Set thread count: 25 ends/cm, 25 picks/cm</li>
+<li>Set denier: 120 (fine cotton yarn)</li>
+<li>Set fiber type: Cotton</li>
+</ul>
+</li>
+<li>Apply colors: Red warp, White weft</li>
+<li>Save design</li>
+</ul>
+</li>
+<li><p><strong>Preview 2D</strong> (5 minutes)</p>
+<ul>
+<li>Go to Fabric Physics → 2D Simulation</li>
+<li>View your weave with realistic yarn visualization</li>
+<li>Adjust yarn diameter if needed</li>
+<li>Take screenshot for reference</li>
+</ul>
+</li>
+<li><p><strong>Run 3D Simulation</strong> (10 minutes)</p>
+<ul>
+<li>Go to Fabric Physics → 3D Simulation</li>
+<li>Choose model: Peirce Elliptical</li>
+<li>Set iterations: 15 (good quality)</li>
+<li>Run simulation</li>
+<li>Explore the 3D model by rotating and zooming</li>
+</ul>
+</li>
+<li><p><strong>Analyze Properties</strong> (5 minutes)</p>
+<ul>
+<li>Go to Fabric Analysis</li>
+<li>Review calculated properties:<ul>
+<li>Coverage factor</li>
+<li>Crimp percentage</li>
+<li>Thickness</li>
+<li>Weight</li>
+</ul>
+</li>
+<li>Export analysis as CSV for records</li>
+</ul>
+</li>
+<li><p><strong>Create Custom Model</strong> (10 minutes)</p>
+<ul>
+<li>Go to Model Builder</li>
+<li>Create a variant of your yarn model</li>
+<li>Add slight modifications to amplitude</li>
+<li>Test and publish as new model</li>
+</ul>
+</li>
+<li><p><strong>Export Results</strong> (10 minutes)</p>
+<ul>
+<li>Export as:<ul>
+<li>SVG (weave draft for records)</li>
+<li>OBJ (3D model for CAD)</li>
+<li>PNG (screenshot for sharing)</li>
+<li>CSV (data for analysis)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Final Save</strong> (5 minutes)</p>
+<ul>
+<li>Make sure everything is saved (Ctrl+S)</li>
+<li>Create backup: File → Backup</li>
+<li>Save backup to external drive</li>
+</ul>
+</li>
+</ol>
+<p><strong>✓ You&#39;ve completed a full fabric design workflow!</strong></p>
+<hr>
+<h2>Main Sections</h2>
+<h3>1. Home Page</h3>
+<p>The Home Page provides quick access to:</p>
+<ul>
+<li><strong>Recent Projects</strong> — Open previously saved projects</li>
+<li><strong>Quick Start</strong> — Template-based project creation</li>
+<li><strong>Feature Overview</strong> — Information about app capabilities</li>
+<li><strong>Links</strong> — Access to GitHub repository and producer portfolio</li>
+</ul>
+<p><strong>Navigation:</strong> Click &quot;Home&quot; in the sidebar or use the navigation menu.</p>
+<h3>2. Weave Design</h3>
+<p>Design custom weave patterns using the interactive weave designer.</p>
+<h4>Starting a New Weave</h4>
+<ol>
+<li>Click <strong>Weave Design</strong> in the sidebar</li>
+<li>Choose creation method:<ul>
+<li><strong>Blank Canvas</strong> — Start from scratch</li>
+<li><strong>Built-in Patterns</strong> — Select from 27 pre-made patterns:<ul>
+<li>Plain weave, twills (2/2, 3/1, etc.)</li>
+<li>Satins (4-harness, 5-harness, etc.)</li>
+<li>Ribs, honeycomb, waffle, huckaback, and more</li>
+</ul>
+</li>
+<li><strong>Import from File</strong> — Load existing weave specifications</li>
+</ul>
+</li>
+</ol>
+<h4>Design Features</h4>
+<p><strong>Canvas Controls:</strong></p>
+<ul>
+<li><strong>Pan:</strong> Click and drag with middle mouse button</li>
+<li><strong>Zoom:</strong> Mouse scroll wheel</li>
+<li><strong>Reset:</strong> Button in toolbar</li>
+</ul>
+<p><strong>Grid Editing:</strong></p>
+<ul>
+<li>Click cells to toggle warp/weft intersection</li>
+<li>Use color to distinguish different yarn systems</li>
+<li>Accent warp and transparent weft tiles available</li>
+</ul>
+<p><strong>Color Management:</strong></p>
+<ul>
+<li>Define color repeats independently for warp and weft</li>
+<li>Use color library or create custom swatches</li>
+<li>Save color presets for reuse</li>
+</ul>
+<h4>Weave Grid Properties</h4>
+<ul>
+<li><strong>Width/Height:</strong> Number of ends and picks</li>
+<li><strong>Pattern Repeat:</strong> Smallest repeating unit</li>
+<li><strong>Thread Count:</strong> Ends per cm, picks per cm</li>
+<li><strong>Yarn Properties:</strong> Denier, linear density</li>
+</ul>
+<h3>3. Fabric Physics Page</h3>
+<p>Advanced fabric physics simulation and analysis.</p>
+<h4>Physics Modes</h4>
+<ol>
+<li><p><strong>2D Simulation</strong></p>
+<ul>
+<li>Continuous yarn ovals with fiber roughness</li>
+<li>Density calculations in ends/cm</li>
+<li>Yarn interlacing preview</li>
+<li>Real-time parameter adjustment</li>
+</ul>
+</li>
+<li><p><strong>3D Simulation</strong></p>
+<ul>
+<li>Multiple yarn path models:<ul>
+<li><strong>Peirce Model</strong> — Classical geometric model</li>
+<li><strong>Kemp Model</strong> — Semi-empirical approach</li>
+<li><strong>Fourier Model</strong> — Harmonic representation</li>
+<li><strong>Bézier Model</strong> — Smooth curve interpolation</li>
+<li><strong>Backer Model</strong> — Wave-based geometry</li>
+<li><strong>Olofsson Model</strong> — Advanced parametric model</li>
+</ul>
+</li>
+<li>Fabric deformation under load</li>
+<li>Stress/strain analysis</li>
+<li>Interactive viewport with rotation and zoom</li>
+</ul>
+</li>
+</ol>
+<h4>Physics Parameters</h4>
+<p><strong>Yarn Properties:</strong></p>
+<ul>
+<li>Cross-section shape (oval, round, ribbon)</li>
+<li>Denier (thickness)</li>
+<li>Linear density (g/cm)</li>
+<li>Fiber roughness</li>
+</ul>
+<p><strong>Fabric Properties:</strong></p>
+<ul>
+<li>Thread density (ends/cm, picks/cm)</li>
+<li>Interlacing pattern</li>
+<li>Thickness</li>
+<li>Coverage factor</li>
+</ul>
+<p><strong>Simulation Settings:</strong></p>
+<ul>
+<li>Solver type (FEA, particle-based)</li>
+<li>Time step</li>
+<li>Convergence tolerance</li>
+<li>Material properties</li>
+</ul>
+<h4>Export Results</h4>
+<ul>
+<li><strong>Geometry Data</strong> — 3D mesh coordinates</li>
+<li><strong>Property Report</strong> — Calculated fabric properties</li>
+<li><strong>Visualization</strong> — Screenshots and animations</li>
+</ul>
+<h3>4. Model Builder</h3>
+<p>Create custom geometry models for fabric simulation using visual programming.</p>
+<h4>Getting Started with Models</h4>
+<ol>
+<li>Open <strong>Model Builder</strong> tab</li>
+<li>Choose:<ul>
+<li><strong>Create from Template</strong> — Start with predefined model</li>
+<li><strong>Create Blank</strong> — Build from scratch</li>
+</ul>
+</li>
+<li>Use the visual editor to define equations</li>
+</ol>
+<h4>Building Models</h4>
+<p><strong>Components:</strong></p>
+<ol>
+<li><strong>Input Parameters</strong> — User-configurable values</li>
+<li><strong>Governing Equations</strong> — Mathematical relationships</li>
+<li><strong>Output Results</strong> — Calculated values</li>
+</ol>
+<p><strong>Workflow:</strong></p>
+<ol>
+<li>Define input parameters (drag parameter blocks)</li>
+<li>Write governing equations using:<ul>
+<li>Mathematical operators (+, -, *, /, ^)</li>
+<li>Trigonometric functions (sin, cos, tan, etc.)</li>
+<li>Built-in constants (π, e, etc.)</li>
+</ul>
+</li>
+<li>Connect equations to outputs</li>
+<li>Test with sample values</li>
+<li>Save as publishable package</li>
+</ol>
+<p><strong>AI Assistance:</strong></p>
+<ul>
+<li>Use AI Suggest to get equation recommendations</li>
+<li>Request equation explanations</li>
+<li>Get validation feedback</li>
+<li>View suggested parameter ranges</li>
+</ul>
+<h4>Publishing Models</h4>
+<ol>
+<li>Validate all equations</li>
+<li>Set parameter presets</li>
+<li>Configure viewer controls (if exporting UI)</li>
+<li>Publish as package</li>
+<li>Share with other users</li>
+</ol>
+<h3>5. Fabric Analysis Page</h3>
+<p>Analyze and compare fabric properties.</p>
+<h4>Analysis Features</h4>
+<ul>
+<li><strong>Property Calculation</strong> — Automatic computation from parameters</li>
+<li><strong>Comparison Tools</strong> — Side-by-side property comparison</li>
+<li><strong>Export Reports</strong> — Generate analysis documents</li>
+<li><strong>Visualization</strong> — Graphs and charts of properties</li>
+</ul>
+<h4>Available Properties</h4>
+<ul>
+<li>Coverage factor</li>
+<li>Crimp percentage</li>
+<li>Thickness</li>
+<li>Density</li>
+<li>Porosity</li>
+<li>Air permeability (calculated)</li>
+<li>Tensile strength (estimated)</li>
+</ul>
+<h3>6. Export &amp; Output</h3>
+<h4>Export Formats</h4>
+<ol>
+<li><p><strong>Weave Specification</strong></p>
+<ul>
+<li><code>.weave</code> format (project file)</li>
+<li>SVG for 2D designs</li>
+<li>PDF for printing</li>
+</ul>
+</li>
+<li><p><strong>3D Geometry</strong></p>
+<ul>
+<li><code>.obj</code> — 3D mesh model</li>
+<li><code>.fbx</code> — Game engine format</li>
+<li><code>.step</code> — CAD format</li>
+</ul>
+</li>
+<li><p><strong>Data Export</strong></p>
+<ul>
+<li><code>.csv</code> — Property tables</li>
+<li><code>.json</code> — Complete project data</li>
+<li><code>.xml</code> — Structured report</li>
+</ul>
+</li>
+</ol>
+<h4>Export Settings</h4>
+<ul>
+<li>Resolution (DPI for images)</li>
+<li>File format options</li>
+<li>Compression levels</li>
+<li>Color space (RGB, CMYK)</li>
+<li>Include metadata</li>
+</ul>
+<h3>7. Settings &amp; Preferences</h3>
+<h4>Application Settings</h4>
+<p><strong>Appearance:</strong></p>
+<ul>
+<li>Theme (Light, Dark, Auto)</li>
+<li>Mica backdrop effects (enabled/disabled)</li>
+<li>Font size</li>
+<li>Color scheme customization</li>
+</ul>
+<p><strong>Physics:</strong></p>
+<ul>
+<li>Default solver</li>
+<li>FEA parameters</li>
+<li>Simulation time step</li>
+<li>Convergence criteria</li>
+</ul>
+<p><strong>Export:</strong></p>
+<ul>
+<li>Default export format</li>
+<li>Default location</li>
+<li>File naming conventions</li>
+</ul>
+<p><strong>Advanced:</strong></p>
+<ul>
+<li>Recovery autosave interval</li>
+<li>Calculation precision</li>
+<li>Memory limits</li>
+<li>Debug logging</li>
+</ul>
+<h4>Keyboard Shortcuts</h4>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl+N</td>
+<td>New project</td>
+</tr>
+<tr>
+<td>Ctrl+O</td>
+<td>Open project</td>
+</tr>
+<tr>
+<td>Ctrl+S</td>
+<td>Save project</td>
+</tr>
+<tr>
+<td>Ctrl+E</td>
+<td>Export</td>
+</tr>
+<tr>
+<td>Ctrl+Q</td>
+<td>Quit application</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>Run simulation</td>
+</tr>
+<tr>
+<td>F11</td>
+<td>Toggle fullscreen</td>
+</tr>
+<tr>
+<td>Ctrl+,</td>
+<td>Open settings</td>
+</tr>
+</tbody></table>
+<h2>FAQs</h2>
+<h3>Q: How do I start a new weave design?</h3>
+<p><strong>A:</strong> Click &quot;Weave Design&quot; → &quot;New&quot; → Select &quot;Blank Canvas&quot; or choose from templates.</p>
+<h3>Q: Can I import weave patterns from other software?</h3>
+<p><strong>A:</strong> Yes. Use the import feature in Weave Design and select a compatible weave file format.</p>
+<h3>Q: What&#39;s the difference between 2D and 3D simulation?</h3>
+<p><strong>A:</strong> 2D shows yarn cross-sections in the weave plane. 3D shows full 3D geometry with yarn paths and fabric structure.</p>
+<h3>Q: How do I export my design?</h3>
+<p><strong>A:</strong> Go to File → Export, choose format, configure settings, and select save location.</p>
+<h3>Q: Can I use my own yarn properties?</h3>
+<p><strong>A:</strong> Yes. In Fabric Physics, define custom yarn parameters (denier, density, roughness, etc.).</p>
+<h3>Q: Is there a way to batch process multiple projects?</h3>
+<p><strong>A:</strong> Currently, you must process projects individually. Batch processing is planned for a future release.</p>
+<h3>Q: How do I publish custom geometry models?</h3>
+<p><strong>A:</strong> Use Model Builder → Create/Edit Model → Validate → Publish as Package. See Model Builder section for details.</p>
+<h3>Q: What file formats are supported for import?</h3>
+<p><strong>A:</strong> <code>.weave</code>, <code>.asc</code>, <code>.dup</code> (Jacquard formats), and standard image formats for color sampling.</p>
+<h3>Q: Can I undo changes during design?</h3>
+<p><strong>A:</strong> Yes. Use Ctrl+Z (or Edit → Undo). Multiple undo levels are supported.</p>
+<h3>Q: How do I share my projects with colleagues?</h3>
+<p><strong>A:</strong> Export as <code>.weave</code> file or save with all dependencies. Share the file via email or file sharing service.</p>
+<h2>Support &amp; Feedback</h2>
+<p>For issues, feature requests, or feedback:</p>
+<ol>
+<li>Visit the <a href="https://github.com">GitHub Repository</a></li>
+<li>Check <a href="../README.html">Documentation</a></li>
+<li>Review <a href="08-TROUBLESHOOTING.html">Troubleshooting Guide</a></li>
+</ol>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

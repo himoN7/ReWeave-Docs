@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>04-ARCHITECTURE · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<p>﻿# ReWeave Architecture Overview</p>
+<p>Comprehensive architecture design document covering system structure, component relationships, and data flow.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#system-overview">System Overview</a></li>
+<li><a href="#architectural-patterns">Architectural Patterns</a></li>
+<li><a href="#component-architecture">Component Architecture</a></li>
+<li><a href="#data-flow">Data Flow</a></li>
+<li><a href="#physics-pipeline">Physics Pipeline</a></li>
+<li><a href="#project-file-structure">Project File Structure</a></li>
+<li><a href="#dependency-injection">Dependency Injection</a></li>
+<li><a href="#threading--concurrency">Threading &amp; Concurrency</a></li>
+</ol>
+<h2>System Overview</h2>
+<h3>High-Level Architecture</h3>
+<pre><code>┌─────────────────────────────────────────────────────┐
+│              WinUI Application Layer                 │
+│  (Views, Controls, Converters, Selectors)           │
+└──────────────┬──────────────────────────────────────┘
+               │
+┌──────────────▼──────────────────────────────────────┐
+│         MVVM ViewModel Layer                         │
+│  (MainViewModel, WeaveDesignViewModel, etc.)        │
+└──────────────┬──────────────────────────────────────┘
+               │
+┌──────────────▼──────────────────────────────────────┐
+│           Service Coordination Layer                 │
+│  (Coordinators, Managers, Service Facades)          │
+└──────────────┬──────────────────────────────────────┘
+               │
+┌──────────────▼──────────────────────────────────────┐
+│         Business Logic Services Layer                │
+│  (Simulation, FileIO, Import/Export, etc.)         │
+└──────────────┬──────────────────────────────────────┘
+               │
+┌──────────────▼──────────────────────────────────────┐
+│      Domain Models &amp; Data Structures                 │
+│  (FabricSimulationSpec, YarnSpec, etc.)            │
+└──────────────┬──────────────────────────────────────┘
+               │
+┌──────────────▼──────────────────────────────────────┐
+│     Physics Engine &amp; Core Algorithms                 │
+│  (ReWeave.Physics, Particle Systems, FEA)           │
+└─────────────────────────────────────────────────────┘
+</code></pre>
+<h3>Key Principles</h3>
+<ol>
+<li><strong>Separation of Concerns:</strong> Clear boundaries between UI, logic, and data</li>
+<li><strong>Dependency Injection:</strong> Services injected, not created directly</li>
+<li><strong>Reactive UI:</strong> UI automatically updates when data changes</li>
+<li><strong>Async/Await:</strong> Non-blocking operations, responsive UI</li>
+<li><strong>Testability:</strong> Interfaces and dependency injection enable mocking</li>
+<li><strong>Composability:</strong> Services combine to create complex workflows</li>
+</ol>
+<h2>Architectural Patterns</h2>
+<h3>1. MVVM (Model-View-ViewModel)</h3>
+<p><strong>Purpose:</strong> Separate UI from business logic</p>
+<p><strong>Structure:</strong></p>
+<pre><code>View (XAML)
+    ↓ (Binds to)
+ViewModel (ObservableObject)
+    ↓ (Uses)
+Services &amp; Models
+</code></pre>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>UI can be redesigned without code changes</li>
+<li>Logic can be tested without UI</li>
+<li>Multiple views can share same ViewModel</li>
+<li>Reactive updates via property change notification</li>
+</ul>
+<h3>2. Service-Oriented Architecture</h3>
+<p><strong>Purpose:</strong> Encapsulate reusable business logic</p>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Services implement specific interfaces</li>
+<li>Loosely coupled through interfaces</li>
+<li>Can be tested in isolation</li>
+<li>Composed into coordinators for complex workflows</li>
+</ul>
+<p><strong>Example Services:</strong></p>
+<pre><code class="language-csharp">// File I/O
+public interface IAppProjectFileIo { }
+
+// Simulation
+public interface IFabricPhysicsSimulationService { }
+
+// Import/Export
+public interface IFabricImagePaletteExtractor { }
+
+// Project Management
+public interface IAppProjectCoordinator { }
+</code></pre>
+<h3>3. Coordinator Pattern</h3>
+<p><strong>Purpose:</strong> Orchestrate multiple services for complex workflows</p>
+<p><strong>Structure:</strong></p>
+<pre><code class="language-csharp">public class MyCoordinator
+{
+    private readonly IServiceA _serviceA;
+    private readonly IServiceB _serviceB;
+    private readonly IServiceC _serviceC;
+    
+    public async Task ComplexWorkflowAsync()
+    {
+        var step1 = await _serviceA.DoWorkAsync();
+        var step2 = await _serviceB.ProcessAsync(step1);
+        var step3 = await _serviceC.FinalizeAsync(step2);
+        return step3;
+    }
+}
+</code></pre>
+<h3>4. Repository Pattern</h3>
+<p><strong>Purpose:</strong> Abstract data access</p>
+<p><strong>Current Implementation:</strong></p>
+<ul>
+<li>File-based persistence (JSON)</li>
+<li>Abstracted through <code>IAppProjectStore</code></li>
+<li>Could be replaced with database</li>
+</ul>
+<h3>5. Factory Pattern</h3>
+<p><strong>Purpose:</strong> Create complex objects</p>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-csharp">public class GeometryModelEvaluatorFactory
+{
+    public IGeometryModelEvaluator Create(GeometryModelSource source)
+    {
+        return source.Kind switch
+        {
+            ModelKind.BuiltIn =&gt; new BuiltInGeometryModelEvaluator(),
+            ModelKind.Package =&gt; new PackageGeometryModelEvaluator(),
+            _ =&gt; throw new ArgumentException()
+        };
+    }
+}
+</code></pre>
+<h3>6. Strategy Pattern</h3>
+<p><strong>Purpose:</strong> Encapsulate interchangeable algorithms</p>
+<p><strong>Example: Yarn Path Models</strong></p>
+<pre><code class="language-csharp">public interface IYarnPathModel
+{
+    Vector3[] CalculatePath(YarnSpecification spec);
+}
+
+// Multiple implementations
+public class PeirceYarnPathModel : IYarnPathModel { }
+public class KempYarnPathModel : IYarnPathModel { }
+public class FourierYarnPathModel : IYarnPathModel { }
+// ... etc
+</code></pre>
+<h2>Component Architecture</h2>
+<h3>Core Components</h3>
+<h4>1. Views &amp; Controls Layer</h4>
+<p><strong>Responsibility:</strong> Present UI and handle user input</p>
+<p><strong>Key Components:</strong></p>
+<ul>
+<li><code>HomePage</code> — Project overview and quick start</li>
+<li><code>WeaveDesignPage</code> — 2D design interface</li>
+<li><code>FabricPhysicsPage</code> — Physics simulation UI</li>
+<li><code>ModelBuilderPage</code> — Visual equation editor</li>
+<li><code>SimulationPage</code> — Advanced 3D simulation</li>
+<li>Custom Controls: Canvas, Viewport, GridEditor</li>
+</ul>
+<p><strong>Communication:</strong></p>
+<ul>
+<li>Binds to ViewModel properties</li>
+<li>Invokes ViewModel commands</li>
+<li>Handles navigation</li>
+</ul>
+<h4>2. ViewModel Layer</h4>
+<p><strong>Responsibility:</strong> Application state and user interaction logic</p>
+<p><strong>Key ViewModels:</strong></p>
+<pre><code>MainViewModel
+├── HomeViewModel
+├── WeaveDesignViewModel
+│   ├── WeaveDesignViewModel.Advanced
+│   └── WeaveDesignViewModel.Project
+├── FabricPhysicsViewModel
+│   └── FabricPhysicsViewModel.Patterns
+├── SimulationViewModel
+│   ├── SimulationViewModel.Camera
+│   ├── SimulationViewModel.Design
+│   ├── SimulationViewModel.Export
+│   ├── SimulationViewModel.Lifecycle
+│   ├── SimulationViewModel.OutputBuild
+│   ├── SimulationViewModel.Projects
+│   ├── SimulationViewModel.PublishedPackages
+│   ├── SimulationViewModel.RenderBindings
+│   ├── SimulationViewModel.SpecBindings
+│   ├── SimulationViewModel.ViewState
+│   └── SimulationViewModel.WeaveImport
+├── ModelBuilderPreviewViewModel
+├── FabricAnalysisViewModel
+└── SettingsViewModel
+</code></pre>
+<p><strong>Pattern:</strong> Partial classes for organization</p>
+<pre><code class="language-csharp">// SimulationViewModel.cs - Main class
+public partial class SimulationViewModel : ObservableObject { }
+
+// SimulationViewModel.Camera.cs - Separate concern
+public partial class SimulationViewModel
+{
+    // Camera-specific methods
+}
+</code></pre>
+<h4>3. Service Coordination Layer</h4>
+<p><strong>Services</strong> provide business logic and handle complex operations.</p>
+<p><strong>Key Services:</strong></p>
+<p><strong>Project Management:</strong></p>
+<ul>
+<li><code>AppProjectCoordinator</code> — Project lifecycle</li>
+<li><code>AppProjectFileIo</code> — File I/O</li>
+<li><code>AppProjectStore</code> — Project storage/retrieval</li>
+<li><code>AppProjectSession</code> — Session management</li>
+<li><code>AppProjectRecoveryService</code> — Auto-save &amp; recovery</li>
+</ul>
+<p><strong>Simulation &amp; Physics:</strong></p>
+<ul>
+<li><code>FabricPhysicsSimulationService</code> — Physics calculations</li>
+<li><code>FabricPhysicsSimulationWorker</code> — Background worker</li>
+<li><code>FabricPhysicsContext</code> — Simulation context</li>
+<li><code>FabricPhysicsValidationSuite</code> — Physics validation</li>
+</ul>
+<p><strong>Geometry &amp; Models:</strong></p>
+<ul>
+<li><code>BuiltInGeometryModelEvaluator</code> — Built-in models</li>
+<li><code>PackageGeometryModelEvaluator</code> — Custom models</li>
+<li><code>GeometryModelEvaluatorFactory</code> — Model factory</li>
+</ul>
+<p><strong>Model Builder (AI):</strong></p>
+<ul>
+<li><code>ModelBuilderAiAssistCoordinator</code> — AI orchestration</li>
+<li><code>ModelBuilderPackageCompiler</code> — Compilation</li>
+<li><code>ModelBuilderParameterBinder</code> — Parameter binding</li>
+<li><code>ModelBuilderExpressionEvaluator</code> — Expression evaluation</li>
+</ul>
+<p><strong>Import/Export:</strong></p>
+<ul>
+<li><code>FabricSimulationSpecSerializer</code> — JSON serialization</li>
+<li><code>FabricImagePaletteExtractor</code> — Image color extraction</li>
+<li>Export services for various formats</li>
+</ul>
+<p><strong>UI Infrastructure:</strong></p>
+<ul>
+<li><code>AppSettingsService</code> — User preferences</li>
+<li><code>HelixViewportCoordinator</code> — 3D viewport management</li>
+<li><code>SystemBackdropCoordinator</code> — Mica effects</li>
+</ul>
+<h4>4. Models &amp; Data Structures</h4>
+<p><strong>Purpose:</strong> Data contracts and domain entities</p>
+<p><strong>Key Models:</strong></p>
+<p><strong>Fabric Specification:</strong></p>
+<pre><code class="language-csharp">public class FabricSimulationSpec
+{
+    public WeavePatternData? WeavePattern { get; set; }
+    public FabricGeometryParams? GeometryParams { get; set; }
+    public YarnSpecification[]? Yarns { get; set; }
+    public FiberMaterialProfile[]? Materials { get; set; }
+}
+</code></pre>
+<p><strong>Yarn Definition:</strong></p>
+<pre><code class="language-csharp">public class YarnSpecification
+{
+    public string? Name { get; set; }
+    public double Denier { get; set; }
+    public double LinearDensity { get; set; }
+    public YarnCrossSectionKind CrossSection { get; set; }
+    public double FiberRoughness { get; set; }
+}
+</code></pre>
+<p><strong>Geometry Model:</strong></p>
+<pre><code class="language-csharp">public class FabricGeometryModel
+{
+    public string? Id { get; set; }
+    public GeometryModelSource Source { get; set; }
+    public FabricGeometryParams? Params { get; set; }
+}
+</code></pre>
+<p><strong>Project Document:</strong></p>
+<pre><code class="language-csharp">public class AppProjectDocument
+{
+    public string? ProjectId { get; set; }
+    public AppProjectType Type { get; set; }
+    public FabricSimulationSpec? FabricSpec { get; set; }
+    public Dictionary&lt;string, object&gt;? Metadata { get; set; }
+}
+</code></pre>
+<h4>5. Physics Engine</h4>
+<p><strong>Separate Project:</strong> <code>ReWeave.Physics</code></p>
+<p><strong>Components:</strong></p>
+<ul>
+<li><p><strong>Simulation Engines:</strong></p>
+<ul>
+<li><code>FabricSimulation2D</code> — 2D yarn simulation</li>
+<li><code>FabricSimulation3D</code> — 3D fabric simulation</li>
+</ul>
+</li>
+<li><p><strong>Particle System:</strong> Yarn modeled as particle sequences</p>
+</li>
+<li><p><strong>Constraint Solvers:</strong> Position and contact constraints</p>
+</li>
+<li><p><strong>Material Models:</strong> Fiber properties and behavior</p>
+</li>
+<li><p><strong>Topology:</strong> Yarn interlacing patterns</p>
+</li>
+<li><p><strong>Metrics:</strong> Property calculations</p>
+</li>
+</ul>
+<h2>Data Flow</h2>
+<h3>Typical User Workflow Data Flow</h3>
+<pre><code>User Input (UI)
+    ↓
+ViewModel Command Handler
+    ↓
+Service Call(s)
+    ↓
+Model/Data Processing
+    ↓
+Physics Engine (if applicable)
+    ↓
+Results returned to Service
+    ↓
+ViewModel updates Properties
+    ↓
+UI automatically refreshes (data binding)
+    ↓
+User sees results
+</code></pre>
+<h3>Example: Running a Simulation</h3>
+<pre><code>User clicks &quot;Run Simulation&quot; button
+    ↓
+SimulationViewModel.RunSimulationCommand executed
+    ↓
+Coordinator validates FabricSimulationSpec
+    ↓
+FabricPhysicsSimulationService.RunSimulationAsync(spec)
+    ↓
+Selects appropriate yarn path model (Peirce, Kemp, etc.)
+    ↓
+Physics engine calculates geometry (possibly GPU-accelerated)
+    ↓
+Results packaged into SimulationResult object
+    ↓
+ViewModel.SimulationResult = result
+    ↓
+UI bound to SimulationResult.Geometry, etc.
+    ↓
+Controls render updated visualization
+    ↓
+User sees 3D fabric in viewport
+</code></pre>
+<h2>Physics Pipeline</h2>
+<h3>Simulation Architecture</h3>
+<pre><code>Input Specification
+├── Fabric Geometry
+│   ├── Weave pattern
+│   ├── Thread density
+│   └── Yarn properties
+├── Material Properties
+│   ├── Fiber type
+│   ├── Denier
+│   └── Density
+└── Simulation Parameters
+    ├── Solver type
+    ├── Time step
+    └── Convergence criteria
+    ↓
+Geometry Model Selection
+├── Peirce geometric
+├── Kemp semi-empirical
+├── Fourier harmonic
+├── Bézier interpolation
+├── Backer wave-based
+└── Olofsson parametric
+    ↓
+Yarn Path Calculation
+├── Centerline geometry
+├── Cross-section
+└── Interlacing zones
+    ↓
+Constraint Setup
+├── Position constraints
+├── Contact constraints
+└── Material constraints
+    ↓
+Solver Execution
+├── Particle system
+├── FEA (optional)
+└── Iterative refinement
+    ↓
+Results Collection
+├── Vertex positions
+├── Stress/strain data
+├── Property calculations
+└── Visualization data
+    ↓
+Output Result
+</code></pre>
+<h3>Yarn Path Models</h3>
+<p><strong>Strategy Pattern Implementation:</strong></p>
+<pre><code class="language-csharp">public interface IYarnPathModel
+{
+    Vector3[] CalculatePath(
+        WeaveTileData tile,
+        YarnCrossSectionKind section,
+        FabricGeometryParams @params);
+}
+
+// Peirce: Classical geometric approximation
+public class PeirceYarnPathModel : IYarnPathModel { }
+
+// Kemp: Empirical enhancement
+public class KempYarnPathModel : IYarnPathModel { }
+
+// Fourier: Harmonic decomposition
+public class FourierYarnPathModel : IYarnPathModel { }
+
+// ... etc
+</code></pre>
+<h2>Project File Structure</h2>
+<h3>Project Persistence</h3>
+<p><strong>Format:</strong> JSON-based with metadata</p>
+<pre><code class="language-json">{
+  &quot;projectId&quot;: &quot;proj-123&quot;,
+  &quot;projectType&quot;: &quot;FabricSimulation&quot;,
+  &quot;version&quot;: &quot;0.4.0&quot;,
+  &quot;metadata&quot;: {
+    &quot;name&quot;: &quot;My Weave Design&quot;,
+    &quot;created&quot;: &quot;2024-01-15T10:30:00Z&quot;,
+    &quot;lastModified&quot;: &quot;2024-01-15T14:45:00Z&quot;,
+    &quot;thumbnail&quot;: &quot;base64...&quot;
+  },
+  &quot;fabricSimulationSpec&quot;: {
+    &quot;weavePattern&quot;: { ... },
+    &quot;geometryParams&quot;: { ... },
+    &quot;yarns&quot;: [ ... ],
+    &quot;materials&quot;: [ ... ]
+  }
+}
+</code></pre>
+<p><strong>Storage:</strong></p>
+<ul>
+<li><strong>Default Location:</strong> <code>%AppData%\WinUi ReWeave\Projects\</code></li>
+<li><strong>File Extension:</strong> <code>.weave</code></li>
+<li><strong>Backup Location:</strong> <code>%AppData%\WinUi ReWeave\Recovery\</code></li>
+</ul>
+<h2>Dependency Injection</h2>
+<h3>DI Container Setup</h3>
+<p><strong>Currently:</strong> Manual service creation in coordinators</p>
+<p><strong>Future:</strong> Microsoft.Extensions.DependencyInjection</p>
+<pre><code class="language-csharp">// Current pattern (manual)
+public class MyCoordinator
+{
+    private readonly IService1 _service1;
+    private readonly IService2 _service2;
+    
+    public MyCoordinator()
+    {
+        _service1 = new Service1();
+        _service2 = new Service2();
+    }
+}
+
+// Future pattern (DI)
+var services = new ServiceCollection();
+services.AddSingleton&lt;IService1, Service1&gt;();
+services.AddTransient&lt;IService2, Service2&gt;();
+var provider = services.BuildServiceProvider();
+
+var coordinator = provider.GetRequiredService&lt;MyCoordinator&gt;();
+</code></pre>
+<h3>Service Lifetimes</h3>
+<ul>
+<li><strong>Singleton:</strong> <code>AppSettingsService</code>, <code>AppProjectStore</code></li>
+<li><strong>Transient:</strong> Service instances for temporary work</li>
+<li><strong>Scoped:</strong> (Not currently used, but available for DI)</li>
+</ul>
+<h2>Threading &amp; Concurrency</h2>
+<h3>Main Thread (UI Thread)</h3>
+<p><strong>Responsibilities:</strong></p>
+<ul>
+<li>XAML rendering</li>
+<li>Event handling</li>
+<li>UI updates via DispatcherQueue</li>
+</ul>
+<p><strong>Access:</strong> <code>DispatcherQueue.GetForCurrentThread()</code></p>
+<h3>Background Threads</h3>
+<p><strong>Physics Simulation:</strong></p>
+<pre><code class="language-csharp">// Run off UI thread
+await Task.Run(async () =&gt; {
+    var result = await _physicsEngine.SimulateAsync(spec);
+    return result;
+});
+
+// Update UI on main thread
+this.DispatcherQueue.TryEnqueue(() =&gt; {
+    this.SimulationResult = result;
+});
+</code></pre>
+<p><strong>Pattern:</strong> Async/await with proper thread marshalling</p>
+<h3>Synchronization</h3>
+<ul>
+<li><strong>No explicit locks</strong> (async/await manages coordination)</li>
+<li><strong>UI updates</strong> marshalled to UI thread</li>
+<li><strong>Data</strong> immutable or thread-safe by design</li>
+</ul>
+<h2>Advanced Patterns</h2>
+<h3>Model Builder Pipeline</h3>
+<pre><code>User Creates Equation
+    ↓
+ExpressionTokenizer → Tokens
+    ↓
+ExpressionEvaluator → AST
+    ↓
+Compiler → IL
+    ↓
+Runtime Execution
+    ↓
+Results → ViewModel
+</code></pre>
+<h3>AI Assistance Flow</h3>
+<pre><code>User Request
+    ↓
+ModelBuilderAiPromptBuilder (construct prompt)
+    ↓
+IModelBuilderAiService (call AI)
+    ↓
+ModelBuilderAiResponseParser (parse response)
+    ↓
+ModelBuilderAiResponseValidator (validate)
+    ↓
+ModelBuilderAiSuggestionApplier (apply to UI)
+</code></pre>
+<h3>Recovery &amp; Auto-save</h3>
+<pre><code>Periodic Timer (configurable interval)
+    ↓
+AppProjectRecoveryService.AutoSaveAsync()
+    ↓
+Serialize current project state
+    ↓
+Write to recovery location
+    ↓
+Application crash
+    ↓
+Next launch: Detect recovery file
+    ↓
+Prompt user to recover
+    ↓
+Restore from recovery
+</code></pre>
+<hr>
+<h2>Design Patterns Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Usage</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MVVM</td>
+<td>UI architecture</td>
+<td>ViewModel + DataBinding</td>
+</tr>
+<tr>
+<td>Service-Oriented</td>
+<td>Business logic</td>
+<td>FabricPhysicsService</td>
+</tr>
+<tr>
+<td>Coordinator</td>
+<td>Complex workflows</td>
+<td>AppProjectCoordinator</td>
+</tr>
+<tr>
+<td>Repository</td>
+<td>Data access</td>
+<td>AppProjectStore</td>
+</tr>
+<tr>
+<td>Factory</td>
+<td>Object creation</td>
+<td>GeometryModelEvaluatorFactory</td>
+</tr>
+<tr>
+<td>Strategy</td>
+<td>Algorithms</td>
+<td>IYarnPathModel implementations</td>
+</tr>
+<tr>
+<td>Observer</td>
+<td>State changes</td>
+<td>ObservableProperty</td>
+</tr>
+<tr>
+<td>Command</td>
+<td>User actions</td>
+<td>RelayCommand</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>Next:</strong> See <a href="06-API-REFERENCE.html">API Reference</a> for service details.</p>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

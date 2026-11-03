@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Keyboard Shortcuts Reference (ReWeave) · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<h1>Keyboard Shortcuts Reference (ReWeave)</h1>
+<p><strong>Last Updated:</strong> July 2026<br><strong>Audience:</strong> All Users, Trainers, Support<br><strong>Platform:</strong> Windows (WinUI) only</p>
+<blockquote>
+<p><strong>Source of truth:</strong> shortcuts wired in the app (command bars / <code>MainWindow</code> / Weave Design <code>KeyDown</code>).<br>PowerToys Shortcut Guide: <code>docs/guides/powertoys/+ReWeave.en-US.yml</code> (install via <code>scripts/Install-PowerToysShortcutGuide.ps1</code>).<br>Older “planned” shortcuts below the Implemented section are <strong>not</strong> guaranteed.</p>
+</blockquote>
+<hr>
+<h2>Implemented shortcuts</h2>
+<h3>Workspace (global)</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Shortcut</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Search pages and commands</td>
+<td>Ctrl+K</td>
+</tr>
+<tr>
+<td>Save project</td>
+<td>Ctrl+S</td>
+</tr>
+<tr>
+<td>Save project as</td>
+<td>Ctrl+Shift+S</td>
+</tr>
+<tr>
+<td>New project</td>
+<td>Ctrl+N</td>
+</tr>
+<tr>
+<td>Open / import project</td>
+<td>Ctrl+O</td>
+</tr>
+</tbody></table>
+<h3>Weave Design</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Shortcut</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Undo / Redo</td>
+<td>Ctrl+Z / Ctrl+Y (also Ctrl+Shift+Z)</td>
+</tr>
+<tr>
+<td>Select all / Copy / Cut / Paste</td>
+<td>Ctrl+A / C / X / V</td>
+</tr>
+<tr>
+<td>Float check</td>
+<td>Ctrl+F</td>
+</tr>
+<tr>
+<td>Preview in fabric geometry</td>
+<td>Ctrl+Enter</td>
+</tr>
+<tr>
+<td>Mirror H / Mirror V / Rotate / Invert</td>
+<td>Ctrl+Shift+H / V / R / I</td>
+</tr>
+<tr>
+<td>Delete / Delete+collapse</td>
+<td>Delete / Shift+Delete</td>
+</tr>
+<tr>
+<td>Drawdown ↔ threading</td>
+<td>Tab</td>
+</tr>
+<tr>
+<td>Move hover cell</td>
+<td>Arrow keys</td>
+</tr>
+<tr>
+<td>Tools: Pan / Point / Straight / Line / Freehand / Eraser / Select</td>
+<td>H / P / S / L / F / E / A</td>
+</tr>
+<tr>
+<td>Extend selection to matching cells</td>
+<td>Q</td>
+</tr>
+<tr>
+<td>Clear in-progress draw</td>
+<td>Esc</td>
+</tr>
+<tr>
+<td>Threading shafts 1–10 / 11–20</td>
+<td>0–9 / Shift+0–9 (when threading focused)</td>
+</tr>
+</tbody></table>
+<h3>Fabric Geometry</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Shortcut</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Undo / Redo 2D weave</td>
+<td>Ctrl+Z / Ctrl+Y (Ctrl+Shift+Z)</td>
+</tr>
+<tr>
+<td>Save pattern to library</td>
+<td><strong>Ctrl+Alt+S</strong> (not Ctrl+S)</td>
+</tr>
+<tr>
+<td>Save pattern as</td>
+<td><strong>Ctrl+Alt+Shift+S</strong></td>
+</tr>
+<tr>
+<td>Reset weave to saved</td>
+<td>Ctrl+R</td>
+</tr>
+<tr>
+<td>Rebuild 3D preview</td>
+<td>F5</td>
+</tr>
+<tr>
+<td>Edit weave (open Weave Design)</td>
+<td>Ctrl+E</td>
+</tr>
+<tr>
+<td>2D preview: change pixels per cell</td>
+<td>Mouse wheel over fabric (1–64; rebuilds yarn detail)</td>
+</tr>
+<tr>
+<td>2D preview: view zoom only</td>
+<td>Ctrl+wheel or pinch (does not change yarn pixels)</td>
+</tr>
+</tbody></table>
+<h3>Fabric Physics</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Shortcut</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Simulate / pause (or Solve when Simulate hidden)</td>
+<td>Space</td>
+</tr>
+<tr>
+<td>Step</td>
+<td>F10</td>
+</tr>
+<tr>
+<td>Reset</td>
+<td>Ctrl+R</td>
+</tr>
+<tr>
+<td>Frame viewport</td>
+<td>F</td>
+</tr>
+</tbody></table>
+<h3>Unit Cell Strain Bench</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Shortcut</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Apply test protocol</td>
+<td>Ctrl+Enter</td>
+</tr>
+<tr>
+<td>Pause / resume</td>
+<td>Space</td>
+</tr>
+<tr>
+<td>Step</td>
+<td>F10</td>
+</tr>
+<tr>
+<td>Reset</td>
+<td>Ctrl+R</td>
+</tr>
+<tr>
+<td>Frame viewport</td>
+<td>F</td>
+</tr>
+<tr>
+<td>Export CSV</td>
+<td>Ctrl+Shift+E</td>
+</tr>
+</tbody></table>
+<h3>Fabric Analyzer</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Shortcut</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Import photo</td>
+<td>Ctrl+I</td>
+</tr>
+<tr>
+<td>Recognize weave</td>
+<td>Ctrl+Enter</td>
+</tr>
+<tr>
+<td>Extract palette region</td>
+<td>Ctrl+Shift+I</td>
+</tr>
+</tbody></table>
+<h3>Model Builder</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Shortcut</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Undo / Redo</td>
+<td>Ctrl+Z / Ctrl+Y (Ctrl+Shift+Z)</td>
+</tr>
+<tr>
+<td>Duplicate node</td>
+<td>Ctrl+D</td>
+</tr>
+<tr>
+<td>Delete node</td>
+<td>Delete</td>
+</tr>
+<tr>
+<td>Deselect</td>
+<td>Esc</td>
+</tr>
+</tbody></table>
+<h3>Motif layout dialog</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Shortcut</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Rotate tile +90°</td>
+<td>R (on focused assign control)</td>
+</tr>
+<tr>
+<td>Clear tile</td>
+<td>Delete / Backspace</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Conflict notes</h2>
+<ul>
+<li><strong>Ctrl+S</strong> always saves the <strong>project</strong>. Pattern-library save on Geometry is <strong>Ctrl+Alt+S</strong>.</li>
+<li><strong>Space / F / F10 / Ctrl+R</strong> are page-scoped (Physics vs Strain Bench vs Geometry) — same verbs where the action exists.</li>
+<li><strong>Ctrl+O</strong> opens a project globally; Analyzer photo import is <strong>Ctrl+I</strong>.</li>
+</ul>
+<hr>
+<h2>Planned / not wired</h2>
+<p>The remainder of historical draft content (page-nav Ctrl+1–8, customize-shortcuts Settings UI, Mac/Linux columns, fictional Physics keypad views, etc.) is <strong>not implemented</strong>. Prefer the tables above and the in-app Guides → Keyboard shortcuts expander.</p>
+<details>
+<summary>Legacy draft sections (archived, not authoritative)</summary><h3>File Operations (legacy draft)</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Shortcut</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>New from Template</td>
+<td>Ctrl+Shift+N</td>
+<td>Not wired</td>
+</tr>
+<tr>
+<td>Create Backup</td>
+<td>Ctrl+B</td>
+<td>Not wired</td>
+</tr>
+<tr>
+<td>Print</td>
+<td>Ctrl+P</td>
+<td>Not wired</td>
+</tr>
+<tr>
+<td>Exit App</td>
+<td>Alt+F4</td>
+<td>OS only</td>
+</tr>
+</tbody></table>
+<h3>Edit / View / Tools (legacy draft)</h3>
+<p>Many entries previously listed (Ctrl+D duplicate outside Model Builder, F11 fullscreen, Ctrl+, Settings, F1 Help, screenshot chords, etc.) are <strong>not</strong> app accelerators today.</p>
+</details>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

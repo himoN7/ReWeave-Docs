@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ensure you're up to date · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<p>﻿# Contributing Guidelines</p>
+<p>Guidelines for contributing to ReWeave.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#code-of-conduct">Code of Conduct</a></li>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#contribution-workflow">Contribution Workflow</a></li>
+<li><a href="#code-standards">Code Standards</a></li>
+<li><a href="#commit-guidelines">Commit Guidelines</a></li>
+<li><a href="#pull-request-process">Pull Request Process</a></li>
+<li><a href="#testing-requirements">Testing Requirements</a></li>
+</ol>
+<h2>Code of Conduct</h2>
+<h3>Our Commitment</h3>
+<p>We are committed to providing a welcoming and inspiring community for all. Please read and adhere to our Code of Conduct:</p>
+<ul>
+<li>Be respectful and inclusive</li>
+<li>Welcome diverse perspectives</li>
+<li>Assume good intent</li>
+<li>Focus on constructive feedback</li>
+<li>Report inappropriate behavior</li>
+</ul>
+<hr>
+<h2>Getting Started</h2>
+<h3>Prerequisites</h3>
+<ol>
+<li><strong>Fork the repository</strong> on GitHub</li>
+<li><strong>Clone your fork:</strong><pre><code class="language-bash">git clone https://github.com/YOUR_USERNAME/WinUi-ReWeave.git
+cd WinUi-ReWeave
+</code></pre>
+</li>
+<li><strong>Add upstream remote:</strong><pre><code class="language-bash">git remote add upstream https://github.com/ORIGINAL_OWNER/WinUi-ReWeave.git
+</code></pre>
+</li>
+<li><strong>Complete development setup</strong> — See <a href="05-INSTALLATION-SETUP.html">Installation &amp; Setup</a></li>
+</ol>
+<hr>
+<h2>Contribution Workflow</h2>
+<h3>1. Create Feature Branch</h3>
+<pre><code class="language-bash"># Ensure you&#39;re up to date
+git fetch upstream
+git checkout upstream/main
+git checkout -b feature/my-feature
+
+# Branch naming conventions:
+# feature/description        — New feature
+# bugfix/issue-name         — Bug fix
+# docs/document-name        — Documentation
+# refactor/component-name   — Refactoring
+# test/test-name           — Test additions
+</code></pre>
+<h3>2. Implement Changes</h3>
+<p><strong>Guidelines:</strong></p>
+<ul>
+<li>One feature per branch</li>
+<li>Keep commits focused and logical</li>
+<li>Write tests as you code</li>
+<li>Update documentation</li>
+</ul>
+<h3>3. Test Locally</h3>
+<pre><code class="language-bash"># Run all tests
+dotnet test
+
+# Run specific test project
+dotnet test ReWeave.AutomatedTests
+
+# Manual testing
+# F5 in Visual Studio to run and debug
+</code></pre>
+<h3>4. Commit Changes</h3>
+<p>See <a href="#commit-guidelines">Commit Guidelines</a> below.</p>
+<pre><code class="language-bash">git add .
+git commit -m &quot;feat: Add new simulation feature&quot;
+</code></pre>
+<h3>5. Push and Create PR</h3>
+<pre><code class="language-bash">git push origin feature/my-feature
+</code></pre>
+<p>Then create Pull Request on GitHub.</p>
+<hr>
+<h2>Code Standards</h2>
+<h3>Naming Conventions</h3>
+<pre><code class="language-csharp">// Classes: PascalCase
+public class FabricPhysicsService { }
+public interface ISimulationCache { }
+
+// Methods: PascalCase
+public async Task ProcessAsync() { }
+
+// Properties: PascalCase
+public string ProjectName { get; set; }
+
+// Private fields: _camelCase
+private string _buffer;
+
+// Constants: PascalCase or UPPER_SNAKE_CASE
+private const int MaxRetries = 3;
+public const double PI = 3.14159;
+
+// Local variables: camelCase
+var fabricSpec = project.FabricSpecification;
+</code></pre>
+<h3>File Organization</h3>
+<pre><code class="language-csharp">public class MyService
+{
+    // 1. Constants
+    private const int MaxSize = 100;
+    
+    // 2. Static fields
+    private static int _instanceCount;
+    
+    // 3. Instance fields
+    private readonly ILogger _logger;
+    private string? _buffer;
+    
+    // 4. Constructors
+    public MyService(ILogger logger) { }
+    
+    // 5. Properties
+    public string? Name { get; set; }
+    
+    // 6. Public methods
+    public async Task&lt;Result&gt; ExecuteAsync() { }
+    
+    // 7. Protected/internal methods
+    protected void LogMessage(string msg) { }
+    
+    // 8. Private methods
+    private void ValidateInput() { }
+    
+    // 9. Nested types
+    private record ResultData(string Value);
+}
+</code></pre>
+<h3>Documentation</h3>
+<p><strong>All public members must have XML documentation:</strong></p>
+<pre><code class="language-csharp">/// &lt;summary&gt;
+/// Simulates fabric physics with specified parameters.
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;spec&quot;&gt;Fabric specification.&lt;/param&gt;
+/// &lt;param name=&quot;options&quot;&gt;Simulation configuration.&lt;/param&gt;
+/// &lt;param name=&quot;cancellationToken&quot;&gt;Cancellation token.&lt;/param&gt;
+/// &lt;returns&gt;Simulation results with geometry and properties.&lt;/returns&gt;
+/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;If spec is null.&lt;/exception&gt;
+public async Task&lt;SimulationResult&gt; RunSimulationAsync(
+    FabricSimulationSpec spec,
+    SimulationOptions options,
+    CancellationToken cancellationToken = default)
+{
+    ArgumentNullException.ThrowIfNull(spec);
+    // Implementation
+}
+</code></pre>
+<h3>Code Style</h3>
+<p><strong>Prefer modern C# features:</strong></p>
+<pre><code class="language-csharp">// ✓ Good: Target-typed new
+var service = new FabricPhysicsService();
+
+// ✓ Good: Nullable reference types
+public string? GetName() =&gt; _name;
+
+// ✓ Good: Pattern matching
+var result = obj switch
+{
+    IService svc =&gt; await svc.ExecuteAsync(),
+    null =&gt; throw new ArgumentNullException(),
+    _ =&gt; HandleDefault()
+};
+
+// ✓ Good: Records for data
+public record FabricSpec(string Name, double Thickness);
+
+// ✓ Good: LINQ
+var items = data.Where(x =&gt; x.IsValid)
+                 .OrderBy(x =&gt; x.Name)
+                 .ToList();
+
+// ✗ Avoid: Older patterns
+var service = new FabricPhysicsService() as IService; // Use cast
+#nullable disable  // Use nullable types throughout
+</code></pre>
+<h3>Error Handling</h3>
+<p><strong>Validate early:</strong></p>
+<pre><code class="language-csharp">public void ProcessFabric(FabricSpec spec)
+{
+    ArgumentNullException.ThrowIfNull(spec);
+    
+    if (spec.Thickness &lt; 0)
+        throw new ArgumentException(&quot;Thickness must be positive&quot;);
+    
+    // Process...
+}
+</code></pre>
+<p><strong>Use specific exceptions:</strong></p>
+<pre><code class="language-csharp">// ✓ Good
+throw new ArgumentOutOfRangeException(nameof(density), &quot;Density must be between 0 and 1&quot;);
+
+// ✗ Avoid
+throw new Exception(&quot;Invalid density&quot;);
+</code></pre>
+<hr>
+<h2>Commit Guidelines</h2>
+<h3>Commit Message Format</h3>
+<pre><code>&lt;type&gt;: &lt;subject&gt;
+
+&lt;body&gt;
+
+&lt;footer&gt;
+</code></pre>
+<p><strong>Types:</strong></p>
+<ul>
+<li><code>feat</code> — New feature</li>
+<li><code>fix</code> — Bug fix</li>
+<li><code>docs</code> — Documentation changes</li>
+<li><code>style</code> — Code style (formatting, semicolons, etc.)</li>
+<li><code>refactor</code> — Code refactoring</li>
+<li><code>perf</code> — Performance improvement</li>
+<li><code>test</code> — Test additions</li>
+<li><code>chore</code> — Build, dependencies, tooling</li>
+</ul>
+<p><strong>Subject line:</strong></p>
+<ul>
+<li>Imperative mood (&quot;add&quot; not &quot;added&quot; or &quot;adds&quot;)</li>
+<li>Don&#39;t capitalize first letter</li>
+<li>No period at end</li>
+<li>Max 50 characters</li>
+</ul>
+<p><strong>Body:</strong></p>
+<ul>
+<li>Explain what and why, not how</li>
+<li>Wrap at 72 characters</li>
+<li>Separate from subject with blank line</li>
+</ul>
+<p><strong>Footer:</strong></p>
+<ul>
+<li>Reference issues: <code>Fixes #123</code></li>
+<li>Breaking changes: <code>BREAKING CHANGE: description</code></li>
+</ul>
+<h3>Examples</h3>
+<pre><code class="language-bash"># Good commits
+git commit -m &quot;feat: Add 3D Olofsson yarn model
+
+Implements the Olofsson yarn path model for advanced fabric geometry
+calculation. Includes parameter presets and validation.
+
+Fixes #234&quot;
+
+git commit -m &quot;fix: Correct crimp factor calculation
+
+The crimp factor was using incorrect formula. Updated to use
+proper empirical model from literature.
+
+Refs #456&quot;
+
+git commit -m &quot;docs: Update physics pipeline documentation&quot;
+
+git commit -m &quot;refactor: Extract geometry validation to service&quot;
+
+git commit -m &quot;test: Add FabricPhysicsService integration tests&quot;
+</code></pre>
+<hr>
+<h2>Pull Request Process</h2>
+<h3>Before Creating PR</h3>
+<ol>
+<li><p><strong>Update your branch:</strong></p>
+<pre><code class="language-bash">git fetch upstream
+git rebase upstream/main
+</code></pre>
+</li>
+<li><p><strong>Run tests:</strong></p>
+<pre><code class="language-bash">dotnet test
+</code></pre>
+</li>
+<li><p><strong>Check code style:</strong></p>
+<ul>
+<li>Visual Studio: Analyze → Run Code Analysis</li>
+<li>Command: <code>dotnet format --verify-no-changes</code></li>
+</ul>
+</li>
+<li><p><strong>Build solution:</strong></p>
+<pre><code class="language-bash">dotnet build -c Release
+</code></pre>
+</li>
+</ol>
+<h3>Creating PR</h3>
+<p><strong>Fill in PR template:</strong></p>
+<pre><code class="language-markdown">## Description
+Brief description of changes.
+
+## Type of Change
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Breaking change
+- [ ] Documentation update
+
+## Related Issues
+Fixes #123
+
+## Testing
+How was this tested?
+
+## Checklist
+- [ ] Tests pass
+- [ ] Documentation updated
+- [ ] Code follows style guide
+- [ ] No new warnings
+</code></pre>
+<h3>During Review</h3>
+<ul>
+<li>Respond promptly to feedback</li>
+<li>Make requested changes in new commits (don&#39;t force push)</li>
+<li>Request re-review after changes</li>
+<li>Be respectful and professional</li>
+</ul>
+<h3>Merging</h3>
+<ul>
+<li>PR must have approval from maintainer(s)</li>
+<li>All CI checks must pass</li>
+<li>Branch must be up to date with main</li>
+<li>Use &quot;Squash and merge&quot; for clean history</li>
+</ul>
+<hr>
+<h2>Testing Requirements</h2>
+<h3>Unit Tests</h3>
+<p><strong>Location:</strong> <code>ReWeave.AutomatedTests/Unit/</code></p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>Isolated test of single component</li>
+<li>No external dependencies (use mocks)</li>
+<li>Test one behavior per test</li>
+<li>Clear test names</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-csharp">[TestFixture]
+public class YarnSpecificationTests
+{
+    [Test]
+    public void Constructor_WithValidParams_CreatesInstance()
+    {
+        // Arrange
+        const double expectedDenier = 150;
+        
+        // Act
+        var yarn = new YarnSpecification { Denier = expectedDenier };
+        
+        // Assert
+        Assert.That(yarn.Denier, Is.EqualTo(expectedDenier));
+    }
+    
+    [Test]
+    public void Denier_WhenNegative_ThrowsException()
+    {
+        // Arrange
+        var yarn = new YarnSpecification();
+        
+        // Act &amp; Assert
+        Assert.Throws&lt;ArgumentException&gt;(() =&gt; yarn.Denier = -1);
+    }
+}
+</code></pre>
+<h3>Integration Tests</h3>
+<p><strong>Location:</strong> <code>ReWeave.AutomatedTests/Integration/</code></p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>Test interaction between components</li>
+<li>Can use real services</li>
+<li>Should still be relatively fast</li>
+</ul>
+<p><strong>Example:</strong></p>
+<pre><code class="language-csharp">[TestFixture]
+public class FabricSimulationIntegrationTests
+{
+    [Test]
+    public async Task RunSimulation_WithValidSpec_ReturnsResults()
+    {
+        // Arrange
+        var service = new FabricPhysicsSimulationService();
+        var spec = CreateValidSpec();
+        
+        // Act
+        var result = await service.RunSimulationAsync(spec);
+        
+        // Assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.VertexPositions, Is.Not.Empty);
+    }
+}
+</code></pre>
+<h3>Test Coverage Goals</h3>
+<ul>
+<li><strong>Services:</strong> ≥80% coverage</li>
+<li><strong>Utilities:</strong> ≥70% coverage</li>
+<li><strong>Critical paths:</strong> 100% coverage</li>
+<li><strong>Overall:</strong> ≥75% coverage</li>
+</ul>
+<h3>Running Tests</h3>
+<pre><code class="language-bash"># Run all tests
+dotnet test
+
+# Run with coverage
+dotnet test /p:CollectCoverage=true
+
+# Run specific category
+dotnet test --filter &quot;Category=Integration&quot;
+
+# Verbose output
+dotnet test -v normal
+</code></pre>
+<hr>
+<h2>Documentation Guidelines</h2>
+<h3>Inline Documentation</h3>
+<ul>
+<li>Use XML doc comments for public members</li>
+<li>Keep comments up-to-date with code</li>
+<li>Explain why, not what (code shows what)</li>
+</ul>
+<h3>File Documentation</h3>
+<ul>
+<li>Add file headers for complex files:<pre><code class="language-csharp">// &lt;summary&gt;
+// Handles fabric physics simulation calculations.
+// Supports multiple yarn path models and solver types.
+// &lt;/summary&gt;
+namespace WinUi_ReWeave.Services;
+</code></pre>
+</li>
+</ul>
+<h3>Updating External Docs</h3>
+<ul>
+<li>Update <a href="01-USER-GUIDE.html">User Guide</a> for user-facing changes</li>
+<li>Update <a href="03-DEVELOPER-GUIDE.html">Developer Guide</a> for code changes</li>
+<li>Update <a href="04-ARCHITECTURE.html">Architecture</a> for structural changes</li>
+</ul>
+<hr>
+<h2>Common Contribution Scenarios</h2>
+<h3>Adding a New Feature</h3>
+<ol>
+<li>Create feature branch: <code>git checkout -b feature/my-feature</code></li>
+<li>Add models in <code>Models/</code></li>
+<li>Create service interface and implementation</li>
+<li>Add ViewModel binding if UI-related</li>
+<li>Create XAML view or control</li>
+<li>Write unit tests</li>
+<li>Write integration tests</li>
+<li>Update documentation</li>
+<li>Create PR</li>
+</ol>
+<h3>Fixing a Bug</h3>
+<ol>
+<li>Create branch: <code>git checkout -b bugfix/issue-name</code></li>
+<li>Write failing test that reproduces bug</li>
+<li>Fix code until test passes</li>
+<li>Run full test suite to ensure no regressions</li>
+<li>Document the fix</li>
+<li>Create PR with issue reference</li>
+</ol>
+<h3>Refactoring</h3>
+<ol>
+<li>Ensure existing tests pass</li>
+<li>Create new tests if coverage needed</li>
+<li>Refactor in small, logical steps</li>
+<li>Keep each commit focused</li>
+<li>Verify tests still pass after each change</li>
+<li>Document any API changes</li>
+</ol>
+<hr>
+<h2>Support &amp; Questions</h2>
+<ul>
+<li><strong>GitHub Issues</strong> — Bug reports and feature requests</li>
+<li><strong>Discussions</strong> — General questions and ideas</li>
+<li><strong>Documentation</strong> — Check docs first for common questions</li>
+</ul>
+<hr>
+<p>Thank you for contributing to ReWeave! 🧵</p>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

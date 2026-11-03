@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ensure correct working directory · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<p>﻿# Troubleshooting Guide</p>
+<p>Solutions for common issues and problems.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#application-wont-start">Application Won&#39;t Start</a></li>
+<li><a href="#runtime-errors">Runtime Errors</a></li>
+<li><a href="#physics--simulation-issues">Physics &amp; Simulation Issues</a></li>
+<li><a href="#ui--rendering-problems">UI &amp; Rendering Problems</a></li>
+<li><a href="#file--project-issues">File &amp; Project Issues</a></li>
+<li><a href="#performance-issues">Performance Issues</a></li>
+<li><a href="#build--compilation">Build &amp; Compilation</a></li>
+<li><a href="#getting-help">Getting Help</a></li>
+</ol>
+<h2>Application Won&#39;t Start</h2>
+<h3>App crashes immediately on launch</h3>
+<p><strong>Symptoms:</strong> App closes within 1 second of launching</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Check Windows version:</strong></p>
+<ul>
+<li>Run: <code>winver</code></li>
+<li>Must be Windows 10 Build 1809 or later</li>
+<li>Windows 11 recommended</li>
+</ul>
+</li>
+<li><p><strong>Check .NET Runtime:</strong></p>
+<pre><code class="language-powershell">dotnet --list-runtimes
+# Should show: Microsoft.WindowsDesktop.App 8.x.x
+</code></pre>
+<p>If not installed: Download from <a href="https://dotnet.microsoft.com">dotnet.microsoft.com</a></p>
+</li>
+<li><p><strong>Reinstall the app:</strong></p>
+<ul>
+<li>Uninstall: Settings → Apps → ReWeave → Uninstall</li>
+<li>Restart computer</li>
+<li>Reinstall from latest bundle</li>
+</ul>
+</li>
+</ol>
+<h3>&quot;Unhandled Exception&quot; message appears</h3>
+<p><strong>Cause:</strong> Usually corrupted settings or cache</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Clear app data:</strong></p>
+<pre><code class="language-powershell"># Remove settings cache
+Remove-Item &quot;$env:AppData\WinUi ReWeave&quot; -Recurse -Force
+</code></pre>
+</li>
+<li><p><strong>Restart the app</strong> — It will recreate default settings</p>
+</li>
+</ol>
+<h3>App won&#39;t start from Microsoft Store</h3>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Go to Settings → Apps → Apps &amp; features</li>
+<li>Find &quot;ReWeave&quot;</li>
+<li>Click → Advanced options</li>
+<li>Click &quot;Repair&quot;</li>
+<li>Wait for repair to complete</li>
+</ol>
+<hr>
+<h2>Runtime Errors</h2>
+<h3>&quot;System.InvalidOperationException: Cannot create instance of type...&quot;</h3>
+<p><strong>Cause:</strong> Service dependency injection misconfiguration</p>
+<p><strong>Solution:</strong></p>
+<ul>
+<li><strong>For users:</strong> Reinstall the application</li>
+<li><strong>For developers:</strong> Check that all services are properly registered in DI container</li>
+</ul>
+<h3>&quot;System.ArgumentNullException: Value cannot be null&quot;</h3>
+<p><strong>Cause:</strong> Required parameter is missing or null</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li>Ensure all fields are filled in dialog/input forms</li>
+<li>Check file is valid before importing</li>
+<li>Restart the application</li>
+</ol>
+<h3>&quot;OutOfMemoryException&quot;</h3>
+<p><strong>Cause:</strong> Application ran out of available memory</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><strong>Close other applications</strong> to free memory</li>
+<li><strong>Reduce simulation grid size:</strong><ul>
+<li>Use smaller fabric dimensions (e.g., 64x64 instead of 256x256)</li>
+<li>Reduce thread density</li>
+</ul>
+</li>
+<li><strong>Restart the app</strong> to clear memory</li>
+</ol>
+<h3>&quot;System.IO.IOException: File is in use&quot;</h3>
+<p><strong>Cause:</strong> File cannot be accessed because it&#39;s locked</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><strong>Close the file in other applications:</strong><ul>
+<li>Check if file is open in another instance of ReWeave</li>
+<li>Check if file is in use by Cloud sync (OneDrive, Google Drive)</li>
+</ul>
+</li>
+<li><strong>Move file to local drive:</strong><ul>
+<li>Avoid network/cloud storage locations</li>
+<li>Use: <code>C:\Users\YourName\Documents\My Projects\</code></li>
+</ul>
+</li>
+<li><strong>Try with different filename</strong> if issue persists</li>
+</ol>
+<hr>
+<h2>Physics &amp; Simulation Issues</h2>
+<h3>Simulation takes too long to complete</h3>
+<p><strong>Typical times:</strong></p>
+<ul>
+<li>32x32 grid: 2-5 seconds</li>
+<li>64x64 grid: 10-30 seconds</li>
+<li>128x128 grid: 1-3 minutes</li>
+<li>256x256 grid: 5-15 minutes</li>
+</ul>
+<p><strong>If taking longer:</strong></p>
+<ol>
+<li><p><strong>Reduce grid size:</strong></p>
+<pre><code>Fabric Physics → Settings → Grid Size → Select smaller
+</code></pre>
+</li>
+<li><p><strong>Change solver type:</strong></p>
+<ul>
+<li>Settings → Physics → Solver → Particle System (faster)</li>
+<li>Or: FEA (slower but more accurate)</li>
+</ul>
+</li>
+<li><p><strong>Check system resources:</strong></p>
+<ul>
+<li>Close other applications</li>
+<li>Check disk space (need 1GB free)</li>
+</ul>
+</li>
+<li><p><strong>Update GPU drivers:</strong></p>
+<ul>
+<li>NVIDIA: <a href="https://www.nvidia.com/Download/driverDetails.aspx">Driver downloads</a></li>
+<li>AMD: <a href="https://www.amd.com/en/support">Driver downloads</a></li>
+</ul>
+</li>
+</ol>
+<h3>Simulation doesn&#39;t complete / hangs forever</h3>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Cancel simulation:</strong></p>
+<ul>
+<li>Click &quot;Cancel&quot; button or press Esc</li>
+<li>Wait 10-30 seconds for graceful shutdown</li>
+</ul>
+</li>
+<li><p><strong>Force quit:</strong></p>
+<ul>
+<li>Press Alt+F4</li>
+<li>Or: Task Manager → End task</li>
+</ul>
+</li>
+<li><p><strong>Reduce problem complexity:</strong></p>
+<ul>
+<li>Smaller fabric dimensions</li>
+<li>Simpler yarn properties</li>
+<li>Fewer material layers</li>
+</ul>
+</li>
+<li><p><strong>Check settings:</strong></p>
+<ul>
+<li>Convergence tolerance not too strict</li>
+<li>Max iterations sufficient</li>
+<li>Time step reasonable</li>
+</ul>
+</li>
+</ol>
+<h3>Simulation converges but results look wrong</h3>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Verify input parameters:</strong></p>
+<ul>
+<li>Check thread density (should be &gt; 0)</li>
+<li>Check yarn denier (should be &gt; 0)</li>
+<li>Validate geometry parameters</li>
+</ul>
+</li>
+<li><p><strong>Try different yarn model:</strong></p>
+<ul>
+<li>Fabric Physics → Settings → Yarn Path Model</li>
+<li>Try: Peirce (most stable) or Kemp (more detailed)</li>
+</ul>
+</li>
+<li><p><strong>Check visualization settings:</strong></p>
+<ul>
+<li>Toggle wireframe mode</li>
+<li>Enable stress visualization</li>
+<li>Rotate 3D view</li>
+</ul>
+</li>
+<li><p><strong>Export raw data:</strong></p>
+<ul>
+<li>Export as JSON or CSV</li>
+<li>Inspect numeric values</li>
+<li>Check if values are in expected ranges</li>
+</ul>
+</li>
+</ol>
+<h3>3D geometry looks deformed or incorrect</h3>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Adjust camera:</strong></p>
+<ul>
+<li>Right-click and drag to rotate</li>
+<li>Scroll to zoom</li>
+<li>Double-click to reset view</li>
+</ul>
+</li>
+<li><p><strong>Check scale:</strong></p>
+<ul>
+<li>Try different zoom levels</li>
+<li>Use &quot;Fit to View&quot; button</li>
+</ul>
+</li>
+<li><p><strong>Verify model selection:</strong></p>
+<ul>
+<li>Fabric Physics → Settings → Select different yarn model</li>
+<li>Some models may work better for specific weave types</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>UI &amp; Rendering Problems</h2>
+<h3>Controls not responding to clicks</h3>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Check if processing:</strong></p>
+<ul>
+<li>Wait for any running simulation to complete</li>
+<li>Look for progress indicator</li>
+</ul>
+</li>
+<li><p><strong>Restart the application:</strong></p>
+<ul>
+<li>Close completely (Alt+F4)</li>
+<li>Wait 5 seconds</li>
+<li>Reopen</li>
+</ul>
+</li>
+<li><p><strong>Clear UI cache:</strong></p>
+<pre><code class="language-powershell">Remove-Item &quot;$env:LocalAppData\WinUi ReWeave&quot; -Recurse -Force
+</code></pre>
+</li>
+</ol>
+<h3>3D viewport is black or not rendering</h3>
+<p><strong>Causes:</strong> GPU initialization issue</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Update GPU drivers:</strong></p>
+<ul>
+<li>NVIDIA: <a href="https://www.nvidia.com/Download/driverDetails.aspx">Downloads</a></li>
+<li>AMD: <a href="https://www.amd.com/en/support">Downloads</a></li>
+<li>Intel: <a href="https://ark.intel.com/content/www/us/en/ark.html">Downloads</a></li>
+</ul>
+</li>
+<li><p><strong>Disable hardware acceleration (temporary workaround):</strong></p>
+<ul>
+<li>Settings → Appearance → Hardware Acceleration → Off</li>
+<li>Performance will degrade</li>
+</ul>
+</li>
+<li><p><strong>Try integrated GPU:</strong></p>
+<ul>
+<li>Some discrete GPUs may conflict</li>
+<li>Try using integrated graphics instead</li>
+</ul>
+</li>
+</ol>
+<h3>Text is blurry or hard to read</h3>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Adjust display scaling:</strong></p>
+<ul>
+<li>Settings → Display → Scale and layout</li>
+<li>Try 100% or 125%</li>
+<li>Restart application</li>
+</ul>
+</li>
+<li><p><strong>Increase font size:</strong></p>
+<ul>
+<li>Settings → Appearance → Font Size → Larger</li>
+</ul>
+</li>
+</ol>
+<h3>Colors look washed out or incorrect</h3>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Check color profile:</strong></p>
+<ul>
+<li>Settings → Color Management</li>
+<li>Ensure correct profile for display</li>
+</ul>
+</li>
+<li><p><strong>Adjust theme:</strong></p>
+<ul>
+<li>Settings → Appearance → Theme → Try Light/Dark/Auto</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>File &amp; Project Issues</h2>
+<h3>Cannot save project / &quot;Access Denied&quot;</h3>
+<p><strong>Causes:</strong> Folder permissions issue</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Check folder permissions:</strong></p>
+<ul>
+<li>Right-click folder → Properties → Security</li>
+<li>Ensure your user has &quot;Modify&quot; permission</li>
+</ul>
+</li>
+<li><p><strong>Use different location:</strong></p>
+<ul>
+<li>Save to: <code>C:\Users\YourName\Documents\</code></li>
+<li>Avoid: Network drives, Cloud storage initially</li>
+</ul>
+</li>
+<li><p><strong>Run as Administrator (Windows only):</strong></p>
+<ul>
+<li>Right-click app → Run as administrator</li>
+</ul>
+</li>
+</ol>
+<h3>File corruption / &quot;Cannot read file&quot;</h3>
+<p><strong>Symptoms:</strong> Error when opening saved project</p>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Try recovery file:</strong></p>
+<pre><code>Check: %AppData%\WinUi ReWeave\Recovery\
+</code></pre>
+</li>
+<li><p><strong>Restore from backup:</strong></p>
+<ul>
+<li>Check if cloud backup exists (OneDrive, Google Drive)</li>
+<li>Check system restore point</li>
+</ul>
+</li>
+<li><p><strong>Export and recreate:</strong></p>
+<ul>
+<li>If data exportable, reconstruct project</li>
+<li>Contact support with error message</li>
+</ul>
+</li>
+</ol>
+<h3>Cannot import weave file</h3>
+<p><strong>Causes:</strong> Unsupported format or corrupted file</p>
+<p><strong>Supported formats:</strong></p>
+<ul>
+<li><code>.weave</code> — ReWeave format</li>
+<li><code>.asc</code> — Jacquard format</li>
+<li><code>.dup</code> — Jacquard format</li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Verify file format:</strong></p>
+<ul>
+<li>Check file extension</li>
+<li>Try opening in text editor to inspect</li>
+</ul>
+</li>
+<li><p><strong>Convert from other software:</strong></p>
+<ul>
+<li>Export from source software as supported format</li>
+<li>Then import into ReWeave</li>
+</ul>
+</li>
+<li><p><strong>Try sample files:</strong></p>
+<ul>
+<li>Use built-in patterns first</li>
+<li>If those work, issue is with imported file</li>
+</ul>
+</li>
+</ol>
+<h3>Export fails or produces empty files</h3>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Ensure project is complete:</strong></p>
+<ul>
+<li>All required fields filled</li>
+<li>Simulation completed successfully</li>
+</ul>
+</li>
+<li><p><strong>Check disk space:</strong></p>
+<ul>
+<li>Must have 500MB+ free</li>
+<li>Cannot export to read-only location</li>
+</ul>
+</li>
+<li><p><strong>Use different format:</strong></p>
+<ul>
+<li>Try exporting as JSON instead of CSV</li>
+<li>Or try SVG instead of PNG</li>
+</ul>
+</li>
+<li><p><strong>Choose different location:</strong></p>
+<ul>
+<li>Avoid network drives</li>
+<li>Use local folder: <code>C:\Users\YourName\Documents\</code></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>Performance Issues</h2>
+<h3>Application is slow/laggy</h3>
+<p><strong>Causes:</strong></p>
+<ul>
+<li>Large simulation grids</li>
+<li>Complex geometry calculations</li>
+<li>Insufficient system memory</li>
+<li>Outdated GPU drivers</li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Reduce workload:</strong></p>
+<ul>
+<li>Use smaller fabric dimensions</li>
+<li>Reduce grid size from 128x128 to 64x64</li>
+<li>Use simpler yarn models</li>
+</ul>
+</li>
+<li><p><strong>Close other applications:</strong></p>
+<ul>
+<li>Free up memory</li>
+<li>Reduce CPU contention</li>
+</ul>
+</li>
+<li><p><strong>Enable performance mode:</strong></p>
+<ul>
+<li>Settings → Advanced → Performance Mode → On</li>
+</ul>
+</li>
+<li><p><strong>Update drivers:</strong></p>
+<ul>
+<li>GPU drivers must be current</li>
+<li>Check for Windows updates</li>
+</ul>
+</li>
+<li><p><strong>Increase virtual memory:</strong></p>
+<pre><code class="language-powershell"># Settings → System → About → Advanced system settings
+# → Virtual memory → Set to 2x RAM
+</code></pre>
+</li>
+</ol>
+<h3>High CPU usage even when idle</h3>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Disable recovery autosave:</strong></p>
+<ul>
+<li>Settings → Advanced → Autosave → Off</li>
+</ul>
+</li>
+<li><p><strong>Close background processes:</strong></p>
+<ul>
+<li>Task Manager → End unnecessary tasks</li>
+</ul>
+</li>
+<li><p><strong>Check if simulation running:</strong></p>
+<ul>
+<li>Simulation may be background processing</li>
+<li>Check progress indicator</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>Build &amp; Compilation</h2>
+<h3>Build fails with &quot;Project file not found&quot;</h3>
+<p><strong>Solution:</strong></p>
+<pre><code class="language-bash"># Ensure correct working directory
+cd &quot;WinUi ReWeave&quot;
+
+# Verify file exists
+dir *.csproj
+
+# Try full path
+dotnet build &quot;C:\Users\yourname\source\repos\WinUi ReWeave\WinUi ReWeave\WinUi ReWeave.csproj&quot;
+</code></pre>
+<h3>&quot;NuGet package not found&quot;</h3>
+<p><strong>Solution:</strong></p>
+<pre><code class="language-bash"># Restore packages
+dotnet restore
+
+# Update packages
+dotnet nuget update source &quot;nuget.org&quot;
+
+# Clear cache
+dotnet nuget locals all --clear
+</code></pre>
+<h3>Build succeeds but app won&#39;t run</h3>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li><p><strong>Check platform:</strong></p>
+<ul>
+<li>Ensure x64 matches your system</li>
+<li>Use x86 if on 32-bit Windows (rare)</li>
+</ul>
+</li>
+<li><p><strong>Check dependencies:</strong></p>
+<pre><code class="language-bash">dotnet build -v diagnostic
+</code></pre>
+</li>
+<li><p><strong>Rebuild from scratch:</strong></p>
+<pre><code class="language-bash">dotnet clean
+dotnet restore
+dotnet build
+</code></pre>
+</li>
+</ol>
+<hr>
+<h2>Getting Help</h2>
+<h3>Gathering Diagnostic Information</h3>
+<p><strong>For bug reports, collect:</strong></p>
+<ol>
+<li><p><strong>Error message:</strong> Full text of error</p>
+</li>
+<li><p><strong>Steps to reproduce:</strong> Exact sequence to cause issue</p>
+</li>
+<li><p><strong>System info:</strong></p>
+<pre><code class="language-powershell"># Windows version
+winver
+
+# .NET version
+dotnet --version
+
+# GPU info
+Get-WmiObject Win32_VideoController | Select-Object Name
+</code></pre>
+</li>
+<li><p><strong>Application logs:</strong></p>
+<pre><code>Location: %AppData%\WinUi ReWeave\Logs\
+</code></pre>
+</li>
+<li><p><strong>Screenshots:</strong> Visual representation of issue</p>
+</li>
+</ol>
+<h3>Where to Report Issues</h3>
+<ol>
+<li><p><strong>GitHub Issues:</strong> <a href="https://github.com">New Issue</a></p>
+<ul>
+<li>Search existing issues first</li>
+<li>Provide reproducible example</li>
+<li>Include diagnostic info above</li>
+</ul>
+</li>
+<li><p><strong>GitHub Discussions:</strong> General questions</p>
+</li>
+<li><p><strong>Producer Email:</strong> Through app&#39;s About page</p>
+</li>
+</ol>
+<h3>Additional Resources</h3>
+<ul>
+<li><strong>User Guide:</strong> <a href="01-USER-GUIDE.html">01-USER-GUIDE.md</a></li>
+<li><strong>Developer Guide:</strong> <a href="03-DEVELOPER-GUIDE.html">03-DEVELOPER-GUIDE.md</a></li>
+<li><strong>Architecture:</strong> <a href="04-ARCHITECTURE.html">04-ARCHITECTURE.md</a></li>
+<li><strong>Installation:</strong> <a href="05-INSTALLATION-SETUP.html">05-INSTALLATION-SETUP.md</a></li>
+</ul>
+<hr>
+<h2>Still Need Help?</h2>
+<p><strong>Common issues checklists:</strong></p>
+<p><strong>Application won&#39;t start:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Windows 10 Build 1809+?</li>
+<li><input disabled="" type="checkbox"> .NET 8 installed?</li>
+<li><input disabled="" type="checkbox"> GPU drivers updated?</li>
+<li><input disabled="" type="checkbox"> Sufficient disk space (500MB)?</li>
+</ul>
+<p><strong>Simulation issues:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Grid size ≤ 128x128?</li>
+<li><input disabled="" type="checkbox"> Yarn parameters valid?</li>
+<li><input disabled="" type="checkbox"> Free memory available?</li>
+<li><input disabled="" type="checkbox"> GPU drivers current?</li>
+</ul>
+<p><strong>File issues:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Folder permissions correct?</li>
+<li><input disabled="" type="checkbox"> File extension supported?</li>
+<li><input disabled="" type="checkbox"> File not corrupted?</li>
+<li><input disabled="" type="checkbox"> Sufficient disk space?</li>
+</ul>
+<p><strong>Performance issues:</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Other apps closed?</li>
+<li><input disabled="" type="checkbox"> GPU drivers updated?</li>
+<li><input disabled="" type="checkbox"> Virtual memory configured?</li>
+<li><input disabled="" type="checkbox"> Grid size reasonable?</li>
+</ul>
+<p>If issues persist after all above checks, please report to GitHub Issues with diagnostic information.</p>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clone repository · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<p>﻿# ReWeave Developer Guide</p>
+<p>Complete reference for developers working on the ReWeave codebase.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#tech-stack">Tech Stack</a></li>
+<li><a href="#project-structure">Project Structure</a></li>
+<li><a href="#getting-started-for-developers">Getting Started</a></li>
+<li><a href="#architecture-patterns">Architecture Patterns</a></li>
+<li><a href="#development-workflows">Development Workflows</a></li>
+<li><a href="#code-standards">Code Standards</a></li>
+<li><a href="#testing-strategy">Testing Strategy</a></li>
+</ol>
+<h2>Overview</h2>
+<p><strong>ReWeave</strong> is a modern Windows desktop application for fabric simulation and design. The codebase emphasizes:</p>
+<ul>
+<li><strong>MVVM Architecture:</strong> Clear separation of UI, logic, and data</li>
+<li><strong>Reactive Programming:</strong> Uses MVVM Toolkit for property notification</li>
+<li><strong>Service-Oriented:</strong> Dependency injection and loose coupling</li>
+<li><strong>Performance:</strong> Optimized physics calculations with GPU support</li>
+<li><strong>Testability:</strong> Comprehensive unit and integration test coverage</li>
+</ul>
+<p><strong>Key Metrics:</strong></p>
+<ul>
+<li><strong>Language:</strong> C# (.NET 8)</li>
+<li><strong>UI Framework:</strong> WinUI 3</li>
+<li><strong>Code Style:</strong> Modern C# with nullable reference types</li>
+<li><strong>Test Coverage:</strong> Unit, Integration, Automation, Regression tests</li>
+<li><strong>Build Targets:</strong> x86, x64, ARM64</li>
+</ul>
+<h2>Tech Stack</h2>
+<h3>Core Framework</h3>
+<ul>
+<li><strong>.NET 8</strong> — Latest LTS framework</li>
+<li><strong>WinUI 3</strong> — Modern native Windows UI</li>
+<li><strong>Windows App SDK</strong> — Latest Windows platform APIs</li>
+</ul>
+<h3>Libraries &amp; Packages</h3>
+<ul>
+<li><strong>Community Toolkit MVVM</strong> (8.4.2) — MVVM infrastructure</li>
+<li><strong>Community Toolkit Animations</strong> (8.2) — Smooth transitions</li>
+<li><strong>HelixToolkit</strong> — 3D rendering (SharpDX)</li>
+<li><strong>System.Text.Json</strong> — JSON serialization</li>
+<li><strong>CommunityToolkit.Diagnostics</strong> — Diagnostics utilities</li>
+</ul>
+<h3>Development Tools</h3>
+<ul>
+<li><strong>Visual Studio 2022</strong> — Primary IDE</li>
+<li><strong>Git</strong> — Version control</li>
+<li><strong>NUnit</strong> — Testing framework</li>
+<li><strong>FakeItEasy</strong> — Mocking library</li>
+</ul>
+<h3>Physics &amp; Simulation</h3>
+<ul>
+<li><strong>Particle Systems</strong> — Custom yarn simulation</li>
+<li><strong>Constraint Solvers</strong> — FEA integration</li>
+<li><strong>Geometry Engines</strong> — Multiple yarn path models</li>
+</ul>
+<h2>Project Structure</h2>
+<pre><code>WinUi ReWeave/
+├── Views/                          # XAML UI pages
+│   ├── HomePage.xaml
+│   ├── WeaveDesignPage.xaml
+│   ├── FabricPhysicsPage.xaml
+│   ├── ModelBuilderPage.xaml
+│   ├── SimulationPage.xaml
+│   └── ...
+├── ViewModels/                     # MVVM ViewModel layer
+│   ├── MainViewModel.cs
+│   ├── WeaveDesignViewModel.cs
+│   ├── FabricPhysicsViewModel.cs
+│   ├── SimulationViewModel*.cs     # Partial classes
+│   └── ...
+├── Models/                         # Data models &amp; contracts
+│   ├── FabricSimulationSpec.cs
+│   ├── YarnSpecification.cs
+│   ├── ModelBuilderPackage.cs
+│   └── ...
+├── Services/                       # Business logic &amp; coordination
+│   ├── FabricPhysicsSimulationService.cs
+│   ├── ModelBuilderAiAssistCoordinator.cs
+│   ├── AppProjectFileIo.cs
+│   ├── AppSettingsService.cs
+│   └── ...
+├── Controls/                       # Custom XAML controls
+│   ├── FabricPhysicsCanvas2D.cs
+│   ├── FabricPhysicsCanvas3D.cs
+│   ├── InfiniteWeaveCanvas.cs
+│   └── ...
+├── Converters/                     # XAML value converters
+├── Helpers/                        # Utility functions
+├── Core/                           # Core domain logic
+├── Selectors/                      # DataTemplate selectors
+└── Assets/                         # Images, icons, styles
+</code></pre>
+<h3>Related Projects</h3>
+<ul>
+<li><strong>ReWeave.Physics</strong> — Physics simulation engine (separate project)</li>
+<li><strong>ReWeave.Physics.Fea</strong> — FEA solver components</li>
+<li><strong>ReWeave.AutomatedTests</strong> — Test automation framework</li>
+</ul>
+<h2>Getting Started for Developers</h2>
+<h3>Prerequisites</h3>
+<ol>
+<li><strong>Windows 10 (Build 17763+) or Windows 11</strong></li>
+<li><strong>Visual Studio 2022</strong> with:<ul>
+<li>.NET 8 SDK</li>
+<li>Windows App SDK workload</li>
+<li>C# development tools</li>
+</ul>
+</li>
+<li><strong>Git</strong> — For version control</li>
+</ol>
+<h3>Development Setup</h3>
+<pre><code class="language-bash"># Clone repository
+git clone https://github.com/yourusername/WinUi-ReWeave.git
+cd WinUi-ReWeave
+
+# Restore dependencies
+dotnet restore
+
+# Build solution (x64)
+dotnet build -p:Platform=x64
+
+# Run from Visual Studio
+# Press F5 to debug with breakpoints
+</code></pre>
+<h3>First Build</h3>
+<pre><code class="language-powershell"># PowerShell
+cd &quot;WinUi ReWeave&quot;
+dotnet build -p:Platform=x64 -c Debug
+
+# Visual Studio
+# 1. Open WinUi ReWeave.slnx
+# 2. Set x64 as active platform
+# 3. Press Ctrl+Shift+B to build
+# 4. Press F5 to run
+</code></pre>
+<h3>Debugging</h3>
+<p><strong>Visual Studio Debugger:</strong></p>
+<pre><code>F5              — Start debugging
+Shift+F5        — Stop debugging
+Ctrl+Alt+B      — Breakpoints window
+Ctrl+Alt+W      — Watch window
+Ctrl+Alt+I      — Immediate window
+</code></pre>
+<p><strong>Console Output:</strong></p>
+<ul>
+<li>Debug.WriteLine() output appears in Output window</li>
+<li>Structured logging in Services/Diagnostics</li>
+</ul>
+<h2>Architecture Patterns</h2>
+<h3>MVVM Architecture</h3>
+<pre><code>View (XAML)
+    ↓
+ViewModel (ObservableObject)
+    ↓
+Services &amp; Models
+    ↓
+Physics Engine / Persistence
+</code></pre>
+<p><strong>Key Components:</strong></p>
+<ol>
+<li><p><strong>Views</strong> — XAML UI pages and controls</p>
+<ul>
+<li>Data bind to ViewModel</li>
+<li>Handle user input</li>
+<li>Minimal code-behind (prefer behaviors)</li>
+</ul>
+</li>
+<li><p><strong>ViewModels</strong> — Observable business logic</p>
+<ul>
+<li>Inherit from <code>ObservableObject</code> (MVVM Toolkit)</li>
+<li>Expose properties with <code>OnPropertyChanged()</code></li>
+<li>Commands for user actions</li>
+<li>Coordinate services</li>
+</ul>
+</li>
+<li><p><strong>Services</strong> — Reusable business logic</p>
+<ul>
+<li>Stateful or singleton</li>
+<li>Dependency injection via DI container</li>
+<li>Clear interfaces for testability</li>
+</ul>
+</li>
+<li><p><strong>Models</strong> — Data contracts</p>
+<ul>
+<li>Plain C# classes (POCOs)</li>
+<li>JSON serializable</li>
+<li>Immutable where possible</li>
+</ul>
+</li>
+</ol>
+<h3>Example: Adding a Feature</h3>
+<p><strong>1. Define Model:</strong></p>
+<pre><code class="language-csharp">public class CustomParam
+{
+    public string Name { get; set; }
+    public double Value { get; set; }
+}
+</code></pre>
+<p><strong>2. Create Service:</strong></p>
+<pre><code class="language-csharp">public interface ICustomService
+{
+    Task&lt;CustomResult&gt; ProcessAsync(CustomParam param);
+}
+
+public class CustomService : ICustomService
+{
+    public async Task&lt;CustomResult&gt; ProcessAsync(CustomParam param)
+    {
+        // Business logic here
+    }
+}
+</code></pre>
+<p><strong>3. Use in ViewModel:</strong></p>
+<pre><code class="language-csharp">public partial class MyViewModel : ObservableObject
+{
+    private readonly ICustomService _service;
+    
+    [ObservableProperty]
+    private CustomParam? currentParam;
+    
+    public MyViewModel(ICustomService service)
+    {
+        _service = service;
+    }
+    
+    [RelayCommand]
+    private async Task ProcessAsync()
+    {
+        if (CurrentParam != null)
+        {
+            var result = await _service.ProcessAsync(CurrentParam);
+            // Handle result
+        }
+    }
+}
+</code></pre>
+<p><strong>4. Bind in View:</strong></p>
+<pre><code class="language-xaml">&lt;Button Command=&quot;{x:Bind ViewModel.ProcessCommand}&quot; 
+        Content=&quot;Process&quot;/&gt;
+</code></pre>
+<h3>Service Coordination Pattern</h3>
+<p><strong>Multi-service workflows</strong> use coordinator services:</p>
+<pre><code class="language-csharp">public class MyCoordinator
+{
+    private readonly IServiceA _serviceA;
+    private readonly IServiceB _serviceB;
+    
+    public async Task ExecuteWorkflowAsync()
+    {
+        var stepOne = await _serviceA.GetDataAsync();
+        var stepTwo = await _serviceB.ProcessAsync(stepOne);
+        return stepTwo;
+    }
+}
+</code></pre>
+<h3>Physics Pipeline</h3>
+<pre><code>User Input (Parameters)
+    ↓
+Simulation Service validates &amp; prepares
+    ↓
+Physics Engine calculates (GPU-accelerated)
+    ↓
+Results cached
+    ↓
+ViewModel updates UI bindings
+    ↓
+Controls render visualization
+</code></pre>
+<h2>Development Workflows</h2>
+<h3>Feature Development</h3>
+<ol>
+<li><p><strong>Create branch:</strong></p>
+<pre><code class="language-bash">git checkout -b feature/my-feature
+</code></pre>
+</li>
+<li><p><strong>Implement feature:</strong></p>
+<ul>
+<li>Create/modify models</li>
+<li>Write service(s)</li>
+<li>Add ViewModel binding</li>
+<li>Design XAML view</li>
+<li>Add test coverage</li>
+</ul>
+</li>
+<li><p><strong>Test locally:</strong></p>
+<pre><code class="language-bash"># Run unit tests
+dotnet test ReWeave.AutomatedTests/ReWeave.AutomatedTests.csproj
+
+# Manual testing
+# F5 in Visual Studio
+</code></pre>
+</li>
+<li><p><strong>Commit and push:</strong></p>
+<pre><code class="language-bash">git add .
+git commit -m &quot;feat: Add my new feature&quot;
+git push origin feature/my-feature
+</code></pre>
+</li>
+<li><p><strong>Create Pull Request</strong></p>
+<ul>
+<li>Link related issues</li>
+<li>Add description</li>
+<li>Request reviewers</li>
+</ul>
+</li>
+</ol>
+<h3>Bug Fixing</h3>
+<ol>
+<li><strong>Reproduce and isolate:</strong> Identify minimal reproduction case</li>
+<li><strong>Create test:</strong> Write failing unit test that reproduces bug</li>
+<li><strong>Fix code:</strong> Implement solution</li>
+<li><strong>Verify test passes:</strong> Confirm fix resolves test</li>
+<li><strong>Check no regressions:</strong> Run full test suite</li>
+<li><strong>Create PR:</strong> Link to bug report issue</li>
+</ol>
+<h3>Refactoring</h3>
+<ol>
+<li><strong>Identify target:</strong> Which component/service to refactor</li>
+<li><strong>Ensure test coverage:</strong> Write tests before refactoring</li>
+<li><strong>Refactor incrementally:</strong> One small change at a time</li>
+<li><strong>Verify tests still pass:</strong> After each change</li>
+<li><strong>Commit frequently:</strong> Create a new commit for each logical step</li>
+<li><strong>Document changes:</strong> Update comments/docs as needed</li>
+</ol>
+<h2>Code Standards</h2>
+<h3>Naming Conventions</h3>
+<pre><code class="language-csharp">// Classes
+public class FabricPhysicsService { }
+public interface ISimulationCache { }
+
+// Properties
+public string ProjectName { get; set; }
+
+// Private fields
+private readonly ILogger _logger;
+private string _tempBuffer;
+
+// Methods
+public async Task&lt;bool&gt; ProcessAsync() { }
+public void ExecuteOperation() { }
+
+// Constants
+private const int MaxRetries = 3;
+public static readonly Color DefaultColor = Colors.Blue;
+
+// Local variables
+var fabricSpec = project.FabricSpecification;
+</code></pre>
+<h3>Code Organization</h3>
+<pre><code class="language-csharp">public class MyService
+{
+    // Constants
+    private const int MaxSize = 100;
+    
+    // Fields
+    private readonly ILogger _logger;
+    private string? _buffer;
+    
+    // Constructors
+    public MyService(ILogger logger) { _logger = logger; }
+    
+    // Properties
+    public string? Name { get; set; }
+    
+    // Public methods
+    public async Task&lt;Result&gt; ExecuteAsync() { }
+    
+    // Private methods
+    private void ValidateInput() { }
+    
+    // Nested types
+    private record ResultData(string Value);
+}
+</code></pre>
+<h3>XAML Conventions</h3>
+<pre><code class="language-xaml">&lt;!-- Namespace declarations at top --&gt;
+&lt;Window
+    xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+    xmlns:local=&quot;using:WinUi_ReWeave.Views&quot;&gt;
+    
+    &lt;!-- Resources --&gt;
+    &lt;StackPanel&gt;
+        &lt;!-- Nested elements with proper indentation --&gt;
+        &lt;TextBlock Text=&quot;Label&quot;/&gt;
+        &lt;Button Command=&quot;{x:Bind ViewModel.ActionCommand}&quot;/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;
+</code></pre>
+<h3>Documentation</h3>
+<pre><code class="language-csharp">/// &lt;summary&gt;
+/// Simulates fabric physics with specified parameters.
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;spec&quot;&gt;Fabric specification defining geometry.&lt;/param&gt;
+/// &lt;param name=&quot;options&quot;&gt;Simulation options (solver type, tolerance).&lt;/param&gt;
+/// &lt;param name=&quot;cancellationToken&quot;&gt;Token for cancellation.&lt;/param&gt;
+/// &lt;returns&gt;Simulation results including stress/strain data.&lt;/returns&gt;
+/// &lt;exception cref=&quot;ArgumentNullException&quot;&gt;Thrown if spec is null.&lt;/exception&gt;
+public async Task&lt;SimulationResult&gt; RunSimulationAsync(
+    FabricSimulationSpec spec,
+    SimulationOptions options,
+    CancellationToken cancellationToken = default)
+{
+    ArgumentNullException.ThrowIfNull(spec);
+    // Implementation
+}
+</code></pre>
+<h2>Testing Strategy</h2>
+<h3>Test Organization</h3>
+<pre><code>ReWeave.AutomatedTests/
+├── Unit/                    # Fast, isolated tests
+│   ├── Services/
+│   ├── Models/
+│   └── Helpers/
+├── Integration/             # Service interaction tests
+├── Regression/              # Known bug prevention
+├── Stress/                  # Performance &amp; scale tests
+├── UiAutomation/           # End-to-end UI tests
+└── Snapshots/              # Visual regression tests
+</code></pre>
+<h3>Writing Tests</h3>
+<p><strong>Unit Test Example:</strong></p>
+<pre><code class="language-csharp">[TestFixture]
+public class FabricPhysicsServiceTests
+{
+    private FabricPhysicsService _service;
+    private IGeometryCalculator _calculator;
+    
+    [SetUp]
+    public void Setup()
+    {
+        _calculator = A.Fake&lt;IGeometryCalculator&gt;();
+        _service = new FabricPhysicsService(_calculator);
+    }
+    
+    [Test]
+    public async Task RunSimulationAsync_WithValidSpec_ReturnsResults()
+    {
+        // Arrange
+        var spec = CreateValidFabricSpec();
+        
+        // Act
+        var result = await _service.RunSimulationAsync(spec);
+        
+        // Assert
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.IsConverged, Is.True);
+    }
+    
+    private FabricSimulationSpec CreateValidFabricSpec()
+    {
+        return new FabricSimulationSpec { /* ... */ };
+    }
+}
+</code></pre>
+<h3>Running Tests</h3>
+<pre><code class="language-bash"># Run all tests
+dotnet test
+
+# Run specific test project
+dotnet test ReWeave.AutomatedTests/ReWeave.AutomatedTests.csproj
+
+# Run with verbose output
+dotnet test -v normal
+
+# Run specific test class
+dotnet test --filter &quot;TestClass=MyServiceTests&quot;
+</code></pre>
+<h3>Test Coverage Goals</h3>
+<ul>
+<li><strong>Services:</strong> ≥80% coverage</li>
+<li><strong>Models:</strong> ≥70% coverage (simple data containers)</li>
+<li><strong>Controllers:</strong> ≥75% coverage</li>
+<li><strong>Critical paths:</strong> 100% coverage</li>
+</ul>
+<hr>
+<h2>Performance Considerations</h2>
+<h3>Physics Simulation</h3>
+<ul>
+<li>GPU acceleration via DirectX/SharpDX</li>
+<li>Multithreading for large calculations</li>
+<li>Caching intermediate results</li>
+<li>Streaming results to UI</li>
+</ul>
+<h3>UI Rendering</h3>
+<ul>
+<li>Virtual scrolling for large grids</li>
+<li>Cached control templates</li>
+<li>Async image loading</li>
+<li>DirectX viewport for 3D</li>
+</ul>
+<h3>Memory Management</h3>
+<ul>
+<li>Object pooling for frequently allocated types</li>
+<li>Disposing resources properly</li>
+<li>Monitoring large allocations</li>
+<li>Streaming file I/O for large projects</li>
+</ul>
+<hr>
+<h2>Debugging Physics</h2>
+<p><strong>Enable physics debug visualization:</strong></p>
+<pre><code class="language-csharp">#if DEBUG
+FabricPhysicsContext.DebugVisualization = true;
+#endif
+</code></pre>
+<p><strong>Profile simulation performance:</strong></p>
+<pre><code class="language-csharp">var sw = Stopwatch.StartNew();
+var result = await _service.RunSimulationAsync(spec);
+sw.Stop();
+Debug.WriteLine($&quot;Simulation time: {sw.ElapsedMilliseconds}ms&quot;);
+</code></pre>
+<hr>
+<h2>Next Steps</h2>
+<ol>
+<li><strong>Clone repo</strong> and complete development setup</li>
+<li><strong>Review existing services</strong> to understand patterns</li>
+<li><strong>Write a small feature</strong> to get familiar with workflow</li>
+<li><strong>Run test suite</strong> to verify environment</li>
+<li><strong>Read Architecture Guide</strong> for deep dive</li>
+</ol>
+<p>See <a href="04-ARCHITECTURE.html">Architecture Overview</a> for detailed system design.</p>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

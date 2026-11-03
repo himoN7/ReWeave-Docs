@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Performance & Optimization · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<h1>Performance &amp; Optimization</h1>
+<p>Guidelines for performance optimization, profiling, and best practices.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#performance-targets">Performance Targets</a></li>
+<li><a href="#profiling-tools">Profiling Tools</a></li>
+<li><a href="#optimization-strategies">Optimization Strategies</a></li>
+<li><a href="#physics-optimization">Physics Optimization</a></li>
+<li><a href="#ui-performance">UI Performance</a></li>
+<li><a href="#memory-management">Memory Management</a></li>
+<li><a href="#benchmarking">Benchmarking</a></li>
+</ol>
+<h2>Performance Targets</h2>
+<h3>Application Startup</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Target</th>
+<th>Current</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Cold Start</strong></td>
+<td>&lt; 3s</td>
+<td>2.2s</td>
+</tr>
+<tr>
+<td><strong>Warm Start</strong></td>
+<td>&lt; 1s</td>
+<td>0.8s</td>
+</tr>
+<tr>
+<td><strong>First Paint</strong></td>
+<td>&lt; 500ms</td>
+<td>380ms</td>
+</tr>
+<tr>
+<td><strong>Fully Interactive</strong></td>
+<td>&lt; 2s</td>
+<td>1.5s</td>
+</tr>
+</tbody></table>
+<h3>Simulation Performance</h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Grid Size</th>
+<th>Target Time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>2D Simulation</strong></td>
+<td>32x32</td>
+<td>2-5s</td>
+</tr>
+<tr>
+<td><strong>2D Simulation</strong></td>
+<td>64x64</td>
+<td>10-30s</td>
+</tr>
+<tr>
+<td><strong>3D Simulation</strong></td>
+<td>32x32</td>
+<td>5-15s</td>
+</tr>
+<tr>
+<td><strong>3D Simulation</strong></td>
+<td>64x64</td>
+<td>30s-2m</td>
+</tr>
+<tr>
+<td><strong>Model Compilation</strong></td>
+<td>Medium</td>
+<td>&lt; 5s</td>
+</tr>
+</tbody></table>
+<h3>UI Responsiveness</h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Target</th>
+<th>Current</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Button Click Response</strong></td>
+<td>&lt; 100ms</td>
+<td>50ms</td>
+</tr>
+<tr>
+<td><strong>Scroll/Pan</strong></td>
+<td>60 FPS</td>
+<td>58 FPS</td>
+</tr>
+<tr>
+<td><strong>Viewport Rotation</strong></td>
+<td>60 FPS</td>
+<td>55 FPS</td>
+</tr>
+<tr>
+<td><strong>Dialog Open</strong></td>
+<td>&lt; 200ms</td>
+<td>150ms</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Profiling Tools</h2>
+<h3>Visual Studio Profiler</h3>
+<pre><code>Debug → Performance Profiler or Alt+F2
+
+1. Select &quot;CPU Usage&quot;
+2. Run application
+3. Perform operation
+4. Stop recording
+5. Analyze results
+</code></pre>
+<p><strong>Key Metrics:</strong></p>
+<ul>
+<li>CPU usage (%) — Should be &lt;80% idle time</li>
+<li>Call tree — Functions consuming most CPU</li>
+<li>Hot paths — Most frequently called functions</li>
+</ul>
+<h3>Memory Profiler</h3>
+<pre><code>Debug → Performance Profiler
+
+1. Select &quot;Memory Usage&quot;
+2. Take baseline snapshot
+3. Perform operation
+4. Take another snapshot
+5. Compare snapshots
+</code></pre>
+<p><strong>Checklist:</strong></p>
+<ul>
+<li>No unexpected allocations</li>
+<li>Objects properly disposed</li>
+<li>No memory leaks</li>
+</ul>
+<h3>Custom Performance Tracking</h3>
+<pre><code class="language-csharp">// Simple timing
+var sw = Stopwatch.StartNew();
+var result = await ExpensiveOperationAsync();
+sw.Stop();
+Debug.WriteLine($&quot;Operation took {sw.ElapsedMilliseconds}ms&quot;);
+
+// Detailed metrics
+var metrics = new OperationMetrics
+{
+    StartTime = DateTime.UtcNow,
+    MemoryBefore = GC.GetTotalMemory(true)
+};
+
+// Do work...
+
+metrics.MemoryAfter = GC.GetTotalMemory(true);
+metrics.Duration = DateTime.UtcNow - metrics.StartTime;
+
+LogMetrics(metrics);
+</code></pre>
+<hr>
+<h2>Optimization Strategies</h2>
+<h3>1. Async/Await Pattern</h3>
+<p><strong>Always use async for I/O operations:</strong></p>
+<pre><code class="language-csharp">// ✓ Good
+public async Task&lt;SimulationResult&gt; RunSimulationAsync(FabricSimulationSpec spec)
+{
+    return await Task.Run(() =&gt; PerformSimulation(spec));
+}
+
+// ✗ Bad - Blocks UI thread
+public SimulationResult RunSimulation(FabricSimulationSpec spec)
+{
+    return PerformSimulation(spec);  // Blocks if expensive
+}
+</code></pre>
+<h3>2. Caching</h3>
+<p><strong>Cache expensive computations:</strong></p>
+<pre><code class="language-csharp">public class ModelCache
+{
+    private readonly Dictionary&lt;string, CachedModel&gt; _cache = new();
+    
+    public IGeometryModel GetModel(string modelId)
+    {
+        if (_cache.TryGetValue(modelId, out var cached))
+        {
+            return cached.Model;
+        }
+        
+        var model = LoadModel(modelId);
+        _cache[modelId] = new CachedModel { Model = model };
+        return model;
+    }
+    
+    public void InvalidateCache(string? modelId = null)
+    {
+        if (modelId != null)
+            _cache.Remove(modelId);
+        else
+            _cache.Clear();
+    }
+}
+</code></pre>
+<h3>3. Lazy Initialization</h3>
+<p><strong>Defer expensive operations:</strong></p>
+<pre><code class="language-csharp">private Lazy&lt;ExpensiveResource&gt; _resource = new(() =&gt; 
+    new ExpensiveResource());
+
+public ExpensiveResource Resource =&gt; _resource.Value;
+</code></pre>
+<h3>4. Object Pooling</h3>
+<p><strong>Reuse frequently allocated objects:</strong></p>
+<pre><code class="language-csharp">public class Vector3Pool
+{
+    private readonly Stack&lt;Vector3&gt; _pool = new();
+    private const int InitialSize = 1000;
+    
+    public Vector3Pool()
+    {
+        for (int i = 0; i &lt; InitialSize; i++)
+            _pool.Push(new Vector3());
+    }
+    
+    public Vector3 Get()
+    {
+        return _pool.Count &gt; 0 ? _pool.Pop() : new Vector3();
+    }
+    
+    public void Return(Vector3 vector)
+    {
+        vector.X = vector.Y = vector.Z = 0;
+        _pool.Push(vector);
+    }
+}
+</code></pre>
+<h3>5. LINQ Optimization</h3>
+<pre><code class="language-csharp">// ✓ Good - Single pass
+var largeValues = data.Where(x =&gt; x &gt; 100).ToList();
+
+// ✗ Bad - Multiple passes
+var large = data.Where(x =&gt; x &gt; 100);
+var count = large.Count();  // Second pass
+var first = large.FirstOrDefault();  // Third pass
+
+// ✓ Better - Use iterator when possible
+foreach (var item in data.Where(x =&gt; x &gt; 100))
+{
+    // Process without materialization
+}
+</code></pre>
+<hr>
+<h2>Physics Optimization</h2>
+<h3>GPU Acceleration</h3>
+<p><strong>Enable GPU-accelerated simulation:</strong></p>
+<pre><code class="language-csharp">var options = new SimulationOptions
+{
+    UseGpuAcceleration = true,
+    ThreadCount = Environment.ProcessorCount
+};
+
+var result = await _service.RunSimulationAsync(spec, options);
+</code></pre>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>DirectX 11+ compatible GPU</li>
+<li>Current GPU drivers</li>
+<li>At least 2GB VRAM</li>
+</ul>
+<h3>Solver Selection</h3>
+<table>
+<thead>
+<tr>
+<th>Solver</th>
+<th>Speed</th>
+<th>Accuracy</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Particle System</strong></td>
+<td>Fastest</td>
+<td>Good</td>
+<td>Most fabric types</td>
+</tr>
+<tr>
+<td><strong>FEA</strong></td>
+<td>Slower</td>
+<td>Best</td>
+<td>Precision needed</td>
+</tr>
+<tr>
+<td><strong>Hybrid</strong></td>
+<td>Balanced</td>
+<td>Very Good</td>
+<td>Complex geometries</td>
+</tr>
+</tbody></table>
+<h3>Grid Resolution Impact</h3>
+<pre><code>32x32:   Fastest, lowest accuracy
+64x64:   Balanced
+128x128: Slower, better accuracy
+256x256: Slowest, highest detail
+
+Recommendation: Use 64x64 for interactive design
+</code></pre>
+<h3>Parallel Processing</h3>
+<pre><code class="language-csharp">// Use all cores
+var options = new SimulationOptions
+{
+    ThreadCount = Environment.ProcessorCount,  // Auto-detect cores
+    UseGpuAcceleration = true
+};
+</code></pre>
+<hr>
+<h2>UI Performance</h2>
+<h3>Virtual Scrolling</h3>
+<p>For large lists, implement virtual scrolling:</p>
+<pre><code class="language-xaml">&lt;ItemsRepeater ItemsSource=&quot;{x:Bind Items}&quot;&gt;
+    &lt;ItemsRepeater.Layout&gt;
+        &lt;UniformGridLayout ItemWidth=&quot;100&quot; ItemHeight=&quot;100&quot;/&gt;
+    &lt;/ItemsRepeater.Layout&gt;
+&lt;/ItemsRepeater&gt;
+</code></pre>
+<h3>Image Optimization</h3>
+<pre><code class="language-csharp">// Load images asynchronously
+public async Task&lt;BitmapImage&gt; LoadImageAsync(string path)
+{
+    var bitmap = new BitmapImage();
+    bitmap.SetSource(await File.OpenStreamForReadAsync(path));
+    return bitmap;
+}
+
+// Limit image size
+public void OptimizeImage(BitmapImage image)
+{
+    image.DecodePixelWidth = 800;  // Max width
+    image.DecodePixelHeight = 600; // Max height
+}
+</code></pre>
+<h3>Viewport Optimization</h3>
+<p><strong>3D Rendering:</strong></p>
+<pre><code class="language-csharp">// Reduce vertex count
+var simplified = SimplifyMesh(fullGeometry, 0.5);  // 50% reduction
+
+// Use LOD (Level of Detail)
+if (zoomLevel &lt; 0.5)
+    RenderLodMesh(simplifiedGeometry);
+else
+    RenderFullMesh(fullGeometry);
+
+// Frustum culling
+if (!IsInViewFrustum(object3D))
+    return;  // Skip rendering
+</code></pre>
+<h3>Rendering Optimization</h3>
+<pre><code class="language-csharp">// Batch similar objects
+var batch = new RenderBatch();
+foreach (var yarn in yarns)
+{
+    batch.Add(yarn.Geometry);  // Group rendering
+}
+batch.Render();
+
+// Use dirty flags
+public class RenderTarget
+{
+    private bool _isDirty = true;
+    
+    public void Render()
+    {
+        if (!_isDirty) return;
+        // Render logic
+        _isDirty = false;
+    }
+    
+    public void Invalidate() =&gt; _isDirty = true;
+}
+</code></pre>
+<hr>
+<h2>Memory Management</h2>
+<h3>Allocation Patterns</h3>
+<p><strong>Minimize allocations:</strong></p>
+<pre><code class="language-csharp">// ✓ Good - Reuse arrays
+var buffer = new double[1000];
+for (int iteration = 0; iteration &lt; 100; iteration++)
+{
+    ProcessData(buffer);  // Reuse
+}
+
+// ✗ Bad - Allocate each iteration
+for (int iteration = 0; iteration &lt; 100; iteration++)
+{
+    var buffer = new double[1000];  // Allocate each time
+    ProcessData(buffer);
+}
+</code></pre>
+<h3>Disposal Pattern</h3>
+<pre><code class="language-csharp">// Implement proper disposal
+public class SimulationContext : IDisposable
+{
+    private IntPtr _nativeHandle;
+    private bool _disposed = false;
+    
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+    
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                // Dispose managed resources
+            }
+            
+            // Free unmanaged resources
+            if (_nativeHandle != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(_nativeHandle);
+            }
+            
+            _disposed = true;
+        }
+    }
+    
+    ~SimulationContext()
+    {
+        Dispose(false);
+    }
+}
+</code></pre>
+<h3>Memory Profiling</h3>
+<pre><code class="language-csharp">// Measure allocations
+long before = GC.GetTotalMemory(true);
+
+// Do work...
+
+long after = GC.GetTotalMemory(true);
+Debug.WriteLine($&quot;Allocated: {(after - before) / 1024} KB&quot;);
+</code></pre>
+<hr>
+<h2>Benchmarking</h2>
+<h3>Setting Up Benchmarks</h3>
+<pre><code class="language-csharp">using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
+
+[MemoryDiagnoser]
+public class SimulationBenchmarks
+{
+    private FabricSimulationService _service;
+    private FabricSimulationSpec _spec;
+    
+    [GlobalSetup]
+    public void Setup()
+    {
+        _service = new FabricSimulationService();
+        _spec = CreateTestSpec();
+    }
+    
+    [Benchmark]
+    public async Task&lt;SimulationResult&gt; Simulate32x32()
+    {
+        return await _service.RunSimulationAsync(_spec);
+    }
+    
+    [Benchmark]
+    public async Task&lt;SimulationResult&gt; Simulate64x64()
+    {
+        var largeSpec = CreateTestSpec(64);
+        return await _service.RunSimulationAsync(largeSpec);
+    }
+}
+
+// Run benchmarks
+static void Main(string[] args)
+{
+    var summary = BenchmarkRunner.Run&lt;SimulationBenchmarks&gt;();
+}
+</code></pre>
+<h3>Expected Results</h3>
+<pre><code>|           Method |     Mean |   StdDev | Allocated |
+|----------------- |---------:|---------:|----------:|
+| Simulate32x32    | 2.345 s  | 0.087 s  |  45.2 MB  |
+| Simulate64x64    | 12.543 s | 0.342 s  | 185.6 MB  |
+</code></pre>
+<hr>
+<h2>Performance Checklist</h2>
+<p>Before release:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Startup time &lt; 3 seconds (cold)</li>
+<li><input disabled="" type="checkbox"> UI responsive during heavy operations</li>
+<li><input disabled="" type="checkbox"> No memory leaks detected</li>
+<li><input disabled="" type="checkbox"> Peak memory usage &lt; 1 GB</li>
+<li><input disabled="" type="checkbox"> GPU properly utilized (if available)</li>
+<li><input disabled="" type="checkbox"> 60 FPS maintained in viewport</li>
+<li><input disabled="" type="checkbox"> No unnecessary allocations in hot paths</li>
+<li><input disabled="" type="checkbox"> Async patterns used for blocking operations</li>
+<li><input disabled="" type="checkbox"> Caching implemented for expensive operations</li>
+<li><input disabled="" type="checkbox"> Profiler run shows no bottlenecks</li>
+</ul>
+<hr>
+<p><strong>See Also:</strong> <a href="10-TESTING-QUALITY.html">Testing &amp; Quality</a>, <a href="04-ARCHITECTURE.html">Architecture</a></p>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>

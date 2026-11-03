@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Summary · ReWeave</title>
+  <link rel="icon" href="assets/images/app_icon.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a class="brand" href="./"><img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" /> ReZephyr</a>
+    <span class="rule" aria-hidden="true"></span>
+    <a class="brand" href="./"><img src="media/logo.png" alt="" width="28" height="28" /> ReWeave</a>
+    <nav aria-label="Documentation">
+      <a href="00-INDEX.html">Docs</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <span class="spacer"></span>
+    <a class="soon" href="./">Home</a>
+  </header>
+  <main class="page">
+<p>﻿# Platform Deployment &amp; Knowledge Base Setup</p>
+<p><strong>Version:</strong> 0.4.0<br><strong>Last Updated:</strong> July 2026<br><strong>Audience:</strong> Documentation Administrators, DevOps, Product Teams</p>
+<hr>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#zendesk-guide-setup">Zendesk Guide Setup</a></li>
+<li><a href="#gitbook-setup">GitBook Setup</a></li>
+<li><a href="#github-pages-setup">GitHub Pages Setup</a></li>
+<li><a href="#multi-platform-deployment">Multi-Platform Deployment</a></li>
+<li><a href="#content-optimization">Content Optimization</a></li>
+<li><a href="#seo--discoverability">SEO &amp; Discoverability</a></li>
+<li><a href="#analytics--monitoring">Analytics &amp; Monitoring</a></li>
+<li><a href="#maintenance--updates">Maintenance &amp; Updates</a></li>
+</ol>
+<hr>
+<h2>Overview</h2>
+<h3>What is Included</h3>
+<pre><code>Markdown Documentation Suite (15 files):
+✓ Complete feature reference
+✓ User guides and tutorials
+✓ Developer documentation
+✓ API reference
+✓ Troubleshooting guides
+✓ Configuration reference
+✓ Physics documentation
+✓ Export format reference
+✓ Keyboard shortcuts
+✓ Deployment procedures
+✓ Testing documentation
+✓ Performance optimization
+✓ Architecture reference
+✓ Contributing guidelines
+
+Total Content:
+- 40,000+ lines
+- 200+ code examples
+- 30+ diagrams/tables
+- 15+ FAQs per major topic
+- Keyboard-navigable
+- Accessible (WCAG 2.1 AA)
+- Mobile-responsive
+- SEO-optimized
+</code></pre>
+<h3>Deployment Considerations</h3>
+<pre><code>Platform Choice:
+├─ Zendesk Guide
+│  ├─ Best for: Support/help center
+│  ├─ Features: Ticketing, search, analytics
+│  ├─ Cost: Starts $29/month
+│  ├─ Audience: Support focus
+│  └─ Use: Customer-facing help
+│
+├─ GitBook
+│  ├─ Best for: Product docs, developer docs
+│  ├─ Features: Versioning, integration, docs-as-code
+│  ├─ Cost: Free tier available, Pro $10+/user
+│  ├─ Audience: Technical focus
+│  └─ Use: Developer/power user docs
+│
+└─ GitHub Pages
+   ├─ Best for: Open source, internal docs
+   ├─ Features: Free, version control native
+   ├─ Cost: Free
+   ├─ Audience: Developer/technical
+   └─ Use: Internal/community docs
+</code></pre>
+<hr>
+<h2>Zendesk Guide Setup</h2>
+<h3>Prerequisites</h3>
+<pre><code>✓ Zendesk account (Guide plan or higher)
+✓ Admin or agent with permission to manage Guide
+✓ Custom domain configured (optional but recommended)
+✓ SSL certificate (for custom domain)
+</code></pre>
+<h3>Step-by-Step Setup</h3>
+<h4><strong>Step 1: Create Guide Workspace</strong></h4>
+<pre><code>1. Log in to Zendesk admin
+2. Navigate: Zendesk Guide → Manage → Guide Admin
+3. Create New Guide:
+   - Name: &quot;ReWeave Knowledge Base&quot;
+   - URL: help.ReWeave.example.com (or zendesk subdomain)
+   - Visibility: Public or Private
+   - Help Center Theme: Choose or customize
+
+4. Settings:
+   - Enable SSL: Yes (for custom domain)
+   - Analytics: Enable
+   - Search: Enable
+</code></pre>
+<h4><strong>Step 2: Create Categories</strong></h4>
+<pre><code>Category Structure (match doc organization):
+
+1. Getting Started
+   - Quick start guide
+   - Installation
+   - First project
+
+2. User Guide
+   - Weave design
+   - Simulation
+   - Export
+
+3. Features Reference
+   - All features detailed
+   - With examples
+
+4. Developer Guide
+   - Architecture
+   - API reference
+   - Contributing
+
+5. Troubleshooting
+   - Common issues
+   - FAQs
+   - Error solutions
+
+6. Advanced Topics
+   - Physics models
+   - Performance tuning
+   - Custom development
+
+7. About
+   - Release notes
+   - Support
+   - Feedback
+</code></pre>
+<h4><strong>Step 3: Import Documentation</strong></h4>
+<p><strong>Option A: Manual Import (Simple)</strong></p>
+<pre><code>1. Copy each .md file content
+2. In Zendesk: + Article → Create Article
+3. Paste content into editor
+4. Format using Zendesk editor:
+   - Headers → Heading 1/2/3
+   - Bold/Italic → formatting
+   - Code → Code block
+   - Links → Update internal links
+5. Assign to category
+6. Set visibility and permissions
+7. Publish
+
+Time: ~2-3 minutes per article (20 articles × 2.5 min = 50 min)
+</code></pre>
+<p><strong>Option B: Bulk Import (Recommended)</strong></p>
+<pre><code>1. Install Zendesk CLI: npm install -g @zendesk/zcli
+2. Create import manifest (YAML):
+   articles:
+   - title: Getting Started
+     body: 01-USER-GUIDE.md
+     category: Getting Started
+   - title: Developer Guide
+     body: 03-DEVELOPER-GUIDE.md
+     category: Developer Guide
+   (repeat for all 15 files)
+
+3. Upload: zcli article import manifest.yaml
+4. Verify import
+5. Manual formatting (if needed)
+6. Publish
+
+Time: ~5 minutes setup + 20 minutes formatting
+</code></pre>
+<h4><strong>Step 4: Structure &amp; Navigation</strong></h4>
+<pre><code>Zendesk Navigation Setup:
+
+Category 1: Getting Started
+├─ 02-GETTING-STARTED.md
+├─ 05-INSTALLATION-SETUP.md
+└─ 16-KEYBOARD-SHORTCUTS.md
+
+Category 2: User Guides
+├─ 01-USER-GUIDE.md
+├─ 13-FEATURES-COMPLETE.md
+└─ 14-EXPORT-FORMATS.md
+
+Category 3: Developer &amp; API
+├─ 03-DEVELOPER-GUIDE.md
+├─ 04-ARCHITECTURE.md
+├─ 06-API-REFERENCE.md
+└─ 07-CONTRIBUTING.md
+
+Category 4: Advanced Topics
+├─ 17-PHYSICS-MODELS.md
+├─ 10-TESTING-QUALITY.md
+├─ 11-PERFORMANCE.md
+└─ 15-SETTINGS-REFERENCE.md
+
+Category 5: Support &amp; Operations
+├─ 08-TROUBLESHOOTING.md
+├─ 09-DATA-MODELS.md
+├─ 12-DEPLOYMENT.md
+└─ 00-INDEX.md (Redirect or reference)
+</code></pre>
+<h4><strong>Step 5: Customize Appearance</strong></h4>
+<pre><code>1. Guide Admin → Customization
+2. Theme:
+   - Upload logo (400×100 min)
+   - Brand colors (primary, secondary)
+   - Font: Choose system fonts
+   - Header: Customize navigation
+
+3. Branding:
+   - Company name
+   - Footer links
+   - Social media links
+   - Support contact
+
+4. Search:
+   - Enable full-text search
+   - Highlight keywords
+   - Show article count per category
+
+5. Mobile:
+   - Responsive theme (default)
+   - Test on devices
+</code></pre>
+<h4><strong>Step 6: Enable Support Integration</strong></h4>
+<pre><code>Linking to Zendesk Support:
+1. Guide Admin → Support Connection
+2. Enable: &quot;Submit ticket from article&quot;
+3. Configure:
+   - Form fields
+   - Default category
+   - Routing rules
+
+Result:
+- Users can submit tickets directly from docs
+- Links to support
+- Integrated help experience
+</code></pre>
+<h3>Zendesk Best Practices</h3>
+<pre><code>✓ Use clear, short titles (&lt; 60 chars)
+✓ Front-load important info
+✓ Use code blocks for examples
+✓ Link related articles
+✓ Add keywords for search
+✓ Update FAQs from support tickets
+✓ Track analytics to find gaps
+✓ Use consistent formatting
+✓ Test on mobile devices
+✓ Monitor search metrics
+
+✗ Don&#39;t use overly technical language
+✗ Don&#39;t embed large files (use links)
+✗ Don&#39;t duplicate content across articles
+✗ Don&#39;t forget to update when product changes
+✗ Don&#39;t ignore user feedback/analytics
+</code></pre>
+<h3>Zendesk Analytics</h3>
+<pre><code>Monitor:
+1. Most viewed articles
+   → Update if no engagement
+   → Feature top articles
+
+2. Search queries with no results
+   → Add new articles
+   → Improve tagging
+
+3. Articles with high bounce rate
+   → Clarity issues?
+   → Wrong content?
+   → Link to related topics
+
+4. Support ticket reduction
+   → Track tickets before/after docs
+   → Measure ROI
+
+Location: Guide Admin → Analytics
+Frequency: Review weekly/monthly
+</code></pre>
+<hr>
+<h2>GitBook Setup</h2>
+<h3>Prerequisites</h3>
+<pre><code>✓ GitBook account (free or paid)
+✓ GitHub account (for integration)
+✓ Repository with documentation files
+✓ Basic Git knowledge
+</code></pre>
+<h3>Step-by-Step Setup</h3>
+<h4><strong>Step 1: Create GitBook Space</strong></h4>
+<pre><code>1. Sign in to GitBook
+2. Click &quot;Create new&quot;
+3. New Space:
+   - Name: &quot;ReWeave Documentation&quot;
+   - Description: &quot;Complete documentation for ReWeave&quot;
+   - Visibility: Public or Internal
+   - Template: Choose or start blank
+
+4. Customize:
+   - Upload logo/favicon
+   - Set brand colors
+   - Choose layout (sidebar, docs)
+</code></pre>
+<h4><strong>Step 2: Configure GitHub Sync</strong></h4>
+<pre><code>1. Space Settings → Integrations
+2. GitHub:
+   - Select repository
+   - Select branch (main/docs)
+   - Auto-sync: Enable
+
+3. Select folder: /docs/user
+
+4. Sync configuration:
+   - Push to GitHub: Yes (from GitBook)
+   - Pull from GitHub: Yes (keep in sync)
+   - Conflict resolution: Git wins (version control truth)
+
+Result:
+- Edits in GitBook sync to GitHub
+- Edits in GitHub sync to GitBook
+- Single source of truth
+</code></pre>
+<h4><strong>Step 3: Structure Navigation</strong></h4>
+<pre><code>GitBook Table of Contents (SUMMARY.md):
+
+# Summary
+
+## Getting Started
+- [Quick Start](02-GETTING-STARTED.html)
+- [Installation](05-INSTALLATION-SETUP.html)
+- [First Project Tutorial](01-USER-GUIDE.html#getting-started)
+
+## User Documentation
+- [Complete User Guide](01-USER-GUIDE.html)
+- [All Features](13-FEATURES-COMPLETE.html)
+  - [Weave Design](13-FEATURES-COMPLETE.html#2d-weave-design)
+  - [3D Simulation](13-FEATURES-COMPLETE.html#3d-simulation--physics)
+  - [Model Builder](13-FEATURES-COMPLETE.html#model-builder-ai-assisted)
+  - [Export Formats](14-EXPORT-FORMATS.html)
+- [Keyboard Shortcuts](16-KEYBOARD-SHORTCUTS.html)
+- [Settings Reference](15-SETTINGS-REFERENCE.html)
+
+## Developer Guide
+- [Getting Started (Dev)](03-DEVELOPER-GUIDE.html)
+- [Architecture](04-ARCHITECTURE.html)
+- [API Reference](06-API-REFERENCE.html)
+- [Contributing](07-CONTRIBUTING.html)
+
+## Advanced Topics
+- [Physics Models](17-PHYSICS-MODELS.html)
+- [Testing &amp; QA](10-TESTING-QUALITY.html)
+- [Performance Optimization](11-PERFORMANCE.html)
+
+## Operations
+- [Deployment](12-DEPLOYMENT.html)
+- [Troubleshooting](08-TROUBLESHOOTING.html)
+- [Data Models](09-DATA-MODELS.html)
+
+## Reference
+- [Architecture Deep Dive](04-ARCHITECTURE.html)
+- [API Reference](06-API-REFERENCE.html)
+- [Index](00-INDEX.html)
+</code></pre>
+<h4><strong>Step 4: Create SUMMARY.md</strong></h4>
+<pre><code class="language-markdown"># ReWeave Documentation
+
+## Getting Started
+* [Welcome](README.html)
+* [Quick Start](02-GETTING-STARTED.html)
+* [Installation](05-INSTALLATION-SETUP.html)
+
+## User Guide
+* [User Guide](01-USER-GUIDE.html)
+* [All Features](13-FEATURES-COMPLETE.html)
+* [Keyboard Shortcuts](16-KEYBOARD-SHORTCUTS.html)
+* [Settings Reference](15-SETTINGS-REFERENCE.html)
+
+## Developer Guide
+* [Developer Guide](03-DEVELOPER-GUIDE.html)
+* [Architecture](04-ARCHITECTURE.html)
+* [API Reference](06-API-REFERENCE.html)
+* [Contributing](07-CONTRIBUTING.html)
+
+## Advanced
+* [Physics Models](17-PHYSICS-MODELS.html)
+* [Export Formats](14-EXPORT-FORMATS.html)
+* [Testing &amp; QA](10-TESTING-QUALITY.html)
+* [Performance](11-PERFORMANCE.html)
+
+## Operations
+* [Deployment](12-DEPLOYMENT.html)
+* [Troubleshooting](08-TROUBLESHOOTING.html)
+</code></pre>
+<h4><strong>Step 5: Add Cover &amp; README</strong></h4>
+<pre><code>Create book.json:
+{
+  &quot;title&quot;: &quot;ReWeave Documentation&quot;,
+  &quot;description&quot;: &quot;Complete documentation for ReWeave 0.4.0&quot;,
+  &quot;author&quot;: &quot;Hamed Rezaei&quot;,
+  &quot;lang&quot;: &quot;en&quot;,
+  &quot;root&quot;: &quot;./&quot;,
+  &quot;plugins&quot;: [
+    &quot;prism&quot;,
+    &quot;copy-code-button&quot;,
+    &quot;search-pro&quot;,
+    &quot;mermaid&quot;,
+    &quot;github&quot;
+  ],
+  &quot;pluginsConfig&quot;: {
+    &quot;github&quot;: {
+      &quot;url&quot;: &quot;https://github.com/yourusername/ReWeave&quot;
+    }
+  }
+}
+
+Create README.md:
+(Use as intro/welcome page)
+</code></pre>
+<h4><strong>Step 6: Enable Features</strong></h4>
+<pre><code>Space Settings:
+
+1. Publishing:
+   - Custom domain: docs.ReWeave.example.com
+   - SSL: Automatic (let&#39;s encrypt)
+   - Analytics: Enable
+
+2. Search:
+   - Full-text search: Enabled
+   - Search analytics: Enabled
+
+3. Versions:
+   - Create version for each release
+   - Link to previous versions
+   - Set current as default
+
+4. Comments:
+   - Reader comments: Enable (optional)
+   - Moderation: Enable
+</code></pre>
+<h3>GitBook Best Practices</h3>
+<pre><code>✓ Use clear nested structure
+✓ Link across documents
+✓ Use code syntax highlighting
+✓ Include table of contents
+✓ Version docs with releases
+✓ Keep Git repository clean
+✓ Use consistent formatting
+✓ Test on desktop and mobile
+✓ Monitor search analytics
+✓ Enable version control
+
+✗ Don&#39;t mix docs and code in same directory
+✗ Don&#39;t ignore sync conflicts
+✗ Don&#39;t leave old content
+✗ Don&#39;t forget to commit changes
+✗ Don&#39;t use absolute paths for links
+</code></pre>
+<hr>
+<h2>GitHub Pages Setup</h2>
+<h3>Prerequisites</h3>
+<pre><code>✓ GitHub repository
+✓ README.md in root
+✓ /docs/user folder with .md files
+✓ Basic Git knowledge
+</code></pre>
+<h3>Step-by-Step Setup</h3>
+<h4><strong>Step 1: Enable GitHub Pages</strong></h4>
+<pre><code>1. Repository Settings → Pages
+2. Source: Deploy from branch
+3. Branch: main (or docs branch)
+4. Folder: / (root) or /docs
+5. Custom domain: docs.ReWeave.example.com (optional)
+6. Enforce HTTPS: Yes
+
+Site URL: username.github.io/ReWeave
+or: docs.ReWeave.example.com (if custom)
+</code></pre>
+<h4><strong>Step 2: Choose Theme &amp; Build</strong></h4>
+<pre><code>Option A: Use GitHub Pages Theme (Simple)
+1. Settings → Pages → Theme Chooser
+2. Select: &quot;Minimal&quot;, &quot;Slate&quot;, &quot;Architect&quot;, etc.
+3. Select README.md as homepage
+4. Theme applies automatically
+
+Option B: Jekyll Configuration (Recommended)
+1. Create _config.yml:
+   theme: jekyll-theme-minimal
+   title: ReWeave Documentation
+   description: Complete documentation
+   logo: assets/logo.png
+
+2. Create index.md (homepage)
+3. Jekyll builds automatically on push
+</code></pre>
+<h4><strong>Step 3: Create Navigation</strong></h4>
+<pre><code>Method A: Index Page (Simple)
+1. Create docs/index.md (or README.md)
+2. List all documentation:
+   - [Quick Start](02-GETTING-STARTED.html)
+   - [User Guide](01-USER-GUIDE.html)
+   - etc.
+
+Method B: Wiki-Style (Better)
+1. Enable GitHub Wiki
+2. Create Home page
+3. Link to all docs
+4. Better navigation support
+
+Method C: Table of Contents (Best)
+1. Create comprehensive index
+2. Use markdown headings for navigation
+3. Link to specific sections
+</code></pre>
+<h4><strong>Step 4: Configure Jekyll Build</strong></h4>
+<pre><code>Create _config.yml:
+
+# Site
+title: ReWeave Documentation
+description: Complete User &amp; Developer Guide
+url: https://docs.ReWeave.example.com
+repository: username/ReWeave
+
+# Build
+theme: jekyll-theme-minimal
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Plugins
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-gist
+  - jekyll-mentions
+  - jekyll-github-metadata
+
+# Collections
+collections:
+  guides:
+    output: true
+    permalink: /guides/:path/
+</code></pre>
+<h4><strong>Step 5: Add SEO &amp; Metadata</strong></h4>
+<pre><code>Create _includes/head-custom.html:
+
+&lt;meta name=&quot;keywords&quot; content=&quot;fabric simulation, weave design, physics&quot;&gt;
+&lt;meta name=&quot;og:title&quot; content=&quot;ReWeave Documentation&quot;&gt;
+&lt;meta name=&quot;og:description&quot; content=&quot;Complete guide&quot;&gt;
+&lt;meta name=&quot;og:image&quot; content=&quot;/assets/og-image.png&quot;&gt;
+&lt;link rel=&quot;canonical&quot; href=&quot;https://docs.ReWeave.example.com&quot;&gt;
+
+Add to each page frontmatter:
+
+---
+layout: default
+title: Feature Title
+description: Short description
+keywords: keyword1, keyword2
+---
+</code></pre>
+<h4><strong>Step 6: Auto-Publish Documentation</strong></h4>
+<pre><code>GitHub Actions Workflow (auto-publish on push):
+
+Create .github/workflows/docs.yml:
+
+name: Publish Docs
+on:
+  push:
+    branches: [main]
+    paths: [&#39;docs/user/**&#39;]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
+      - run: bundle exec jekyll build --source docs/user
+      - uses: actions/upload-artifact@v2
+        with:
+          name: site
+          path: _site/
+</code></pre>
+<h3>GitHub Pages Best Practices</h3>
+<pre><code>✓ Use meaningful filenames
+✓ Add frontmatter to all .md files
+✓ Link using relative paths
+✓ Include sitemap (auto-generated)
+✓ Use code highlighting
+✓ Mobile-responsive design
+✓ Fast loading times
+✓ Clear navigation
+✓ Search functionality (see below)
+
+✗ Don&#39;t use absolute paths
+✗ Don&#39;t rely on GitHub wiki (use Pages instead)
+✗ Don&#39;t ignore performance
+✗ Don&#39;t forget mobile testing
+✗ Don&#39;t mix versioning schemes
+</code></pre>
+<h3>Adding Search to GitHub Pages</h3>
+<pre><code>Option A: Simple (No Search)
+- Users rely on browser Ctrl+F
+
+Option B: Algolia Search (Recommended)
+1. Sign up: algolia.com
+2. Create index
+3. Install: npm install @algolia/autocomplete-js
+4. Configure Jekyll plugin
+5. Add search box to layout
+
+Option C: Lunr.js (Simple)
+1. Add to layout via CDN
+2. Index generated automatically
+3. Works offline
+4. Self-hosted search
+</code></pre>
+<hr>
+<h2>Multi-Platform Deployment</h2>
+<h3>Deployment Strategy</h3>
+<pre><code>Phase 1: GitHub Pages (Week 1)
+- Fast, free, low-friction
+- Internal/community focus
+- Version control native
+
+Phase 2: GitBook (Week 2)
+- Better formatting, versioning
+- Developer-friendly
+- Integrates with GitHub
+
+Phase 3: Zendesk Guide (Week 3)
+- Customer-facing help center
+- Support integration
+- Analytics &amp; monitoring
+</code></pre>
+<h3>Maintaining Sync</h3>
+<pre><code>GitHub (Source of Truth)
+   ↓
+   ├→ GitHub Pages (auto via Actions)
+   ├→ GitBook (sync configured)
+   └→ Zendesk (manual or API)
+
+Workflow:
+1. Update .md files in GitHub
+2. Commit &amp; push
+3. GitHub Actions trigger
+4. Publish to Pages (auto)
+5. GitBook syncs (auto)
+6. Zendesk import (manual or scheduled)
+</code></pre>
+<h3>Avoiding Duplicates &amp; Confusion</h3>
+<pre><code>✓ Primary URL: docs.ReWeave.example.com (CloudFlare redirect)
+✓ GitHub Pages: github.com/user/ReWeave/docs (secondary)
+✓ GitBook: gitbook.com/yourspace (internal/dev)
+✓ Zendesk: help.ReWeave.example.com (support focus)
+
+Redirect Strategy:
+- docs.ReWeave.example.com → Primary platform
+- help.ReWeave.example.com → Zendesk (support)
+- api.ReWeave.example.com → API docs (GitHub Pages)
+- dev.ReWeave.example.com → GitBook (developers)
+</code></pre>
+<hr>
+<h2>Content Optimization</h2>
+<h3>For Markdown Rendering</h3>
+<pre><code>Compatibility Checklist:
+
+Headers: # - ###### (1-6 levels)
+✓ All platforms support
+
+Bold/Italic: **bold**, *italic*
+✓ All platforms support
+
+Code: `inline` and ```blocks```
+✓ All platforms support
+
+Links: [text](url)
+✓ All platforms support
+⚠ Use relative paths for internal links
+
+Images: ![alt](path)
+✓ GitHub Pages: full support
+✓ GitBook: full support
+✓ Zendesk: requires URL, not local
+
+Lists: - * + (ordered, unordered)
+✓ All platforms support
+
+Tables: | header | header |
+✓ All platforms support
+
+Blockquotes: &gt; text
+✓ All platforms support
+
+Code highlighting: ```python
+✓ GitHub Pages: via Pygments
+✓ GitBook: via highlight.js
+✓ Zendesk: limited support
+</code></pre>
+<h3>Image &amp; Asset Management</h3>
+<pre><code>Repository Structure:
+</code></pre>
+<p>/docs/user/
+├── 01-USER-GUIDE.md
+├── 02-...
+├── assets/
+│   ├── diagrams/
+│   │   ├── architecture.png
+│   │   ├── workflow.png
+│   │   └── physics.svg
+│   ├── screenshots/
+│   │   ├── weave-design.png
+│   │   └── 3d-viewport.png
+│   └── icons/
+│       ├── tip.svg
+│       └── warning.svg
+└── _config.yml</p>
+<pre><code>
+Image Best Practices:
+- PNG: Screenshots, diagrams (~200-500 KB typical)
+- SVG: Icons, diagrams (scalable, small)
+- JPEG: Photos (if included)
+- Max size: 1 MB per image
+- Width: 600-800px for docs
+
+Link syntax:
+</code></pre>
+<p>GitHub Pages: <img src="assets/diagrams/file.png" alt="alt">
+GitBook: <img src="/assets/diagrams/file.png" alt="alt">
+Zendesk: <img src="https://domain.com/assets/file.png" alt="alt"></p>
+<pre><code></code></pre>
+<h3>Link Handling</h3>
+<pre><code>Internal Links (Relative):
+✓ [User Guide](01-USER-GUIDE.html)
+✓ [Export Guide](14-EXPORT-FORMATS.html#obj-format)
+✓ [Troubleshooting](08-TROUBLESHOOTING.html)
+
+Cross-Document Links (Zendesk):
+- Use article titles or IDs
+- Format: `/en-us/articles/XXXXX`
+- Test after import
+
+External Links (Absolute):
+✓ https://github.com/ReWeave
+✓ https://example.com
+</code></pre>
+<hr>
+<h2>SEO &amp; Discoverability</h2>
+<h3>SEO Optimization</h3>
+<pre><code>For all platforms:
+
+1. Titles (60 chars or less):
+   ✓ Features Reference Guide
+   ✓ Physics Models Explained
+   ✓ Export Formats Complete Guide
+
+2. Meta Descriptions (160 chars):
+   ✓ &quot;Complete reference for all ReWeave export formats including OBJ, STL, WIF with examples&quot;
+
+3. Keywords (3-5 per page):
+   - Primary: &quot;ReWeave&quot;
+   - Secondary: &quot;fabric simulation&quot;, &quot;weave design&quot;
+   - Long-tail: &quot;how to export OBJ in ReWeave&quot;
+
+4. Structure:
+   - Clear H1 titles
+   - Descriptive H2/H3 subheadings
+   - Bulleted lists
+   - Tables for comparison
+
+5. Content:
+   - Front-load keywords
+   - Internal links (5-10 per article)
+   - External links (authoritative)
+   - Word count: 800-2000 words per article
+</code></pre>
+<h3>Search Console Setup</h3>
+<pre><code>GitHub Pages:
+1. Google Search Console: console.google.com
+2. Add property: docs.ReWeave.example.com
+3. Verify ownership (DNS or file)
+4. Submit sitemap: /sitemap.xml
+5. Monitor: Coverage, Performance, Enhancements
+
+GitBook:
+1. Settings → SEO
+2. Auto-sitemap: Enable
+3. Structured data: Enable
+4. Custom domain verification
+
+Zendesk:
+1. Admin → Customize Design
+2. Add meta tags (title, description)
+3. Enable analytics
+4. Submit to Google Search Console
+</code></pre>
+<h3>Analytics Setup</h3>
+<pre><code>GitHub Pages + Google Analytics:
+1. Create Google Analytics 4 property
+2. Add script to _includes/head.html
+3. Track: pages, events, user flow
+
+GitBook Analytics (Built-in):
+1. Space Settings → Analytics
+2. View: Popular pages, search queries
+3. Export: CSV reports
+
+Zendesk Analytics (Built-in):
+1. Guide Admin → Analytics
+2. View: Article views, search metrics
+3. Track: Support ticket reduction
+4. Monitor: Bounce rate, time on page
+</code></pre>
+<hr>
+<h2>Maintenance &amp; Updates</h2>
+<h3>Version Management</h3>
+<pre><code>Release Cycle:
+- GitHub: Link to releases page
+- GitBook: Create version per release (e.g., v0.4.0)
+- Zendesk: Update in place (track in release notes)
+
+Version Structure:
+/releases/
+├── v0.3.0/ (archived)
+├── v0.4.0/ (current)
+└── v0.5.0-beta/ (preview)
+
+Each version:
+- Date released
+- Link to release notes
+- Change summary
+</code></pre>
+<h3>Update Process</h3>
+<pre><code>When documentation changes:
+
+1. Update source files in GitHub
+2. Commit with message: &quot;docs: add feature X&quot;
+3. Push to main branch
+
+4. GitHub Pages: Auto-deploys (~30 seconds)
+5. GitBook: Auto-syncs (~1 minute)
+6. Zendesk: Manual or API sync
+
+Schedule:
+- Minor updates: Weekly
+- Major updates: Monthly
+- Critical fixes: ASAP
+- Bulk migration: Quarterly
+</code></pre>
+<h3>Archival Strategy</h3>
+<pre><code>Keep accessible:
+- Current version: Prominent
+- Previous version: Linked in footer
+- Next version (beta): Separate URL
+
+Archive procedure:
+1. Move to /archive/ directory
+2. Create redirect from old URL
+3. Update sitemap
+4. Update all cross-references
+5. Notify users via blog post
+
+Retention:
+- Keep 2 previous major versions
+- Archive rest in GitHub (searchable)
+- PDFs as backups (optional)
+</code></pre>
+<h3>Backup &amp; Recovery</h3>
+<pre><code>Automated Backups:
+1. GitHub: Native version control (free)
+2. GitBook: Built-in (versioning)
+3. Zendesk: Export periodically (CSV)
+
+Manual Backups:
+- Monthly: Export all docs to .zip
+- Store: Google Drive or S3
+- Redundancy: Multiple locations
+
+Recovery:
+- From GitHub: Git checkout &lt;version&gt;
+- From GitBook: Restore previous version
+- From Zendesk: Re-import from backup
+</code></pre>
+<hr>
+<h2>Migration Checklist</h2>
+<h3>Pre-Launch</h3>
+<ul>
+<li><input disabled="" type="checkbox"> All 15 .md files reviewed</li>
+<li><input disabled="" type="checkbox"> Links tested (internal &amp; external)</li>
+<li><input disabled="" type="checkbox"> Images in place and optimized</li>
+<li><input disabled="" type="checkbox"> Code examples verified</li>
+<li><input disabled="" type="checkbox"> Mobile responsive tested</li>
+<li><input disabled="" type="checkbox"> Search functionality tested</li>
+<li><input disabled="" type="checkbox"> SEO metadata added</li>
+<li><input disabled="" type="checkbox"> Analytics configured</li>
+<li><input disabled="" type="checkbox"> Custom domain verified</li>
+<li><input disabled="" type="checkbox"> SSL/TLS certificate active</li>
+<li><input disabled="" type="checkbox"> Redirect rules configured</li>
+<li><input disabled="" type="checkbox"> Backup strategy planned</li>
+</ul>
+<h3>Launch</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Announce new docs (email, blog)</li>
+<li><input disabled="" type="checkbox"> Update website links</li>
+<li><input disabled="" type="checkbox"> Update app help menu</li>
+<li><input disabled="" type="checkbox"> Update support template links</li>
+<li><input disabled="" type="checkbox"> Notify support team</li>
+<li><input disabled="" type="checkbox"> Train content team</li>
+<li><input disabled="" type="checkbox"> Monitor initial traffic</li>
+<li><input disabled="" type="checkbox"> Check analytics</li>
+</ul>
+<h3>Post-Launch</h3>
+<ul>
+<li><input disabled="" type="checkbox"> Weekly: Monitor analytics</li>
+<li><input disabled="" type="checkbox"> Monthly: Update content</li>
+<li><input disabled="" type="checkbox"> Monthly: Review search queries</li>
+<li><input disabled="" type="checkbox"> Quarterly: Full audit</li>
+<li><input disabled="" type="checkbox"> Quarterly: User feedback review</li>
+<li><input disabled="" type="checkbox"> Yearly: Comprehensive update</li>
+<li><input disabled="" type="checkbox"> Continuous: Fix broken links</li>
+</ul>
+<hr>
+<h2>Getting Help</h2>
+<p>For deployment support:</p>
+<ul>
+<li>GitHub Pages docs: <a href="https://pages.github.com">pages.github.com</a></li>
+<li>GitBook docs: <a href="https://docs.gitbook.com">docs.gitbook.com</a></li>
+<li>Zendesk Help: <a href="https://support.zendesk.com">support.zendesk.com</a></li>
+<li>Community: Stack Overflow, GitHub Discussions</li>
+</ul>
+<p>For documentation issues:</p>
+<ul>
+<li>Contact: <a href="mailto:support@ReWeave.example.com">support@ReWeave.example.com</a></li>
+<li>Feedback: <a href="https://github.com/ReWeave/docs">Submit issue</a></li>
+</ul>
+
+  </main>
+  <footer>
+    <a href="00-INDEX.html">Documentation</a>
+    <span><a href="privacy-policy.html">Privacy</a> · <a href="data-disclosure.html">Data</a> · <a href="support.html">Support</a> · <a href="license.html">License</a></span>
+  </footer>
+</body>
+</html>
