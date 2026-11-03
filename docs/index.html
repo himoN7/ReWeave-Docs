@@ -3,200 +3,156 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ReWeave — Ideas, interlaced.</title>
-  <meta name="description" content="ReWeave is in development. A public preview of the product direction from ReZephyr." />
+  <title>ReWeave — Built to design the cloth</title>
+  <meta name="description" content="ReWeave is a studio for weave design, yarns, and fabric simulation. In development from ReZephyr." />
   <link rel="icon" href="assets/images/app_icon.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <a class="skip" href="#story">Skip to content</a>
   <header>
     <a class="brand" href="https://rezephyr.ir" rel="noopener">
       <img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" />
       ReZephyr
     </a>
     <span class="rule" aria-hidden="true"></span>
-      <a class="brand" href="./" aria-label="ReWeave home">
-      <img src="media/logo.png" alt="" width="28" height="28" />
+    <a class="brand" href="./" aria-label="ReWeave home">
+      <img src="media/logo.png" alt="" width="22" height="22" />
       ReWeave
     </a>
     <nav aria-label="Main navigation">
-      <a href="#story">The story</a>
-      <a href="#explore">Explore</a>
+      <a href="#studio">Studio</a>
       <a href="00-INDEX.html">Docs</a>
       <a href="support.html">Support</a>
     </nav>
     <span class="spacer"></span>
-    <a class="soon" href="#support">Coming soon</a>
+    <a href="privacy-policy.html">Privacy</a>
   </header>
 
   <main>
-    <section class="hero" id="story">
-      <div class="hero-copy">
-        <p class="eyebrow">ReWeave by ReZephyr · In development</p>
-        <h1>A thread of <span>possibility.</span></h1>
-        <p class="lede">An early look at the identity of ReWeave. The guides, privacy policy, and support pages are published with it.</p>
+    <section class="stage" id="story">
+      <div class="stage-copy">
+        <p class="kicker" id="kicker">Meet ReWeave</p>
+        <h1 id="title">Built to design the cloth</h1>
+        <p class="lede" id="lede">Draft the weave, choose the yarn, and see the fabric take shape. ReWeave is in development.</p>
+        <p class="more"><a href="00-INDEX.html">Read the guides</a></p>
       </div>
-      <div class="frame">
-        <div class="frame-art">
-          <video id="hero-video" autoplay muted loop playsinline poster="media/01.jpg">
-            <source src="media/01.mp4" type="video/mp4" />
-          </video>
-          <img id="hero-still" class="still" alt="" hidden />
-        </div>
-        <div class="chapters" role="group" aria-label="Preview chapters">
-          <button type="button" aria-pressed="true" data-video="media/01.mp4" data-poster="media/01.jpg" data-line="Draft to yarn.">01 Yarn</button>
-          <button type="button" aria-pressed="false" data-video="media/02.mp4" data-poster="media/02.jpg" data-line="Yarn to pattern.">02 Pattern</button>
-          <button type="button" aria-pressed="false" data-video="media/03.mp4" data-poster="media/03.jpg" data-line="Pattern to analysis.">03 Analysis</button>
-          <button type="button" aria-pressed="false" data-video="media/04.mp4" data-poster="media/04.jpg" data-line="Analysis to testing.">04 Testing</button>
-          <button type="button" aria-pressed="false" data-video="media/05.mp4" data-poster="media/05.jpg" data-line="Testing to drape.">05 Drape</button>
-          <button type="button" aria-pressed="false" data-video="media/06.mp4" data-poster="media/06.jpg" data-line="Drape to physics.">06 Physics</button>
-          <button type="button" aria-pressed="false" data-video="media/07.mp4" data-poster="media/07.jpg" data-line="Physics to the pattern.">07 Weave</button>
-          <button type="button" aria-pressed="false" data-still="media/weaver.png" data-line="Weaver, beside the design.">08 Weaver AI</button>
-        </div>
-        <p class="note" id="chapter-line">Draft to yarn. Concept visuals, not a product manual.</p>
+      <div class="stage-art">
+        <video id="hero-video" hidden muted loop playsinline poster="media/01.jpg">
+          <source src="media/01.mp4" type="video/mp4" />
+        </video>
+        <img id="hero-still" src="media/shots/home.jpg" alt="ReWeave home on a studio desk" />
       </div>
-    </section>
-
-    <section class="section" id="explore">
-      <p class="eyebrow">Explore</p>
-      <h2>One studio. Many ways to create.</h2>
-      <p class="intro">A first look at the product areas. What ships, and when, is still being decided.</p>
-      <div class="gallery">
-        <figure>
-          <img class="shot" src="media/shots/home.jpg" alt="ReWeave home, shown in full" />
-          <figcaption>Home</figcaption>
-        </figure>
-        <figure>
-          <img class="shot" src="media/shots/design.jpg" alt="Design draft, shown in full" />
-          <figcaption>Design</figcaption>
-        </figure>
-        <figure>
-          <img class="shot" src="media/shots/design-desk.jpg" alt="Design on the desk, shown in full" />
-          <figcaption>Design desk</figcaption>
-        </figure>
-        <figure>
-          <img class="shot" src="media/shots/simulation.jpg" alt="Fabric simulation, shown in full" />
-          <figcaption>Simulation</figcaption>
-        </figure>
-        <figure>
-          <img class="shot" src="media/shots/fabric.jpg" alt="Fabric view, shown in full" />
-          <figcaption>Fabric</figcaption>
-        </figure>
-        <figure>
-          <img class="shot" src="media/shots/yarns.jpg" alt="Yarns, shown in full" />
-          <figcaption>Yarns</figcaption>
-        </figure>
-        <figure>
-          <img class="shot" src="media/shots/geometry.jpg" alt="Geometry, shown in full" />
-          <figcaption>Geometry</figcaption>
-        </figure>
-        <figure>
-          <img class="shot" src="media/shots/tests.jpg" alt="Mechanical tests, shown in full" />
-          <figcaption>Mechanical tests</figcaption>
-        </figure>
-        <figure>
-          <img class="shot" src="media/shots/samples.jpg" alt="Woven studies, shown in full" />
-          <figcaption>Studies</figcaption>
-        </figure>
-        <figure>
-          <img class="shot" src="media/shots/mark.jpg" alt="ReWeave mark with yarn" />
-          <figcaption>Mark</figcaption>
-        </figure>
+      <div class="picks" id="studio" role="group" aria-label="Studio areas">
+        <button type="button" aria-pressed="true" data-still="media/shots/home.jpg" data-kicker="Meet ReWeave" data-title="Built to design the cloth" data-lede="Draft the weave, choose the yarn, and see the fabric take shape. ReWeave is in development.">Home</button>
+        <button type="button" data-still="media/shots/design.jpg" data-kicker="Design" data-title="The draft, on the desk" data-lede="Draw the repeat and read it as cloth.">Design</button>
+        <button type="button" data-still="media/shots/design-desk.jpg" data-kicker="Design" data-title="A repeat you can hold" data-lede="Patterns, palettes, and the draft beside the tools that made them.">Desk</button>
+        <button type="button" data-still="media/shots/yarns.jpg" data-kicker="Yarns" data-title="Yarn, specified" data-lede="Warp, weft, and twist, chosen before the cloth is made.">Yarns</button>
+        <button type="button" data-still="media/shots/geometry.jpg" data-kicker="Geometry" data-title="From the grid to the thread" data-lede="An academic yarn path, shown as a surface you can turn.">Geometry</button>
+        <button type="button" data-still="media/shots/simulation.jpg" data-kicker="Simulation" data-title="The cloth, in color" data-lede="A yarn-interlaced view of the draft you just drew.">Simulation</button>
+        <button type="button" data-still="media/shots/fabric.jpg" data-kicker="Fabric" data-title="Color across the repeat" data-lede="The same draft, in a colorway, at the scale of the cloth.">Fabric</button>
+        <button type="button" data-still="media/shots/tests.jpg" data-kicker="Mechanical tests" data-title="A test for the cloth" data-lede="Load, drape, and the numbers beside the model.">Tests</button>
+        <button type="button" data-still="media/shots/samples.jpg" data-kicker="Studies" data-title="Many cloths, one table" data-lede="Studies of structure, color, and the hand of the yarn.">Studies</button>
+        <button type="button" data-still="media/weaver.png" data-kicker="Weaver" data-title="From a brief to a weave" data-lede="A direction for describing cloth in words. What ships is still being decided.">Weaver</button>
+        <button type="button" data-video="media/01.mp4" data-poster="media/01.jpg" data-kicker="Story" data-title="A thread, in motion" data-lede="Concept films of yarn, pattern, and drape. They are not the product manual.">Story</button>
+      </div>
+      <div class="chapters" id="chapters" hidden>
+        <button type="button" aria-pressed="true" data-video="media/01.mp4" data-poster="media/01.jpg">Yarn</button>
+        <button type="button" data-video="media/02.mp4" data-poster="media/02.jpg">Pattern</button>
+        <button type="button" data-video="media/03.mp4" data-poster="media/03.jpg">Analysis</button>
+        <button type="button" data-video="media/04.mp4" data-poster="media/04.jpg">Testing</button>
+        <button type="button" data-video="media/05.mp4" data-poster="media/05.jpg">Drape</button>
+        <button type="button" data-video="media/06.mp4" data-poster="media/06.jpg">Physics</button>
+        <button type="button" data-video="media/07.mp4" data-poster="media/07.jpg">Weave</button>
       </div>
     </section>
 
-    <section class="section" id="weaver">
-      <div class="split">
-        <div>
-          <p class="eyebrow">Product direction</p>
-          <h2>Meet Weaver AI.</h2>
-          <p class="intro">Ideas, in conversation. Final capabilities have not been announced.</p>
-        </div>
-        <div class="panel">
-          <img src="media/weaver.png" alt="Weaver AI, from brief to weave" />
-        </div>
+    <section class="band">
+      <div class="band-copy">
+        <h2>The mark, in yarn</h2>
+        <p>ReWeave is a studio from ReZephyr. The app is in development, and this site is the public preview.</p>
       </div>
+      <img src="media/shots/mark.jpg" alt="ReWeave mark surrounded by yarn and woven samples" />
     </section>
 
-    <section class="section">
-      <p class="eyebrow">Material</p>
-      <h2>Beyond the grid.</h2>
-      <p class="intro">The visual direction looks toward geometry, drape, and the relationship between a thread and the whole cloth.</p>
-      <img class="shot" src="media/shots/geometry.jpg" alt="Geometry, shown in full" style="margin-top:28px;" />
-    </section>
-
-    <section class="section" id="specs">
-      <p class="eyebrow">At a glance</p>
-      <h2>ReWeave. At a glance.</h2>
-      <p class="intro">An early look. More will be added when it is ready to share.</p>
-      <div class="glance">
-        <article class="card">
-          <h3>One creative direction</h3>
-          <p>The areas above are evolving. Final capabilities are still being defined.</p>
-        </article>
-        <article class="card">
-          <h3>Requirements to be announced</h3>
-          <p>Platforms and system requirements have not been confirmed on this site.</p>
-        </article>
-        <article class="card">
-          <h3>Plans coming soon</h3>
-          <p>Pricing has not been announced.</p>
-        </article>
-        <article class="card">
-          <h3>Store release coming soon</h3>
-          <p>There is no download on this page. A verified link will be added when the app is released.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="support">
-      <h2>A few answers.</h2>
-      <details>
-        <summary>Can I download ReWeave today?</summary>
-        <p>Not yet. This website previews the product direction. It does not provide the app.</p>
-      </details>
-      <details>
-        <summary>Is this the product manual?</summary>
-        <p>No. Guides, setup steps, and technical notes are not published here.</p>
-      </details>
-      <details>
-        <summary>Where are pricing and support?</summary>
-        <p>They will be added when they are ready. There is no signup on this preview.</p>
-      </details>
+    <section class="next" aria-label="On this site">
+      <a href="00-INDEX.html">
+        <span>Documentation</span>
+        <strong>Guides for the studio</strong>
+      </a>
+      <a href="support.html">
+        <span>Help</span>
+        <strong>Support and Store addresses</strong>
+      </a>
+      <a href="privacy-policy.html">
+        <span>Privacy</span>
+        <strong>How the app handles information</strong>
+      </a>
+      <a href="license.html">
+        <span>License</span>
+        <strong>Terms for using ReWeave</strong>
+      </a>
     </section>
   </main>
 
   <footer>
-    <span>Small patterns. New possibilities.</span>
+    <span>ReWeave by <a href="https://rezephyr.ir">ReZephyr</a></span>
     <span>
       <a href="privacy-policy.html">Privacy</a>
-      · <a href="data-disclosure.html">Data</a>
-      · <a href="support.html">Support</a>
-      · <a href="license.html">License</a>
-      · A creation by <a href="https://rezephyr.ir">ReZephyr</a>
+      <a href="data-disclosure.html">Data</a>
+      <a href="support.html">Support</a>
+      <a href="license.html">License</a>
     </span>
   </footer>
   <script>
     const video = document.getElementById("hero-video");
     const still = document.getElementById("hero-still");
-    const line = document.getElementById("chapter-line");
-    document.querySelectorAll(".chapters button").forEach((button) => {
+    const chapters = document.getElementById("chapters");
+    const kicker = document.getElementById("kicker");
+    const title = document.getElementById("title");
+    const lede = document.getElementById("lede");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function showStill(src, alt) {
+      video.pause();
+      video.hidden = true;
+      still.hidden = false;
+      still.src = src;
+      still.alt = alt || "";
+      chapters.hidden = true;
+    }
+
+    function showVideo(src, poster) {
+      if (reduced) {
+        showStill(poster, title.textContent);
+        chapters.hidden = false;
+        return;
+      }
+      still.hidden = true;
+      video.hidden = false;
+      video.poster = poster || "";
+      video.src = src;
+      chapters.hidden = false;
+      video.play();
+    }
+
+    document.querySelectorAll(".picks button").forEach((button) => {
       button.addEventListener("click", () => {
-        document.querySelectorAll(".chapters button").forEach((item) => item.setAttribute("aria-pressed", "false"));
+        document.querySelectorAll(".picks button").forEach((item) => item.setAttribute("aria-pressed", "false"));
         button.setAttribute("aria-pressed", "true");
-        line.textContent = button.dataset.line + " Concept visuals, not a product manual.";
-        if (button.dataset.video) {
-          still.hidden = true;
-          video.hidden = false;
-          video.poster = button.dataset.poster;
-          video.src = button.dataset.video;
-          video.play();
-        } else {
-          video.pause();
-          video.hidden = true;
-          still.hidden = false;
-          still.src = button.dataset.still;
-        }
+        kicker.textContent = button.dataset.kicker;
+        title.textContent = button.dataset.title;
+        lede.textContent = button.dataset.lede;
+        if (button.dataset.video) showVideo(button.dataset.video, button.dataset.poster);
+        else showStill(button.dataset.still, button.dataset.title);
+      });
+    });
+
+    chapters.querySelectorAll("button").forEach((button) => {
+      button.addEventListener("click", () => {
+        chapters.querySelectorAll("button").forEach((item) => item.setAttribute("aria-pressed", "false"));
+        button.setAttribute("aria-pressed", "true");
+        showVideo(button.dataset.video, button.dataset.poster);
       });
     });
   </script>
