@@ -8,9 +8,9 @@
   <link rel="icon" href="assets/images/app_icon.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="home">
   <a class="skip" href="#story">Skip to content</a>
-  <header>
+  <header class="overlay" id="topbar">
     <a class="brand" href="https://rezephyr.ir" rel="noopener">
       <img class="mark" src="assets/brand/rezephyr-mark.svg" alt="" />
       ReZephyr
@@ -20,7 +20,8 @@
       <img src="media/logo.png" alt="" width="22" height="22" />
       ReWeave
     </a>
-    <nav aria-label="Main navigation">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" aria-label="Main navigation">
       <a href="#story">Studio</a>
       <a href="#gallery">Gallery</a>
       <a href="00-INDEX.html">Docs</a>
@@ -31,108 +32,83 @@
   </header>
 
   <main>
-    <section class="reel" id="story">
-      <div class="reel-sticky">
-        <div class="meter" aria-hidden="true"><span id="meter"></span></div>
-        <div class="frame" id="frame">
-          <img id="still-a" class="is-on" src="media/shots/home.jpg" alt="ReWeave home on a studio desk" />
-          <img id="still-b" alt="" />
-          <video id="hero-video" muted loop playsinline poster="media/01.jpg"></video>
-          <div class="chapters" id="chapters" hidden>
-            <button type="button" aria-pressed="true" data-video="media/01.mp4" data-poster="media/01.jpg">Yarn</button>
-            <button type="button" data-video="media/02.mp4" data-poster="media/02.jpg">Pattern</button>
-            <button type="button" data-video="media/03.mp4" data-poster="media/03.jpg">Analysis</button>
-            <button type="button" data-video="media/04.mp4" data-poster="media/04.jpg">Testing</button>
-            <button type="button" data-video="media/05.mp4" data-poster="media/05.jpg">Drape</button>
-            <button type="button" data-video="media/06.mp4" data-poster="media/06.jpg">Physics</button>
-            <button type="button" data-video="media/07.mp4" data-poster="media/07.jpg">Weave</button>
-          </div>
-        </div>
-        <div class="caption">
-          <p class="kicker" id="kicker">Meet ReWeave</p>
-          <h1 id="title">Built to design the cloth</h1>
-          <p class="lede" id="lede">Draft the weave, choose the yarn, and see the fabric take shape.</p>
-        </div>
-        <div class="dots" role="tablist" aria-label="Studio areas">
-          <button type="button" role="tab" aria-selected="true" data-still="media/shots/home.jpg" data-kicker="Meet ReWeave" data-title="Built to design the cloth" data-lede="Draft the weave, choose the yarn, and see the fabric take shape.">Home</button>
-          <button type="button" role="tab" data-still="media/shots/design.jpg" data-kicker="Design" data-title="The draft, on the desk" data-lede="Draw the repeat and read it as cloth.">Design</button>
-          <button type="button" role="tab" data-still="media/shots/yarns.jpg" data-kicker="Yarns" data-title="Yarn, specified" data-lede="Warp, weft, and twist, chosen before the cloth is made.">Yarns</button>
-          <button type="button" role="tab" data-still="media/shots/geometry.jpg" data-kicker="Geometry" data-title="From the grid to the thread" data-lede="An academic yarn path, shown as a surface you can turn.">Geometry</button>
-          <button type="button" role="tab" data-still="media/shots/fabric.jpg" data-kicker="Fabric" data-title="Color across the repeat" data-lede="The same draft, in a colorway, at the scale of the cloth.">Fabric</button>
-          <button type="button" role="tab" data-still="media/shots/tests.jpg" data-kicker="Tests" data-title="A test for the cloth" data-lede="Load, drape, and the numbers beside the model.">Tests</button>
-          <button type="button" role="tab" data-still="media/weaver.png" data-kicker="Weaver" data-title="From a brief to a weave" data-lede="Describe a cloth in words. What ships is still being decided.">Weaver</button>
-          <button type="button" role="tab" data-video="media/01.mp4" data-poster="media/01.jpg" data-kicker="Story" data-title="A thread, in motion" data-lede="Concept films of yarn, pattern, and drape.">Story</button>
-        </div>
+    <section class="hero" id="story">
+      <video id="film-a" class="is-on" autoplay muted loop playsinline poster="media/01.jpg" src="media/01.mp4"></video>
+      <video id="film-b" muted loop playsinline></video>
+      <div class="hero-copy">
+        <p class="kicker">ReWeave by ReZephyr</p>
+        <h1>Cloth, in motion.</h1>
+        <p>A studio for the draft, the yarn, and the fabric they become. In development.</p>
+      </div>
+      <div class="films" role="group" aria-label="Concept films">
+        <button type="button" aria-pressed="true" data-video="media/01.mp4" data-poster="media/01.jpg">Yarn</button>
+        <button type="button" data-video="media/02.mp4" data-poster="media/02.jpg">Pattern</button>
+        <button type="button" data-video="media/03.mp4" data-poster="media/03.jpg">Analysis</button>
+        <button type="button" data-video="media/04.mp4" data-poster="media/04.jpg">Testing</button>
+        <button type="button" data-video="media/05.mp4" data-poster="media/05.jpg">Drape</button>
+        <button type="button" data-video="media/06.mp4" data-poster="media/06.jpg">Physics</button>
+        <button type="button" data-video="media/07.mp4" data-poster="media/07.jpg">Weave</button>
       </div>
     </section>
 
-    <section class="strip" id="gallery">
-      <div class="strip-head">
-        <h2>Every view, in full</h2>
-        <p>Swipe through the studio. Nothing here is cropped.</p>
-        <p class="more"><a href="00-INDEX.html">Read the guides</a></p>
-      </div>
-      <div class="strip-track" tabindex="0" aria-label="Studio screenshots">
-        <figure>
-          <img src="media/shots/home.jpg" alt="ReWeave home" />
-          <figcaption>Home</figcaption>
-        </figure>
-        <figure>
-          <img src="media/shots/design.jpg" alt="Design draft" />
-          <figcaption>Design</figcaption>
-        </figure>
-        <figure>
-          <img src="media/shots/design-desk.jpg" alt="Design on the desk" />
-          <figcaption>Desk</figcaption>
-        </figure>
-        <figure>
-          <img src="media/shots/simulation.jpg" alt="Fabric simulation" />
-          <figcaption>Simulation</figcaption>
-        </figure>
-        <figure>
-          <img src="media/shots/fabric.jpg" alt="Fabric colorway" />
-          <figcaption>Fabric</figcaption>
-        </figure>
-        <figure>
-          <img src="media/shots/yarns.jpg" alt="Yarn catalog" />
-          <figcaption>Yarns</figcaption>
-        </figure>
-        <figure>
-          <img src="media/shots/geometry.jpg" alt="Geometry model" />
-          <figcaption>Geometry</figcaption>
-        </figure>
-        <figure>
-          <img src="media/shots/tests.jpg" alt="Mechanical tests" />
-          <figcaption>Tests</figcaption>
-        </figure>
-        <figure>
-          <img src="media/shots/samples.jpg" alt="Woven studies" />
-          <figcaption>Studies</figcaption>
-        </figure>
-        <figure>
-          <img src="media/shots/mark.jpg" alt="ReWeave mark with yarn" />
-          <figcaption>Mark</figcaption>
-        </figure>
+    <section class="deck" aria-label="Studio">
+      <article>
+        <img src="media/shots/design.jpg" alt="Design draft on the desk" />
+        <div>
+          <h2>Design</h2>
+          <p>Draw the repeat and read it as cloth.</p>
+          <a href="01-USER-GUIDE.html">Open the guide</a>
+        </div>
+      </article>
+      <article>
+        <img src="media/shots/yarns.jpg" alt="Yarn catalog" />
+        <div>
+          <h2>Yarns</h2>
+          <p>Warp, weft, and twist, chosen before the cloth is made.</p>
+          <a href="02-GETTING-STARTED.html">Start here</a>
+        </div>
+      </article>
+      <article>
+        <img src="media/shots/geometry.jpg" alt="Geometry model of a yarn path" />
+        <div>
+          <h2>Geometry</h2>
+          <p>An academic yarn path, shown as a surface you can turn.</p>
+          <a href="17-PHYSICS-MODELS.html">See the models</a>
+        </div>
+      </article>
+      <article>
+        <img src="media/shots/fabric.jpg" alt="Fabric colorway" />
+        <div>
+          <h2>Fabric</h2>
+          <p>The same draft, in a colorway, at the scale of the cloth.</p>
+          <a href="14-EXPORT-FORMATS.html">Export formats</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="pin" id="gallery">
+      <div class="pin-sticky">
+        <div class="pin-copy">
+          <h2>Every view, whole.</h2>
+          <p>Scroll and the studio slides past. On a phone, swipe. The pictures stay complete.</p>
+        </div>
+        <div class="pin-track">
+          <figure><img src="media/shots/home.jpg" alt="ReWeave home" /><figcaption>Home</figcaption></figure>
+          <figure><img src="media/shots/design-desk.jpg" alt="Design on the desk" /><figcaption>Desk</figcaption></figure>
+          <figure><img src="media/shots/simulation.jpg" alt="Fabric simulation" /><figcaption>Simulation</figcaption></figure>
+          <figure><img src="media/shots/tests.jpg" alt="Mechanical tests" /><figcaption>Tests</figcaption></figure>
+          <figure><img src="media/shots/samples.jpg" alt="Woven studies" /><figcaption>Studies</figcaption></figure>
+          <figure><img src="media/weaver.png" alt="Weaver, from a brief to a weave" /><figcaption>Weaver</figcaption></figure>
+          <figure><img src="media/shots/mark.jpg" alt="ReWeave mark with yarn" /><figcaption>Mark</figcaption></figure>
+        </div>
       </div>
     </section>
 
     <section class="next" aria-label="On this site">
-      <a href="00-INDEX.html">
-        <span>Documentation</span>
-        <strong>Guides for the studio</strong>
-      </a>
-      <a href="support.html">
-        <span>Help</span>
-        <strong>Support and Store addresses</strong>
-      </a>
-      <a href="privacy-policy.html">
-        <span>Privacy</span>
-        <strong>How the app handles information</strong>
-      </a>
-      <a href="license.html">
-        <span>License</span>
-        <strong>Terms for using ReWeave</strong>
-      </a>
+      <a href="00-INDEX.html"><span>Documentation</span><strong>Guides for the studio</strong></a>
+      <a href="support.html"><span>Help</span><strong>Support and Store addresses</strong></a>
+      <a href="privacy-policy.html"><span>Privacy</span><strong>How the app handles information</strong></a>
+      <a href="license.html"><span>License</span><strong>Terms for using ReWeave</strong></a>
     </section>
   </main>
 
@@ -146,116 +122,96 @@
     </span>
   </footer>
   <script>
-    const reel = document.querySelector(".reel");
-    const sticky = document.querySelector(".reel-sticky");
-    const scenes = [...document.querySelectorAll(".dots button")];
-    const video = document.getElementById("hero-video");
-    const chapters = document.getElementById("chapters");
-    const meter = document.getElementById("meter");
-    const kicker = document.getElementById("kicker");
-    const title = document.getElementById("title");
-    const lede = document.getElementById("lede");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let front = document.getElementById("still-a");
-    let back = document.getElementById("still-b");
-    let current = 0;
-    let lock = false;
+    const narrow = window.matchMedia("(max-width: 800px)");
+    const bar = document.getElementById("topbar");
+    const toggle = document.querySelector(".nav-toggle");
+    const films = [...document.querySelectorAll(".films button")];
+    let front = document.getElementById("film-a");
+    let back = document.getElementById("film-b");
+    const pin = document.querySelector(".pin");
+    const track = document.querySelector(".pin-track");
 
-    reel.style.setProperty("--steps", scenes.length);
-    scenes.forEach((scene) => {
-      if (!scene.dataset.still) return;
-      const image = new Image();
-      image.src = scene.dataset.still;
+    toggle.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", open ? "false" : "true");
+      bar.classList.toggle("is-open", !open);
+    });
+    document.getElementById("site-nav").addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        toggle.setAttribute("aria-expanded", "false");
+        bar.classList.remove("is-open");
+      }
     });
 
-    function showStill(src, alt) {
-      video.pause();
-      video.classList.remove("is-on");
-      chapters.hidden = true;
-      if (front.getAttribute("src") === src) {
-        front.alt = alt || "";
-        front.classList.add("is-on");
-        return;
-      }
+    function showFilm(src, poster) {
+      if (front.getAttribute("src") === src) return;
       const incoming = back;
       let settled = false;
       const reveal = () => {
         if (settled) return;
         settled = true;
-        incoming.onload = null;
-        incoming.alt = alt || "";
+        incoming.oncanplay = null;
         incoming.classList.add("is-on");
         front.classList.remove("is-on");
+        front.pause();
         back = front;
         front = incoming;
+        if (!reduced) front.play();
       };
-      incoming.onload = reveal;
+      incoming.poster = poster || "";
+      incoming.oncanplay = reveal;
       incoming.src = src;
-      if (incoming.complete && incoming.naturalWidth) reveal();
+      incoming.load();
     }
 
-    function showVideo(src, poster) {
-      front.classList.remove("is-on");
-      back.classList.remove("is-on");
-      video.poster = poster || "";
-      if (!video.src.endsWith(src)) video.src = src;
-      video.classList.add("is-on");
-      chapters.hidden = false;
-      if (!reduced) video.play();
-    }
-
-    function show(index) {
-      const scene = scenes[index];
-      if (!scene) return;
-      current = index;
-      scenes.forEach((item, i) => item.setAttribute("aria-selected", i === index ? "true" : "false"));
-      kicker.textContent = scene.dataset.kicker;
-      title.textContent = scene.dataset.title;
-      lede.textContent = scene.dataset.lede;
-      if (scene.dataset.video) showVideo(scene.dataset.video, scene.dataset.poster);
-      else showStill(scene.dataset.still, scene.dataset.title);
-      const rail = scene.parentElement;
-      const edge = scene.offsetLeft - 24;
-      if (edge < rail.scrollLeft || edge + scene.offsetWidth > rail.scrollLeft + rail.clientWidth) {
-        rail.scrollTo({ left: edge, behavior: reduced ? "auto" : "smooth" });
-      }
-    }
-
-    function place() {
-      const distance = Math.max(1, reel.offsetHeight - sticky.offsetHeight);
-      const scrolled = Math.min(distance, Math.max(0, window.scrollY - reel.offsetTop));
-      const t = scrolled / distance;
-      meter.style.transform = "scaleX(" + t + ")";
-      const index = Math.min(scenes.length - 1, Math.floor(t * scenes.length));
-      if (!lock && index !== current) show(index);
-    }
-
-    scenes.forEach((scene, index) => {
-      scene.addEventListener("click", () => {
-        const distance = Math.max(1, reel.offsetHeight - sticky.offsetHeight);
-        const top = reel.offsetTop + (index / scenes.length) * distance + 1;
-        lock = true;
-        show(index);
-        window.scrollTo({ top, behavior: reduced ? "auto" : "smooth" });
-        window.setTimeout(() => { lock = false; place(); }, reduced ? 0 : 700);
-      });
-    });
-
-    chapters.querySelectorAll("button").forEach((button) => {
+    films.forEach((button) => {
       button.addEventListener("click", () => {
-        chapters.querySelectorAll("button").forEach((item) => item.setAttribute("aria-pressed", "false"));
+        films.forEach((item) => item.setAttribute("aria-pressed", "false"));
         button.setAttribute("aria-pressed", "true");
-        showVideo(button.dataset.video, button.dataset.poster);
+        showFilm(button.dataset.video, button.dataset.poster);
       });
     });
+
+    if (reduced) front.removeAttribute("autoplay");
+
+    const cards = document.querySelectorAll(".deck article");
+    if ("IntersectionObserver" in window) {
+      const seen = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-in");
+            seen.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.18 });
+      cards.forEach((card) => seen.observe(card));
+    } else {
+      cards.forEach((card) => card.classList.add("is-in"));
+    }
+
+    function onScroll() {
+      bar.classList.toggle("is-solid", window.scrollY > 24);
+      if (narrow.matches || reduced) {
+        track.style.transform = "";
+        pin.style.height = "";
+        return;
+      }
+      const extra = Math.max(0, track.scrollWidth - window.innerWidth + 48);
+      pin.style.height = (window.innerHeight + extra) + "px";
+      const distance = Math.max(1, pin.offsetHeight - window.innerHeight);
+      const scrolled = Math.min(distance, Math.max(0, window.scrollY - pin.offsetTop));
+      track.style.transform = "translate3d(" + (-(scrolled / distance) * extra) + "px,0,0)";
+    }
 
     let frame = 0;
     window.addEventListener("scroll", () => {
       if (frame) return;
-      frame = window.requestAnimationFrame(() => { frame = 0; place(); });
+      frame = window.requestAnimationFrame(() => { frame = 0; onScroll(); });
     }, { passive: true });
-    window.addEventListener("resize", place);
-    place();
+    window.addEventListener("resize", onScroll);
+    narrow.addEventListener("change", onScroll);
+    onScroll();
   </script>
 </body>
 </html>
