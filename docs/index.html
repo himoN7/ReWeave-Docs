@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ReWeave — Built to design the cloth</title>
   <meta name="description" content="ReWeave is a studio for weave design, yarns, and fabric simulation. In development from ReZephyr." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600&family=Noto+Sans:wght@400;600&family=Vazirmatn:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="icon" href="assets/images/app_icon.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -20,15 +23,25 @@
       <img src="media/logo.png" alt="" width="22" height="22" />
       ReWeave
     </a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-i18n="menu">Menu</button>
     <nav id="site-nav" aria-label="Main navigation">
-      <a href="#story">Studio</a>
-      <a href="#gallery">Gallery</a>
-      <a href="00-INDEX.html">Docs</a>
-      <a href="support.html">Support</a>
+      <a href="#story" data-i18n="studio">Studio</a>
+      <a href="#gallery" data-i18n="gallery">Gallery</a>
+      <a href="00-INDEX.html" data-i18n="docs">Docs</a>
+      <a href="support.html" data-i18n="support">Support</a>
     </nav>
     <span class="spacer"></span>
-    <a href="privacy-policy.html">Privacy</a>
+    <label class="lang">
+      <span class="visually-hidden" data-i18n="language">Language</span>
+      <select id="lang" aria-label="Language">
+        <option value="en">EN</option>
+        <option value="fa">فا</option>
+        <option value="tr">TR</option>
+        <option value="de">DE</option>
+        <option value="zh">中文</option>
+      </select>
+    </label>
+    <a href="privacy-policy.html" data-i18n="privacy">Privacy</a>
   </header>
 
   <main>
@@ -36,18 +49,18 @@
       <video id="film-a" class="is-on" autoplay muted loop playsinline poster="media/01.jpg" src="media/01.mp4"></video>
       <video id="film-b" muted loop playsinline></video>
       <div class="hero-copy">
-        <p class="kicker">ReWeave by ReZephyr</p>
-        <h1>Cloth, in motion.</h1>
-        <p>A studio for the draft, the yarn, and the fabric they become. In development.</p>
+        <p class="kicker" data-i18n="kicker">ReWeave by ReZephyr</p>
+        <h1 data-i18n="heroTitle">Cloth, in motion.</h1>
+        <p data-i18n="heroLede">A studio for the draft, the yarn, and the fabric they become. In development.</p>
       </div>
       <div class="films" role="group" aria-label="Concept films">
-        <button type="button" aria-pressed="true" data-video="media/01.mp4" data-poster="media/01.jpg">Yarn</button>
-        <button type="button" data-video="media/02.mp4" data-poster="media/02.jpg">Pattern</button>
-        <button type="button" data-video="media/03.mp4" data-poster="media/03.jpg">Analysis</button>
-        <button type="button" data-video="media/04.mp4" data-poster="media/04.jpg">Testing</button>
-        <button type="button" data-video="media/05.mp4" data-poster="media/05.jpg">Drape</button>
-        <button type="button" data-video="media/06.mp4" data-poster="media/06.jpg">Physics</button>
-        <button type="button" data-video="media/07.mp4" data-poster="media/07.jpg">Weave</button>
+        <button type="button" aria-pressed="true" data-video="media/01.mp4" data-poster="media/01.jpg" data-i18n="yarn">Yarn</button>
+        <button type="button" data-video="media/02.mp4" data-poster="media/02.jpg" data-i18n="pattern">Pattern</button>
+        <button type="button" data-video="media/03.mp4" data-poster="media/03.jpg" data-i18n="analysis">Analysis</button>
+        <button type="button" data-video="media/04.mp4" data-poster="media/04.jpg" data-i18n="testing">Testing</button>
+        <button type="button" data-video="media/05.mp4" data-poster="media/05.jpg" data-i18n="drape">Drape</button>
+        <button type="button" data-video="media/06.mp4" data-poster="media/06.jpg" data-i18n="physics">Physics</button>
+        <button type="button" data-video="media/07.mp4" data-poster="media/07.jpg" data-i18n="weave">Weave</button>
       </div>
     </section>
 
@@ -55,33 +68,33 @@
       <article>
         <img src="media/shots/design.jpg" alt="Design draft on the desk" />
         <div>
-          <h2>Design</h2>
-          <p>Draw the repeat and read it as cloth.</p>
-          <a href="01-USER-GUIDE.html">Open the guide</a>
+          <h2 data-i18n="design">Design</h2>
+          <p data-i18n="designBody">Draw the repeat and read it as cloth.</p>
+          <a href="01-USER-GUIDE.html" data-i18n="designLink">Open the guide</a>
         </div>
       </article>
       <article>
         <img src="media/shots/yarns.jpg" alt="Yarn catalog" />
         <div>
-          <h2>Yarns</h2>
-          <p>Warp, weft, and twist, chosen before the cloth is made.</p>
-          <a href="02-GETTING-STARTED.html">Start here</a>
+          <h2 data-i18n="yarns">Yarns</h2>
+          <p data-i18n="yarnsBody">Warp, weft, and twist, chosen before the cloth is made.</p>
+          <a href="02-GETTING-STARTED.html" data-i18n="yarnsLink">Start here</a>
         </div>
       </article>
       <article>
         <img src="media/shots/geometry.jpg" alt="Geometry model of a yarn path" />
         <div>
-          <h2>Geometry</h2>
-          <p>An academic yarn path, shown as a surface you can turn.</p>
-          <a href="17-PHYSICS-MODELS.html">See the models</a>
+          <h2 data-i18n="geometry">Geometry</h2>
+          <p data-i18n="geometryBody">An academic yarn path, shown as a surface you can turn.</p>
+          <a href="17-PHYSICS-MODELS.html" data-i18n="geometryLink">See the models</a>
         </div>
       </article>
       <article>
         <img src="media/shots/fabric.jpg" alt="Fabric colorway" />
         <div>
-          <h2>Fabric</h2>
-          <p>The same draft, in a colorway, at the scale of the cloth.</p>
-          <a href="14-EXPORT-FORMATS.html">Export formats</a>
+          <h2 data-i18n="fabric">Fabric</h2>
+          <p data-i18n="fabricBody">The same draft, in a colorway, at the scale of the cloth.</p>
+          <a href="14-EXPORT-FORMATS.html" data-i18n="fabricLink">Export formats</a>
         </div>
       </article>
     </section>
@@ -89,36 +102,36 @@
     <section class="pin" id="gallery">
       <div class="pin-sticky">
         <div class="pin-copy">
-          <h2>Every view, whole.</h2>
-          <p>Scroll and the studio slides past. On a phone, swipe. The pictures stay complete.</p>
+          <h2 data-i18n="galleryTitle">Every view, whole.</h2>
+          <p data-i18n="galleryLede">Scroll and the studio slides past. On a phone, swipe. The pictures stay complete.</p>
         </div>
         <div class="pin-track">
-          <figure><img src="media/shots/home.jpg" alt="ReWeave home" /><figcaption>Home</figcaption></figure>
-          <figure><img src="media/shots/design-desk.jpg" alt="Design on the desk" /><figcaption>Desk</figcaption></figure>
-          <figure><img src="media/shots/simulation.jpg" alt="Fabric simulation" /><figcaption>Simulation</figcaption></figure>
-          <figure><img src="media/shots/tests.jpg" alt="Mechanical tests" /><figcaption>Tests</figcaption></figure>
-          <figure><img src="media/shots/samples.jpg" alt="Woven studies" /><figcaption>Studies</figcaption></figure>
+          <figure><img src="media/shots/home.jpg" alt="ReWeave home" /><figcaption data-i18n="home">Home</figcaption></figure>
+          <figure><img src="media/shots/design-desk.jpg" alt="Design on the desk" /><figcaption data-i18n="desk">Desk</figcaption></figure>
+          <figure><img src="media/shots/simulation.jpg" alt="Fabric simulation" /><figcaption data-i18n="simulation">Simulation</figcaption></figure>
+          <figure><img src="media/shots/tests.jpg" alt="Mechanical tests" /><figcaption data-i18n="tests">Tests</figcaption></figure>
+          <figure><img src="media/shots/samples.jpg" alt="Woven studies" /><figcaption data-i18n="studies">Studies</figcaption></figure>
           <figure><img src="media/weaver.png" alt="Weaver, from a brief to a weave" /><figcaption>Weaver</figcaption></figure>
-          <figure><img src="media/shots/mark.jpg" alt="ReWeave mark with yarn" /><figcaption>Mark</figcaption></figure>
+          <figure><img src="media/shots/mark.jpg" alt="ReWeave mark with yarn" /><figcaption data-i18n="mark">Mark</figcaption></figure>
         </div>
       </div>
     </section>
 
     <section class="next" aria-label="On this site">
-      <a href="00-INDEX.html"><span>Documentation</span><strong>Guides for the studio</strong></a>
-      <a href="support.html"><span>Help</span><strong>Support and Store addresses</strong></a>
-      <a href="privacy-policy.html"><span>Privacy</span><strong>How the app handles information</strong></a>
-      <a href="license.html"><span>License</span><strong>Terms for using ReWeave</strong></a>
+      <a href="00-INDEX.html"><span data-i18n="docsLabel">Documentation</span><strong data-i18n="nextDocs">Guides for the studio</strong></a>
+      <a href="support.html"><span data-i18n="help">Help</span><strong data-i18n="nextHelp">Support and Store addresses</strong></a>
+      <a href="privacy-policy.html"><span data-i18n="privacy">Privacy</span><strong data-i18n="nextPrivacy">How the app handles information</strong></a>
+      <a href="license.html"><span data-i18n="license">License</span><strong data-i18n="nextLicense">Terms for using ReWeave</strong></a>
     </section>
   </main>
 
   <footer>
-    <span>ReWeave by <a href="https://rezephyr.ir">ReZephyr</a></span>
+    <span><span data-i18n="footer">ReWeave by</span> <a href="https://rezephyr.ir">ReZephyr</a></span>
     <span>
-      <a href="privacy-policy.html">Privacy</a>
-      <a href="data-disclosure.html">Data</a>
-      <a href="support.html">Support</a>
-      <a href="license.html">License</a>
+      <a href="privacy-policy.html" data-i18n="privacy">Privacy</a>
+      <a href="data-disclosure.html" data-i18n="data">Data</a>
+      <a href="support.html" data-i18n="support">Support</a>
+      <a href="license.html" data-i18n="license">License</a>
     </span>
   </footer>
   <script>
@@ -212,6 +225,31 @@
     window.addEventListener("resize", onScroll);
     narrow.addEventListener("change", onScroll);
     onScroll();
+
+    const strings = {
+      en: { menu: "Menu", studio: "Studio", gallery: "Gallery", docs: "Docs", docsLabel: "Documentation", support: "Support", privacy: "Privacy", language: "Language", kicker: "ReWeave by ReZephyr", heroTitle: "Cloth, in motion.", heroLede: "A studio for the draft, the yarn, and the fabric they become. In development.", yarn: "Yarn", pattern: "Pattern", analysis: "Analysis", testing: "Testing", drape: "Drape", physics: "Physics", weave: "Weave", design: "Design", designBody: "Draw the repeat and read it as cloth.", designLink: "Open the guide", yarns: "Yarns", yarnsBody: "Warp, weft, and twist, chosen before the cloth is made.", yarnsLink: "Start here", geometry: "Geometry", geometryBody: "An academic yarn path, shown as a surface you can turn.", geometryLink: "See the models", fabric: "Fabric", fabricBody: "The same draft, in a colorway, at the scale of the cloth.", fabricLink: "Export formats", galleryTitle: "Every view, whole.", galleryLede: "Scroll and the studio slides past. On a phone, swipe. The pictures stay complete.", home: "Home", desk: "Desk", simulation: "Simulation", tests: "Tests", studies: "Studies", mark: "Mark", help: "Help", nextDocs: "Guides for the studio", nextHelp: "Support and Store addresses", nextPrivacy: "How the app handles information", license: "License", nextLicense: "Terms for using ReWeave", data: "Data", footer: "ReWeave by" },
+      fa: { menu: "منو", studio: "استودیو", gallery: "گالری", docs: "راهنما", docsLabel: "مستندات", support: "پشتیبانی", privacy: "حریم خصوصی", language: "زبان", kicker: "ReWeave از ReZephyr", heroTitle: "پارچه، در حرکت.", heroLede: "استودیویی برای نقشه بافت، نخ، و پارچه‌ای که از آن‌ها ساخته می‌شود. در حال توسعه.", yarn: "نخ", pattern: "الگو", analysis: "تحلیل", testing: "آزمون", drape: "افتادگی", physics: "فیزیک", weave: "بافت", design: "طراحی", designBody: "تکرار را بکشید و آن را به صورت پارچه بخوانید.", designLink: "باز کردن راهنما", yarns: "نخ‌ها", yarnsBody: "تار، پود و تاب، پیش از ساخته شدن پارچه.", yarnsLink: "از اینجا شروع کنید", geometry: "هندسه", geometryBody: "مسیر دانشگاهی نخ، به صورت سطحی که می‌توانید بچرخانید.", geometryLink: "دیدن مدل‌ها", fabric: "پارچه", fabricBody: "همان نقشه، در یک رنگ‌بندی، در مقیاس پارچه.", fabricLink: "قالب‌های خروجی", galleryTitle: "هر نما، کامل.", galleryLede: "با پیمایش، استودیو کنار می‌رود. در تلفن، بکشید. تصویرها کامل می‌مانند.", home: "خانه", desk: "میز", simulation: "شبیه‌سازی", tests: "آزمون‌ها", studies: "مطالعه‌ها", mark: "نشان", help: "راهنمایی", nextDocs: "راهنمای استودیو", nextHelp: "پشتیبانی و نشانی‌های فروشگاه", nextPrivacy: "نحوه رسیدگی برنامه به اطلاعات", license: "مجوز", nextLicense: "شرایط استفاده از ReWeave", data: "داده‌ها", footer: "ReWeave از" },
+      tr: { menu: "Menü", studio: "Stüdyo", gallery: "Galeri", docs: "Belgeler", docsLabel: "Belgeler", support: "Destek", privacy: "Gizlilik", language: "Dil", kicker: "ReZephyr’den ReWeave", heroTitle: "Kumaş, hareket halinde.", heroLede: "Desen, iplik ve onlardan oluşan kumaş için bir stüdyo. Geliştirme aşamasında.", yarn: "İplik", pattern: "Desen", analysis: "Analiz", testing: "Deneme", drape: "Döküm", physics: "Fizik", weave: "Dokuma", design: "Tasarım", designBody: "Raportu çizin ve onu kumaş olarak okuyun.", designLink: "Kılavuzu aç", yarns: "İplikler", yarnsBody: "Çözgü, atkı ve büküm, kumaş oluşmadan önce.", yarnsLink: "Buradan başlayın", geometry: "Geometri", geometryBody: "Akademik bir iplik yolu, çevirebileceğiniz bir yüzey olarak.", geometryLink: "Modelleri görün", fabric: "Kumaş", fabricBody: "Aynı desen, bir renk düzeninde, kumaş ölçeğinde.", fabricLink: "Dışa aktarma biçimleri", galleryTitle: "Her görünüm, bütün.", galleryLede: "Kaydırın, stüdyo yanınızdan geçsin. Telefonda kaydırın. Görüntüler tam kalır.", home: "Giriş", desk: "Masa", simulation: "Simülasyon", tests: "Denemeler", studies: "Çalışmalar", mark: "İşaret", help: "Yardım", nextDocs: "Stüdyo kılavuzları", nextHelp: "Destek ve Store adresleri", nextPrivacy: "Uygulamanın bilgileri nasıl işlediği", license: "Lisans", nextLicense: "ReWeave kullanım koşulları", data: "Veriler", footer: "ReWeave," },
+      de: { menu: "Menü", studio: "Studio", gallery: "Galerie", docs: "Dokumentation", docsLabel: "Dokumentation", support: "Support", privacy: "Datenschutz", language: "Sprache", kicker: "ReWeave von ReZephyr", heroTitle: "Stoff, in Bewegung.", heroLede: "Ein Studio für die Patrone, das Garn und den Stoff, der daraus wird. In Entwicklung.", yarn: "Garn", pattern: "Muster", analysis: "Analyse", testing: "Prüfung", drape: "Fall", physics: "Physik", weave: "Gewebe", design: "Entwurf", designBody: "Zeichnen Sie den Rapport und lesen Sie ihn als Stoff.", designLink: "Leitfaden öffnen", yarns: "Garne", yarnsBody: "Kette, Schuss und Drehung, bevor der Stoff entsteht.", yarnsLink: "Hier beginnen", geometry: "Geometrie", geometryBody: "Ein akademischer Garnweg, als Fläche, die Sie drehen können.", geometryLink: "Modelle ansehen", fabric: "Stoff", fabricBody: "Dieselbe Patrone, in einer Farbstellung, im Maßstab des Stoffes.", fabricLink: "Exportformate", galleryTitle: "Jede Ansicht, ganz.", galleryLede: "Scrollen Sie, und das Studio gleitet vorbei. Auf dem Telefon wischen. Die Bilder bleiben vollständig.", home: "Start", desk: "Tisch", simulation: "Simulation", tests: "Prüfungen", studies: "Studien", mark: "Zeichen", help: "Hilfe", nextDocs: "Leitfäden für das Studio", nextHelp: "Support und Store-Adressen", nextPrivacy: "Wie die App mit Informationen umgeht", license: "Lizenz", nextLicense: "Bedingungen für ReWeave", data: "Daten", footer: "ReWeave von" },
+      zh: { menu: "菜单", studio: "工作室", gallery: "图库", docs: "文档", docsLabel: "文档", support: "支持", privacy: "隐私", language: "语言", kicker: "ReZephyr 的 ReWeave", heroTitle: "布料，在运动中。", heroLede: "为纹板、纱线以及它们织成的织物而设的工作室。开发中。", yarn: "纱线", pattern: "图案", analysis: "分析", testing: "测试", drape: "悬垂", physics: "物理", weave: "组织", design: "设计", designBody: "绘制循环，并把它读成织物。", designLink: "打开指南", yarns: "纱线", yarnsBody: "经纱、纬纱与捻度，在织物成形之前选定。", yarnsLink: "从这里开始", geometry: "几何", geometryBody: "一条学术纱线路径，呈现为可以转动的表面。", geometryLink: "查看模型", fabric: "织物", fabricBody: "同一张纹板，换一种配色，放到织物的尺度上。", fabricLink: "导出格式", galleryTitle: "每个画面，都完整。", galleryLede: "滚动时工作室从旁边滑过。在手机上滑动。图片保持完整。", home: "主页", desk: "桌面", simulation: "模拟", tests: "测试", studies: "研究", mark: "标志", help: "帮助", nextDocs: "工作室指南", nextHelp: "支持与商店地址", nextPrivacy: "应用如何处理信息", license: "许可", nextLicense: "ReWeave 使用条款", data: "数据", footer: "ReWeave，来自" }
+    };
+    const htmlLang = { en: "en", fa: "fa", tr: "tr", de: "de", zh: "zh-Hans" };
+    const langSelect = document.getElementById("lang");
+
+    function applyLang(code) {
+      const pack = strings[code] || strings.en;
+      document.documentElement.lang = htmlLang[code] || "en";
+      document.documentElement.dir = code === "fa" ? "rtl" : "ltr";
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const value = pack[node.dataset.i18n];
+        if (value) node.textContent = value;
+      });
+      langSelect.value = strings[code] ? code : "en";
+      localStorage.setItem("reweave-lang", langSelect.value);
+    }
+
+    langSelect.addEventListener("change", () => applyLang(langSelect.value));
+    applyLang(localStorage.getItem("reweave-lang") || "en");
   </script>
 </body>
 </html>
